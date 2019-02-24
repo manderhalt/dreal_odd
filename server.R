@@ -1,5 +1,9 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
+# devtools::install_github('rstudio/DT')
+# install.packages("shinyjs")
+# install.packages("dplyr")
+# install.packages("digest")
 library(imager)
 server <- function(input, output) {
   

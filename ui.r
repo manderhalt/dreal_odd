@@ -1,4 +1,6 @@
 # Define UI for app that draws a histogram ----
+library(shiny)
+source("data.R")
 ui <- fluidPage(
   
   # App title ----
@@ -21,7 +23,14 @@ ui <- fluidPage(
       # Output: Histogram ----
       textOutput("intro_text"),
       
-      h4(textOutput("catchphrase"))
+      h4(textOutput("catchphrase")),
+      lapply(1:length(LIST_QUESTIONS), function(question_number){
+        checkboxGroupInput(inputId=names(LIST_QUESTIONS)[[question_number]], 
+                           label=LIST_QUESTIONS[[question_number]], choices=CHOICES, inline=TRUE)
+      })
+      ,
+      actionButton(inputId = "submitBtn", label = "Submit")
+      
   )
 )
 )
