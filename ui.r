@@ -24,6 +24,9 @@ ui <- fluidPage(
       textOutput("intro_text"),
       
       h4(textOutput("catchphrase")),
+      selectInput("department", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
+      uiOutput("commune"),
+      h4(textOutput("epci_text")),
       lapply(1:length(LIST_QUESTIONS), function(question_number){
         checkboxGroupInput(inputId=names(LIST_QUESTIONS)[[question_number]], 
                            label=LIST_QUESTIONS[[question_number]], choices=CHOICES, inline=TRUE)

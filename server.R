@@ -30,4 +30,11 @@ server <- function(input, output) {
     )
   output$catchphrase <- renderText({CATCHPHRASE})
   
+  departement <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department, ][["CodeZone"]][[1]]
+  })
+  output$commune <- renderUI({
+    selectInput("commune_string", "Quelle est votre commune ?", choices = QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$dept==departement(),][["nom_membre"]])
+  })
+  epci_text <- reactive({epci_text <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string,][["raison_sociale"]]})
+  output$epci_text <- renderText({paste("Votre EPCI est: ",epci_text())})
 }
