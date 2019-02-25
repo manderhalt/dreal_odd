@@ -1,5 +1,6 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
+
 # devtools::install_github('rstudio/DT')
 # install.packages("shinyjs")
 # install.packages("dplyr")
@@ -28,6 +29,26 @@ server <- function(input, output) {
     
     }, deleteFile=FALSE
     )
+  output$odd_1_text <- renderText({ODD_1_TEXT})
+  for (i in 1:17){
+    
+  }
+  output$ODD_1 <- renderImage({
+    list(src = "./Logos/ODD_1.jpg",
+         contentType = 'image/jpg',
+         width=150,
+         height=150)
+    
+  }, deleteFile=FALSE
+  )
+  output$ODD_2 <- renderImage({
+    list(src = "./Logos/ODD_2.jpg",
+         contentType = 'image/jpg',
+         width=150,
+         height=150)
+    
+  }, deleteFile=FALSE
+  )
   output$catchphrase <- renderText({CATCHPHRASE})
   
   departement <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department, ][["CodeZone"]][[1]]
