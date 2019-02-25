@@ -58,4 +58,14 @@ server <- function(input, output) {
   })
   epci_text <- reactive({epci_text <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string,][["raison_sociale"]]})
   output$epci_text <- renderText({paste("Votre EPCI est: ",epci_text())})
+  
+  
+  departement_2 <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department_2, ][["CodeZone"]][[1]]
+  })
+  output$commune_2 <- renderUI({
+    selectInput("commune_string_2", "Quelle est votre commune ?", choices = QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$dept==departement_2(),][["nom_membre"]])
+  })
+  epci_text_2 <- reactive({epci_text_2 <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string_2,][["raison_sociale"]]})
+  output$epci_text_2 <- renderText({paste("Votre EPCI est: ",epci_text_2())})
 }
+

@@ -46,8 +46,9 @@ navbarPage("DREAL Quizz",
                               "",
                               ODD_BASIS),
                       tabPanel("Les 17 ODD",
-                               for (i in 1:17){
-                                 odd <- paste("ODD_",i,sep="")
+                               lapply(1:17, function(i) {
+                                 odd <- paste("ODD ", i, sep="")
+                                 odd_image <- paste("odd_", i, sep="")
                                  box(title = odd,
                                      status = "primary",
                                      solidHeader = F,
@@ -55,12 +56,17 @@ navbarPage("DREAL Quizz",
                                      width = 12,
                                      fluidRow(
                                        column(width = 2, align = "left",
-                                              img(src=paste(odd,".jpg", sep=""), width=100)),
+                                              img(src=paste(odd_image,".jpg", sep=""), width=100)),
                                        column(width = 9, align = "center", textOutput( paste("odd_",i,"_text",sep="")))
                                      ))
                                }
                                )
+                      )
+                    )),
+           tabPanel("Voir les ODD de mon territoire",
+                    selectInput("department_2", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
+                    uiOutput("commune_2"),
+                    h4(textOutput("epci_text_2"))
                     )
-                    ),
-           tabPanel("Voir les ODD de mon territoire")
            )
+
