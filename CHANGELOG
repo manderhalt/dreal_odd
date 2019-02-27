@@ -1,3 +1,7 @@
+* 0.0.5
+	Fixed the town bug, now you can view part of the result, will add the right/wrong version
+* 0.0.4
+	Better refactor, still need to add a ODD dataset for increased clarity, need to improve clarity and cleanness
 * 0.0.3
 	Added the choice of the epci inside the form
 * 0.0.2 
