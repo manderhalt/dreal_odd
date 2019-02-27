@@ -72,7 +72,11 @@ navbarPage("DREAL Quizz",
                     uiOutput("commune_2"),
                     h4(textOutput("epci_text_2")),
                     mainPanel(
-                      plotOutput(outputId = "plot_result")
+                      lapply(1:length(QUESTION), function(i){
+                        current_plot <- paste("plot_",i,sep="")
+                        plotOutput(outputId = current_plot)
+                      }
+                      )
                     )
                     )
            

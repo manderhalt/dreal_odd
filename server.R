@@ -1,6 +1,7 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
 source("helper.R")
+library(dplyr)
 # devtools::install_github('rstudio/DT')
 # install.packages("shinyjs")
 # install.packages("dplyr")
@@ -36,23 +37,28 @@ server <- function(input, output) {
   
   output$catchphrase <- renderText({CATCHPHRASE})
   
-  departement <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department, ][["CodeZone"]][[1]]
+  departement <- reactive({departement_number <-DF_DEP[DF_DEP$Zone==input$department, ]
   })
   output$commune <- renderUI({
-    selectInput("commune_string", "Quelle est votre commune ?", choices = QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$dept==departement(),][["nom_membre"]])
+    selectInput("commune_string", "Quelle est votre commune ?", choices =filter(DF_DEP_EPCI, dept==departement()$CodeZone)[["nom_membre"]])
   })
-  epci_text <- reactive({epci_text <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string,][["raison_sociale"]]})
-  output$epci_text <- renderText({paste("Votre EPCI est: ",epci_text())})
+  epci <- reactive({epci <- filter(filter(DF_DEP_EPCI, nom_membre==input$commune_string), dept==departement()$CodeZone)})
+  output$epci_text <- renderText({paste("Votre EPCI est: ",epci()$raison_sociale)})
   
   
-  departement_2 <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department_2, ][["CodeZone"]][[1]]
+  departement_2 <- reactive({departement_number <-DF_DEP[DF_DEP$Zone==input$department_2, ]
   })
   output$commune_2 <- renderUI({
-    selectInput("commune_string_2", "Quelle est votre commune ?", choices = QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$dept==departement_2(),][["nom_membre"]])
+    selectInput("commune_string_2", "Quelle est votre commune ?", choices = filter(DF_DEP_EPCI, dept==departement_2()$CodeZone)[["nom_membre"]])
   })
-  epci_text_2 <- reactive({epci_text_2 <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string_2,][["raison_sociale"]]})
-  output$epci_text_2 <- renderText({paste("Votre EPCI est: ",epci_text_2())})
+  epci_2 <- reactive({epci_2 <- filter(filter(DF_DEP_EPCI, nom_membre==input$commune_string_2), dept==departement_2()$CodeZone)})
+  output$epci_text_2 <- renderText({paste("Votre EPCI est: ",epci_2()$raison_sociale)})
   
-  output$plot_result <- renderPlot({horiz_histo()})
+  lapply(1:length(QUESTION), function(i){
+    current_plot <- paste("plot_",i,sep="")
+    current_question <- QUESTION[i,]
+    output[[current_plot]] <- renderPlot({horiz_histo(departement_2()$CodeZone, epci_2()$siren, current_question$Code_indicateur)})
+  }
+  )
 }
 

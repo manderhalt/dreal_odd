@@ -1,8 +1,10 @@
 
 COG_2018_COMMUNE_EPCI <- read.csv('./data/COG_2018_COMMUNE_EPCI.csv',header = TRUE,sep=";")
-QUIZZ_ODD_DEP <- read.csv('./data/QUIZZ_ODD_DEP.csv',header = TRUE,sep=";",stringsAsFactors=FALSE)
-QUIZZ_ODD_EPCI <- read.csv('./data/QUIZZ_ODD_EPCI.csv',header = TRUE,sep=";", stringsAsFactors = FALSE)
-QUIZZ_GOOD_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
+DF_DEP <- read.csv('./data/QUIZZ_ODD_DEP.csv',header = TRUE,sep=";",stringsAsFactors=FALSE)
+DF_DEP <- DF_DEP[!is.na(DF_DEP$Zone),]
+DF_EPCI <- read.csv('./data/QUIZZ_ODD_EPCI.csv',header = TRUE,sep=";", stringsAsFactors = FALSE)
+DF_EPCI <- DF_EPCI[!is.na(DF_EPCI$Zone),]
+DF_DEP_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
 IND <- read.csv('./data/Tab_passage_ind_ODD.csv',header = TRUE,sep=";")
 QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)
 save(COG_2018_COMMUNE_EPCI,QUIZZ_ODD_DEP,QUIZZ_ODD_EPCI,IND, file = "./odd/data.RData")
