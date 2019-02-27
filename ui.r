@@ -27,9 +27,10 @@ navbarPage("DREAL Quizz",
                         selectInput("department", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
                         uiOutput("commune"),
                         h4(textOutput("epci_text")),
-                        lapply(1:length(LIST_QUESTIONS), function(question_number){
-                          checkboxGroupInput(inputId=names(LIST_QUESTIONS)[[question_number]], 
-                                             label=LIST_QUESTIONS[[question_number]], choices=CHOICES, inline=TRUE)
+                        lapply(1:length(QUESTION$Libel), function(question_number){
+                          current_question <- QUESTION[question_number,]
+                          checkboxGroupInput(inputId=paste("question_",current_question$Num_question,sep=''), 
+                                             label=current_question$Libel, choices=CHOICES, inline=TRUE)
                         })
                         ,
                         actionButton(inputId = "submitBtn", label = "Submit")
@@ -57,16 +58,24 @@ navbarPage("DREAL Quizz",
                                      fluidRow(
                                        column(width = 2, align = "left",
                                               img(src=paste(odd_image,".jpg", sep=""), width=100)),
-                                       column(width = 9, align = "center", textOutput( paste("odd_",i,"_text",sep="")))
+                                       column(width = 9, align = "center", h4(textOutput( paste("odd_",i,"_text",sep=""))))
                                      ))
                                }
                                )
                       )
                     )),
+           
+           
+           
            tabPanel("Voir les ODD de mon territoire",
                     selectInput("department_2", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
                     uiOutput("commune_2"),
-                    h4(textOutput("epci_text_2"))
+                    h4(textOutput("epci_text_2")),
+                    mainPanel(
+                      plotOutput(outputId = "plot_result")
                     )
+                    )
+           
+           
            )
 

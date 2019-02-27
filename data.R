@@ -4,7 +4,7 @@ QUIZZ_ODD_DEP <- read.csv('./data/QUIZZ_ODD_DEP.csv',header = TRUE,sep=";",strin
 QUIZZ_ODD_EPCI <- read.csv('./data/QUIZZ_ODD_EPCI.csv',header = TRUE,sep=";", stringsAsFactors = FALSE)
 QUIZZ_GOOD_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
 IND <- read.csv('./data/Tab_passage_ind_ODD.csv',header = TRUE,sep=";")
-
+QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)
 save(COG_2018_COMMUNE_EPCI,QUIZZ_ODD_DEP,QUIZZ_ODD_EPCI,IND, file = "./odd/data.RData")
 
 
@@ -25,26 +25,28 @@ Testez votre connaissance du territoire et découvrez les objectifs de développ
 # Différentes questions
 CHOICES <- c("Inférieur" = "inf", "Supérieur" = "sup")
 
-QUESTION_1 <- "Le taux de pauvreté dans votre EPCI est:"
-QUESTION_2 <- "La surface en agriculture biologique est:"
-QUESTION_3 <- "La densité de médecins dans votre EPCI est:"
-QUESTION_4 <- "La part des diplômés du supérieur parmi les 15-24 ans dans votre EPCI est:"
-QUESTION_5 <- "La part des femmes parmi les chômeurs dans votre EPCI est:"
-QUESTION_6 <- "La production d’énergie renouvelable dans votre EPCI est:
-
-(Puissance reliée en énergie renouvelable pour 1000 habitants)
-"
-QUESTION_7 <- "Le taux d’emploi d’emploi dans votre EPCI est:"
-QUESTION_8 <- "La part de déplacements en transports en commun dans les trajets domicile - travail dans votre EPCI est:"
-LIST_QUESTIONS <- list("question_1"=QUESTION_1, "question_2"=QUESTION_2,
-                    "question_3"=QUESTION_3, "question_4"=QUESTION_4,
-                    "question_5"=QUESTION_5, "question_6"=QUESTION_6,
-                    "question_7"=QUESTION_7, "question_8"=QUESTION_8)
-
 # ODD qu'est ce que c'est
 ODD_HEADER <- "Les 17 objectifs de développement durable (ODD) et leurs 169 cibles (sous-objectifs) forment la clé de voûte de l’Agenda 2030. Ils tiennent compte équitablement de la dimension économique, de la dimension sociale et de la dimension environnementale du développement durable et intègrent pour la première fois l’éradication de la pauvreté et le développement durable dans un dispositif commun."
 ODD_BASIS <- "Les ODD doivent être atteints par tous les États membres de l’ONU d’ici à 2030. Cela signifie que tous les pays sont appelés à relever conjointement les défis urgents de la planète. La Suisse est elle aussi appelée à réaliser ces objectifs sur le plan national. Des mesures incitatives doivent en outre être mises en place pour que les acteurs non étatiques contribuent davantage au développement durable."
-ODD_1_TEXT <- "Le premier objectif vise la fin de la pauvreté et la lutte contre les inégalités sous toutes ses formes et partout dans le monde. Il se compose de sept sous-objectifs ciblant : la lutte contre la pauvreté, l’accès aux services de base, la réduction de la proportion de travailleurs pauvres et des personnes les plus vulnérables, notamment les femmes et les enfants."
-
-
+ODD_1_TEXT <- "Objectif 1: Éliminer la pauvreté sous toutes ses formes et partout dans le monde"
+ODD_2_TEXT <- "Objectif 2: Éliminer la faim, assurer la sécurité alimentaire, améliorer la nutrition et promouvoir l’agriculture durable"
+ODD_3_TEXT <- "Objectif 3: Permettre à tous de vivre en bonne santé et promouvoir le bien-être de tous à tout âge"
+ODD_4_TEXT <- "Objectif 4: Assurer l’accès de tous à une éducation de qualité, sur un pied d’égalité, et promouvoir les possibilités d’apprentissage tout au long de la vie"
+ODD_5_TEXT <- "Objectif 5: Parvenir à l’égalité des sexes et autonomiser toutes les femmes et les filles"
+ODD_6_TEXT <- "Objectif 6: Garantir l’accès de tous à l’eau et à l’assainissement et assurer une gestion durable des ressources en eau"
+ODD_7_TEXT <- "Objectif 7: Garantir l’accès de tous à des services énergétiques fiables, durables et modernes, à un coût abordable"
+ODD_8_TEXT <- "Objectif 8: Promouvoir une croissance économique soutenue, partagée et durable, le plein emploi productif et un travail décent pour tous"
+ODD_9_TEXT <- "Objectif 9: Bâtir une infrastructure résiliente, promouvoir une industrialisation durable qui profite à tous et encourager l’innovation"
+ODD_10_TEXT <- "Objectif 10: Réduire les inégalités dans les pays et d’un pays à l’autre"
+ODD_11_TEXT <- "Objectif 11: Faire en sorte que les villes et les établissements humains soient ouverts à tous, sûrs, résilients et durables"
+ODD_12_TEXT <- "Objectif 12: Établir des modes de consommation et de production durables"
+ODD_13_TEXT <- "Objectif 13: Prendre d’urgence des mesures pour lutter contre les changements climatiques et leurs répercussions"
+ODD_14_TEXT <- "Objectif 14: Conserver et exploiter de manière durable les océans, les mers et les ressources marines aux fins du développement durable"
+ODD_15_TEXT <- "Objectif 15: Préserver et restaurer les écosystèmes terrestres"
+ODD_16_TEXT <- "Objectif 16: Promouvoir l’avènement de sociétés pacifiques et ouvertes aux fins du développement durable"
+ODD_17_TEXT <- "Objectif 17: Renforcer les moyens de mettre en oeuvre le Partenariat mondial pour le développement durable et le revitaliser"
+ODD_TEXT <- list("odd_1_text"=ODD_1_TEXT, "odd_2_text"=ODD_2_TEXT, "odd_3_text"=ODD_3_TEXT, "odd_4_text"=ODD_4_TEXT, "odd_5_text"=ODD_5_TEXT,
+                 "odd_6_text"=ODD_6_TEXT, "odd_7_text"=ODD_7_TEXT, "odd_8_text"=ODD_8_TEXT, "odd_9_text"=ODD_9_TEXT, "odd_10_text"=ODD_10_TEXT,
+                 "odd_11_text"=ODD_11_TEXT, "odd_12_text"=ODD_12_TEXT, "odd_13_text"=ODD_13_TEXT, "odd_14_text"=ODD_14_TEXT, "odd_15_text"=ODD_15_TEXT,
+                 "odd_16_text"=ODD_16_TEXT, "odd_17_text"=ODD_17_TEXT)
 

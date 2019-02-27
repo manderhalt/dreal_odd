@@ -1,6 +1,6 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
-
+source("helper.R")
 # devtools::install_github('rstudio/DT')
 # install.packages("shinyjs")
 # install.packages("dplyr")
@@ -29,26 +29,11 @@ server <- function(input, output) {
     
     }, deleteFile=FALSE
     )
-  output$odd_1_text <- renderText({ODD_1_TEXT})
-  for (i in 1:17){
-    
-  }
-  output$ODD_1 <- renderImage({
-    list(src = "./Logos/ODD_1.jpg",
-         contentType = 'image/jpg',
-         width=150,
-         height=150)
-    
-  }, deleteFile=FALSE
-  )
-  output$ODD_2 <- renderImage({
-    list(src = "./Logos/ODD_2.jpg",
-         contentType = 'image/jpg',
-         width=150,
-         height=150)
-    
-  }, deleteFile=FALSE
-  )
+  lapply(1:17, function(i){
+    odd_text = paste("odd_",i ,"_text",sep="")
+    output[[odd_text]] <- renderText({ODD_TEXT[[odd_text]]})
+  })
+  
   output$catchphrase <- renderText({CATCHPHRASE})
   
   departement <- reactive({departement_number <-QUIZZ_ODD_DEP[QUIZZ_ODD_DEP$Zone==input$department, ][["CodeZone"]][[1]]
@@ -67,5 +52,7 @@ server <- function(input, output) {
   })
   epci_text_2 <- reactive({epci_text_2 <- QUIZZ_GOOD_EPCI[QUIZZ_GOOD_EPCI$nom_membre==input$commune_string_2,][["raison_sociale"]]})
   output$epci_text_2 <- renderText({paste("Votre EPCI est: ",epci_text_2())})
+  
+  output$plot_result <- renderPlot({horiz_histo()})
 }
 
