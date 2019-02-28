@@ -7,7 +7,7 @@ DF_EPCI <- DF_EPCI[!is.na(DF_EPCI$Zone),]
 DF_DEP_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
 IND <- read.csv('./data/Tab_passage_ind_ODD.csv',header = TRUE,sep=";")
 QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)
-save(COG_2018_COMMUNE_EPCI,QUIZZ_ODD_DEP,QUIZZ_ODD_EPCI,IND, file = "./odd/data.RData")
+# save(DF_DEP,DF_EPCI,DF_DEP_EPCI,IND, file = "./odd/data.RData")
 
 
 # Elements de texte de la landing page

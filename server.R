@@ -3,10 +3,6 @@ source("data.R")
 source("helper.R")
 library(dplyr)
 # devtools::install_github('rstudio/DT')
-# install.packages("shinyjs")
-# install.packages("dplyr")
-# install.packages("digest")
-library(imager)
 server <- function(input, output) {
   
   # Histogram of the Old Faithful Geyser Data ----

@@ -1,6 +1,4 @@
 source("data.R")
-library(plotly)
-packageVersion('plotly')
 
 get_data <- function(departement_code, epci_code){
   departement_data <- DF_DEP[DF_DEP$CodeZone==departement_code,]
