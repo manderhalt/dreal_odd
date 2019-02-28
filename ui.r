@@ -1,6 +1,7 @@
 # Define UI for app that draws a histogram ----
 library(shiny)
 library(markdown)
+# install.packages("shinydashboard")
 library(shinydashboard)
 source("data.R")
 
@@ -24,7 +25,7 @@ navbarPage("DREAL Quizz",
                         textOutput("intro_text"),
                         
                         h4(textOutput("catchphrase")),
-                        selectInput("department", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
+                        selectInput("department", "Quel est votre département ?",DF_DEP$Zone),
                         uiOutput("commune"),
                         h4(textOutput("epci_text")),
                         lapply(1:length(QUESTION$Libel), function(question_number){
@@ -68,7 +69,7 @@ navbarPage("DREAL Quizz",
            
            
            tabPanel("Voir les ODD de mon territoire",
-                    selectInput("department_2", "Quel est votre département ?",QUIZZ_ODD_DEP$Zone),
+                    selectInput("department_2", "Quel est votre département ?",DF_DEP$Zone),
                     uiOutput("commune_2"),
                     h4(textOutput("epci_text_2")),
                     mainPanel(
