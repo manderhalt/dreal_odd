@@ -33,7 +33,12 @@ navbarPage("DREAL Quizz",
                                              label=current_question$Libel, choices=CHOICES, inline=TRUE)
                         })
                         ,
-                        actionButton(inputId = "submitBtn", label = "Submit")
+                        actionButton(inputId = "submitBtn", label = "Submit"),
+                        lapply(1:length(QUESTION), function(question_number){
+                          current_question <- QUESTION[question_number,]
+                          question_input_id <- paste("question_",current_question$Num_question,sep='')
+                          textOutput(question_input_id)
+                        })
                         
                       )
                     )
