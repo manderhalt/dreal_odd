@@ -25,7 +25,8 @@ Testez votre connaissance du territoire et découvrez les objectifs de développ
 
 
 # Différentes questions
-CHOICES <- c("Inférieur" = "inf", "Supérieur" = "sup")
+CHOICES <- c("Inférieur" = 0, "Supérieur" = 1)
+
 
 # ODD qu'est ce que c'est
 ODD_HEADER <- "Les 17 objectifs de développement durable (ODD) et leurs 169 cibles (sous-objectifs) forment la clé de voûte de l’Agenda 2030. Ils tiennent compte équitablement de la dimension économique, de la dimension sociale et de la dimension environnementale du développement durable et intègrent pour la première fois l’éradication de la pauvreté et le développement durable dans un dispositif commun."

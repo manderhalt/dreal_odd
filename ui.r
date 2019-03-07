@@ -5,6 +5,7 @@ library(markdown)
 library(shinydashboard)
 source("data.R")
 
+
 navbarPage("DREAL Quizz",
            tabPanel("Home",
                     # Sidebar layout with input and output definitions ----
@@ -34,7 +35,12 @@ navbarPage("DREAL Quizz",
                                              label=current_question$Libel, choices=CHOICES, inline=TRUE)
                         })
                         ,
-                        actionButton(inputId = "submitBtn", label = "Submit")
+                        actionButton(inputId = "submitBtn", label = "Submit"),
+                        lapply(1:nrow(QUESTION), function(question_number){
+                          current_question <- QUESTION[question_number,]
+                          question_input_id <- paste("question_",current_question$Num_question,sep='')
+                          textOutput(question_input_id)
+                        })
                         
                       )
                     )
@@ -73,9 +79,13 @@ navbarPage("DREAL Quizz",
                     uiOutput("commune_2"),
                     h4(textOutput("epci_text_2")),
                     mainPanel(
-                      lapply(1:length(QUESTION), function(i){
+                      tags$style(type="text/css",
+                                 ".shiny-output-error { visibility: hidden; }",
+                                 ".shiny-output-error:before { visibility: hidden; }"),
+                      lapply(1:nrow(QUESTION), function(i){
                         current_plot <- paste("plot_",i,sep="")
-                        plotOutput(outputId = current_plot)
+                        plotOutput(
+                          outputId = current_plot)
                       }
                       )
                     )
