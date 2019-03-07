@@ -12,9 +12,18 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   data<- get_data(departement_code, epci_code)
   departement_data <- data$departement_data
   epci_data <- data$epci_data
-  barplot(c(departement_data[[question_code]], epci_data[[question_code]]), main=QUESTION[QUESTION$Code_indicateur==question_code,]$Libel, horiz=TRUE,
-          names.arg=c(departement_data$Zone,epci_data$Zone))
+  dat <- data.frame(
+    question_result = factor(c(departement_data$Zone,epci_data$Zone), levels=c(departement_data$Zone,epci_data$Zone)),
+    c_values = c(departement_data[[question_code]], epci_data[[question_code]]))
+  ggplot(data=dat, aes(x=question_result, y=c_values)) +
+    geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
+    coord_flip() + theme_bw() + 
+    ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
+    theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
+                                      panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
+  
 }
+
 
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep

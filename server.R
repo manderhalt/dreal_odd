@@ -8,7 +8,6 @@ library(dplyr)
 # install.packages("digest")
 library(imager)
 server <- function(input, output) {
-  
   # Histogram of the Old Faithful Geyser Data ----
   # with requested number of bins
   # This expression that generates a histogram is wrapped in a call
@@ -20,61 +19,103 @@ server <- function(input, output) {
   output$intro_text <- renderText({
     INTRO_TEXT
   })
-  output$caption <-  renderText({TITLE})
+  output$caption <-  renderText({
+    TITLE
+  })
   
   output$image_dreal <- renderImage({
-    list(src = "logo_fr_dreal.png",
-         contentType = 'image/png',
-         width=250,
-         height=250)
-    
-    }, deleteFile=FALSE
+    list(
+      src = "logo_fr_dreal.png",
+      contentType = 'image/png',
+      width = 250,
+      height = 250
     )
-  lapply(1:17, function(i){
-    odd_text = paste("odd_",i ,"_text",sep="")
-    output[[odd_text]] <- renderText({ODD_TEXT[[odd_text]]})
+    
+  }, deleteFile = FALSE)
+  lapply(1:17, function(i) {
+    odd_text = paste("odd_", i , "_text", sep = "")
+    output[[odd_text]] <- renderText({
+      ODD_TEXT[[odd_text]]
+    })
   })
   
-  output$catchphrase <- renderText({CATCHPHRASE})
-  
-  departement <- reactive({departement_number <-DF_DEP[DF_DEP$Zone==input$department, ]
+  output$catchphrase <- renderText({
+    CATCHPHRASE
   })
+  
+  departement <-
+    reactive({
+      departement_number <- DF_DEP[DF_DEP$Zone == input$department,]
+    })
   output$commune <- renderUI({
-    selectInput("commune_string", "Quelle est votre commune ?", choices =filter(DF_DEP_EPCI, dept==departement()$CodeZone)[["nom_membre"]])
+    selectInput(
+      "commune_string",
+      "Quelle est votre commune ?",
+      choices = filter(DF_DEP_EPCI, dept == departement()$CodeZone)[["nom_membre"]]
+    )
   })
-  epci <- reactive({epci <- filter(filter(DF_DEP_EPCI, nom_membre==input$commune_string), dept==departement()$CodeZone)})
-  output$epci_text <- renderText({paste("Votre EPCI est: ",epci()$raison_sociale)})
+  epci <-
+    reactive({
+      epci <-
+        filter(
+          filter(DF_DEP_EPCI, nom_membre == input$commune_string),
+          dept == departement()$CodeZone
+        )
+    })
+  output$epci_text <-
+    renderText({
+      paste("Votre EPCI est: ", epci()$raison_sociale)
+    })
   
   
-  departement_2 <- reactive({departement_number <-DF_DEP[DF_DEP$Zone==input$department_2, ]
-  })
+  departement_2 <-
+    reactive({
+      departement_number <- DF_DEP[DF_DEP$Zone == input$department_2,]
+    })
   output$commune_2 <- renderUI({
-    selectInput("commune_string_2", "Quelle est votre commune ?", choices = filter(DF_DEP_EPCI, dept==departement_2()$CodeZone)[["nom_membre"]])
+    selectInput(
+      "commune_string_2",
+      "Quelle est votre commune ?",
+      choices = filter(DF_DEP_EPCI, dept == departement_2()$CodeZone)[["nom_membre"]]
+    )
   })
-  epci_2 <- reactive({epci_2 <- filter(filter(DF_DEP_EPCI, nom_membre==input$commune_string_2), dept==departement_2()$CodeZone)})
-  output$epci_text_2 <- renderText({paste("Votre EPCI est: ",epci_2()$raison_sociale)})
+  epci_2 <-
+    reactive({
+      epci_2 <-
+        filter(
+          filter(DF_DEP_EPCI, nom_membre == input$commune_string_2),
+          dept == departement_2()$CodeZone
+        )
+    })
+  output$epci_text_2 <-
+    renderText({
+      paste("Votre EPCI est: ", epci_2()$raison_sociale)
+    })
   
-  lapply(1:length(QUESTION), function(i){
-    current_plot <- paste("plot_",i,sep="")
-    current_question <- QUESTION[i,]
-    output[[current_plot]] <- renderPlot({horiz_histo(departement_2()$CodeZone, epci_2()$siren, current_question$Code_indicateur)})
-  }
-  )
-  answers <- reactive({answers <- input$question_1})
-  output$answers <- renderText({paste("Votre réponse est: ",answers())})
-  results <- reactive({lapply(1:length(QUESTION), function(question_number){
-    current_question <- QUESTION[question_number,]
-    question_input_id <- paste("question_",current_question$Num_question,sep='')
-    bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
-    response_user <- input[[question_input_id]]
-    renderText({get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
+  lapply(1:nrow(QUESTION), function(i) {
+    current_plot <- paste("plot_", i, sep = "")
+    current_question <- QUESTION[i, ]
+    output[[current_plot]] <-
+      renderPlot({
+        horiz_histo(departement_2()$CodeZone,
+                    epci_2()$siren,
+                    current_question$Code_indicateur)
+      })
   })
-  })
-  lapply(1:length(QUESTION), function(question_number){
-    current_question <- QUESTION[question_number,]
-    question_input_id <- paste("question_",current_question$Num_question,sep='')
-    output[[question_input_id]] <- results()[[question_number]]
-  })
-  
+  #   answers <- reactive({answers <- input$question_1})
+  #   output$answers <- renderText({paste("Votre réponse est: ",answers())})
+  #   results <- reactive({lapply(1:nrow(QUESTION), function(question_number){
+  #     current_question <- QUESTION[question_number,]
+  #     question_input_id <- paste("question_",current_question$Num_question,sep='')
+  #     bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+  #     response_user <- input[[question_input_id]]
+  #     renderText({get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
+  #   })
+  #   })
+  #   #lapply(1:nrow(QUESTION), function(question_number){
+  #   #  current_question <- QUESTION[question_number,]
+  #   #  question_input_id <- paste("question_",current_question$Num_question,sep='')
+  #   #  output[[question_input_id]] <- results()[[question_number]]
+  #   #})
+  #
 }
-
