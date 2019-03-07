@@ -86,6 +86,7 @@ navbarPage("DREAL Quizz",
                         current_plot <- paste("plot_",i,sep="")
                         plotOutput(
                           outputId = current_plot)
+                        
                       }
                       )
                     )
