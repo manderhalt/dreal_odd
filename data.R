@@ -25,7 +25,7 @@ Testez votre connaissance du territoire et découvrez les objectifs de développ
 
 
 # Différentes questions
-CHOICES <- c("Inférieur" = 0, "Supérieur" = 1)
+CHOICES <- c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=NA)
 
 
 # ODD qu'est ce que c'est

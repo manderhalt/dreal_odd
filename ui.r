@@ -31,8 +31,22 @@ navbarPage("DREAL Quizz",
                         h4(textOutput("epci_text")),
                         lapply(1:length(QUESTION$Libel), function(question_number){
                           current_question <- QUESTION[question_number,]
+                          logos <- logos_from_code_indic(current_question$Code_indicateur)
+                          if (length(logos)>1){
+                            img_file_1 = paste(logos[[1]],".jpg", sep="")
+                            img_file_2 = paste(logos[[2]],".jpg", sep="")
+                            div(
+                              checkboxGroupInput(inputId=paste("question_",current_question$Num_question,sep=''), 
+                                                 label=current_question$Libel, choices=CHOICES, inline=TRUE),
+                              img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
+                          }
+                          else {
+                            img_file = paste(logos[[1]],".jpg", sep="")
+                          div(
                           checkboxGroupInput(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                             label=current_question$Libel, choices=CHOICES, inline=TRUE)
+                                             label=current_question$Libel, choices=CHOICES, inline=TRUE),
+                          img(src=img_file, width = 50))
+                          }
                         })
                         ,
                         actionButton(inputId = "submitBtn", label = "Submit"),
