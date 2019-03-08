@@ -56,7 +56,7 @@ navbarPage("DREAL Quizz",
                       tabPanel("Les 17 ODD",
                                lapply(1:17, function(i) {
                                  odd <- paste("ODD ", i, sep="")
-                                 odd_image <- paste("odd_", i, sep="")
+                                 odd_image <- paste("odd", i, sep="")
                                  box(title = odd,
                                      status = "primary",
                                      solidHeader = F,

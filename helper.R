@@ -19,19 +19,35 @@ horiz_histo <- function(departement_code, epci_code, question_code){
     question_result = factor(c(departement_data$Zone,epci_data$Zone), levels=c(departement_data$Zone,epci_data$Zone)),
     c_values = c(departement_data[[question_code]], epci_data[[question_code]]))
   
-  img <- readJPEG("./www/ODD_1.jpg")
-  g <- rasterGrob(img, interpolate=TRUE)
-  
-  ggplot(data=dat, aes(x=question_result, y=c_values)) +
-    geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
-    coord_flip() + theme_bw() + 
-    annotation_custom(g, xmin=1, xmax=2, ymin=0, ymax=Inf)+
-    ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
-    theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
-                                      panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
-  
-  
-  #annotation_custom(rasterGrob(img))
+  logos <- logos_from_code_indic(question_code)
+  if (length(logos)>1){
+    img_1 <- readJPEG(paste("./www/",logos[[1]], ".jpg", sep=""))
+    img_2 <- readJPEG(paste("./www/",logos[[2]], ".jpg", sep=""))
+    g_1 <- rasterGrob(img_1, interpolate=TRUE)
+    g_2 <- rasterGrob(img_2, interpolate=TRUE)
+    ggplot(data=dat, aes(x=question_result, y=c_values)) +
+      geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
+      coord_flip() + theme_bw() + 
+      annotation_custom(g_1, xmin = 1, xmax = 2, ymin = 0, ymax=max(dat$c_values)/2)+
+      annotation_custom(g_2, xmin = 1, xmax = 2, ymin = max(dat$c_values)/2, ymax=Inf)+
+      ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
+      theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
+            panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
+    
+    
+  }
+  else {
+    img <- readJPEG(paste("./www/",logos[[1]], ".jpg", sep=""))
+    
+    g <- rasterGrob(img, interpolate=TRUE)
+    ggplot(data=dat, aes(x=question_result, y=c_values)) +
+      geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
+      coord_flip() + theme_bw() + 
+      annotation_custom(g, xmin = 1, xmax = 2, ymin = -Inf, ymax=Inf)+
+      ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
+      theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
+            panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
+  }
   
 }
 
@@ -68,10 +84,9 @@ get_correct_or_wrong_answer <- function(reponse_user, real_answer){
 }
 
 logos_from_code_indic <- function(code_indicateur){
-  img = readPNG(system.file("img", "Rlogo.png", package="png"))
-  
-  gg = gg + 
-    annotation_custom(rasterGrob(img), 
-                      xmin=0.95*min(mtcars$mpg)-1, xmax=0.95*min(mtcars$mpg)+1, 
-                      ymin=0.62*min(mtcars$wt)-0.5, ymax=0.62*min(mtcars$wt)+0.5)
+  odd = IND[IND$code_indicateur==code_indicateur,][["num_ODD"]]
+  list_logo = strsplit(odd,";")[[1]]
+  list_logo
 }
+
+
