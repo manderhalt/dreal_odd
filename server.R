@@ -98,20 +98,24 @@ server <- function(input, output) {
                     current_question$Code_indicateur)
       })
   })
-  #   answers <- reactive({answers <- input$question_1})
-  #   output$answers <- renderText({paste("Votre réponse est: ",answers())})
-  #   results <- reactive({lapply(1:nrow(QUESTION), function(question_number){
-  #     current_question <- QUESTION[question_number,]
-  #     question_input_id <- paste("question_",current_question$Num_question,sep='')
-  #     bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
-  #     response_user <- input[[question_input_id]]
-  #     renderText({get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
-  #   })
-  #   })
-  #   #lapply(1:nrow(QUESTION), function(question_number){
-  #   #  current_question <- QUESTION[question_number,]
-  #   #  question_input_id <- paste("question_",current_question$Num_question,sep='')
-  #   #  output[[question_input_id]] <- results()[[question_number]]
-  #   #})
+  answers <- reactive({
+  # answers <- reactive({answers <- input$question_1})
+     lapply(1:nrow(QUESTION), function(question_number){
+       current_question <- QUESTION[question_number,]
+       question_input_id <- paste("question_",current_question$Num_question,sep='')
+       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+       response_user <- input[[question_input_id]]
+       answers[[question_input_id]] <-
+         get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
+     })
+  lapply(1:nrow(QUESTION), function(question_number){
+    current_question <- QUESTION[question_number,]
+    question_output_id <- paste("question_",current_question$Num_question,sep='')
+    output[[question_output_id]]<-renderText({
+      input$submitBtn
+      answers()$question_output_id
+    })
+  })
+  
   #
 }
