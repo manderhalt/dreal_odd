@@ -29,6 +29,7 @@ navbarPage("DREAL Quizz",
                         selectInput("department", "Quel est votre département ?",DF_DEP$Zone),
                         uiOutput("commune"),
                         h4(textOutput("epci_text")),
+                        tags$form(
                         lapply(1:length(QUESTION$Libel), function(question_number){
                           current_question <- QUESTION[question_number,]
                           logos <- logos_from_code_indic(current_question$Code_indicateur)
@@ -47,14 +48,17 @@ navbarPage("DREAL Quizz",
                                              label=current_question$Libel, choices=CHOICES, inline=TRUE),
                           img(src=img_file, width = 50))
                           }
-                        })
+                        }), 
+                        br(),
+                        actionButton("submitBtn", "Submit")
+                        )
                         ,
-                        actionButton(inputId = "submitBtn", label = "Submit"),
-                        lapply(1:nrow(QUESTION), function(question_number){
-                          current_question <- QUESTION[question_number,]
-                          question_input_id <- paste("question_",current_question$Num_question,sep='')
-                          textOutput(question_input_id)
-                        })
+                        includeHTML("./www/wheel.html")
+                        # lapply(1:nrow(QUESTION), function(question_number){
+                        #   current_question <- QUESTION[question_number,]
+                        #   question_result_id <- paste("question_",current_question$Num_question,sep='')
+                        #   textOutput(question_result_id)
+                        # })
                         
                       )
                     )
