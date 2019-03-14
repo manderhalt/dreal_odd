@@ -10,3 +10,6 @@ install()
 
 library(divwheel)
 divwheelnav("hello, world")
+devtools::install("./divwheel")
+library(divwheel)
+divwheelnav("lool")
