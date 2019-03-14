@@ -1,6 +1,8 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
 source("helper.R")
+if (!require("dplyr"))
+  install.packages("dplyr")
 library(dplyr)
 if (!require("jsonlite"))
   install.packages("jsonlite")

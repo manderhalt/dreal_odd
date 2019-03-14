@@ -1,10 +1,13 @@
 # Define UI for app that draws a histogram ----
 library(shiny)
+if (!require("markdown"))
+  install.packages("markdown")
 library(markdown)
-# install.packages("shinydashboard")
+if (!require("shinydashboard"))
+  install.packages("shinydashboard")
 library(shinydashboard)
 source("data.R")
-
+source("helper.R")
 
 navbarPage("DREAL Quizz",
            tabPanel("Home",
