@@ -2,6 +2,10 @@
 source("data.R")
 source("helper.R")
 library(dplyr)
+if (!require("jsonlite"))
+  install.packages("jsonlite")
+
+library(jsonlite)
 # devtools::install_github('rstudio/DT')
 server <- function(input, output) {
   # Histogram of the Old Faithful Geyser Data ----

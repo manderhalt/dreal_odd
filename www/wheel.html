@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<script type="text/javascript" src="raphael.min.js"></script>
+<script type="text/javascript" src="raphael.icons.min.js"></script>
+<script type="text/javascript" src="wheelnav.min.js"></script>
+<style>
+  #divWheel {
+            height: 400px;
+            width: 400px;
+            margin: auto;
+        }
+
+  #divWheel>svg {
+      height: 100%;
+      width: 100%;
+  }
+
+  @media (max-width: 600px) {
+      #divWheel {
+          height: 350px;
+          width: 350px;
+      }
+  }
+
+  @media (max-width: 400px) {
+      #divWheel {
+          height: 300px;
+          width: 300px;
+      }
+  }
+</style>
+<script type="text/javascript">
+
+        window.onload = function () {
+
+            var wheel = new wheelnav("divWheel");
+            //This is the place for code snippets from the documentation -> http://wheelnavjs.softwaretailoring.net/documentation.html
+
+            
+
+            //Insert generated JavaScript code from here -> http://pmg.softwaretailoring.net
+
+        };
+
+</script>
+    
+<body>
+   <div id="divWheel" data-wheelnav data-wheelnav-titlewidth="50" data-wheelnav-titleheight="50">
+    <div data-wheelnav-navitemimg="./ODD1.jpg"></div>
+    <div data-wheelnav-navitemimg="./ODD2.jpg"></div>
+    <div data-wheelnav-navitemimg="./ODD3.jpg"></div>
+    <div data-wheelnav-navitemimg="./ODD4.jpg"></div>
+</div>
+</body>
+</html>

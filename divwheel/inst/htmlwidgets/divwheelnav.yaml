@@ -1,0 +1,14 @@
+dependencies:
+ - name: wheel
+   version: 1.7.1
+   src: htmlwidgets/lib
+   script: ./lib/wheelnav.min.js
+ - name: raphael
+   version: 1.7.1
+   src: htmlwidgets/lib
+   script: ./lib/raphael.min.js
+ - name: wheel_classic
+   version: 1.7.1
+   src: htmlwidgets/lib
+   script: ./lib/wheelnav.js
+
