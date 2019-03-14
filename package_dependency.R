@@ -1,0 +1,12 @@
+install.packages("htmlwidgets")
+install.packages("devtools")
+library("htmlwidgets")
+library("devtools")
+# create package using devtools
+devtools::create("divwheel")  
+setwd("divwheel")  
+scaffoldWidget("divwheelnav", edit = FALSE)
+install()
+
+library(divwheel)
+divwheelnav("hello, world")
