@@ -1,3 +1,5 @@
+* 0.0.9
+	Execute package dependency before launching the app
 * 0.0.8
 	Now the wheel works almost as intended, really huge update
 * 0.0.7
