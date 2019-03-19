@@ -122,7 +122,7 @@ server <- function(input, output) {
       answers()$question_output_id
     })
   })
-  output$nav_output = renderDivwheelnav({divwheelnav(1,1,0,1,1,1,1,1)})
+  output$nav_output = renderDivwheelnav({divwheelnav(c(1,0,0,0,1,1,1,1), c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))})
   
   #
 }
