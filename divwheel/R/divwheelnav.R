@@ -5,11 +5,12 @@
 #' @import htmlwidgets
 #'
 #' @export
-divwheelnav <- function(message, width = NULL, height = NULL, elementId = NULL) {
+divwheelnav <- function(question_answer, logos, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
-    message = message
+    question_answer=question_answer,
+    logos=logos
   )
 
   # create widget

@@ -7,4 +7,10 @@ dependencies:
     - ./lib/raphael.icons.min.js
     - ./lib/raphael.min.js
     - ./lib/wheelnav.js
+    - ./lib/wheelnav.navItem.js
+    - ./lib/wheelnav.core.js
+    - ./lib/wheelnav.parse.js
+    - ./lib/wheelnav.pathHelper.js
+    - ./lib/wheelnav.sliceTransform.js
+    - ./lib/wheelnav.style.js
 

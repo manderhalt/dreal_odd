@@ -56,7 +56,7 @@ navbarPage("DREAL Quizz",
                         actionButton("submitBtn", "Submit")
                         )
                         ,
-                        includeHTML("./www/wheel.html")
+                        divwheelnavOutput("nav_output")
                         # lapply(1:nrow(QUESTION), function(question_number){
                         #   current_question <- QUESTION[question_number,]
                         #   question_result_id <- paste("question_",current_question$Num_question,sep='')
