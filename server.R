@@ -122,6 +122,7 @@ server <- function(input, output) {
       answers()$question_output_id
     })
   })
+  output$nav_output = renderDivwheelnav({divwheelnav(1,1,0,1,1,1,1,1)})
   
   #
 }
