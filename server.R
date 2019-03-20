@@ -114,15 +114,20 @@ server <- function(input, output) {
        answers[[question_input_id]] <-
          get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
      })
-  lapply(1:nrow(QUESTION), function(question_number){
-    current_question <- QUESTION[question_number,]
-    question_output_id <- paste("question_",current_question$Num_question,sep='')
-    output[[question_output_id]]<-renderText({
-      input$submitBtn
-      answers()$question_output_id
-    })
-  })
-  output$nav_output = renderDivwheelnav({divwheelnav(c(1,0,0,0,1,1,1,1), c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))})
   
+  event_submit_button_wheel <- eventReactive(input$submitBtn, {
+    answers <- c()
+    lapply(1:nrow(QUESTION), function(question_number){
+      current_question <- QUESTION[question_number,]
+      question_input_id <- paste("question_",current_question$Num_question,sep='')
+      bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      response_user <- input[[question_input_id]]
+      answers <- c(answers,
+        integer(get_correct_or_wrong_answer(response_user, bonne_reponse)))
+      })
+    divwheelnav(c(0,1,1,1,0,1,0,1), c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))
+  })
+  
+  output$nav_output <- renderDivwheelnav(event_submit_button_wheel())
   #
 }
