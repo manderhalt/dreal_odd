@@ -134,7 +134,9 @@ server <- function(input, output) {
       print(type_answer)
       print(response_all)
       })
-    divwheelnav(response_all, get_all_logos_odd())
+    all_logos <- get_all_logos_odd()
+    
+    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos))
   })
   
   output$nav_output <- renderDivwheelnav(event_submit_button_wheel())

@@ -18,6 +18,7 @@ HTMLWidgets.widget({
         // note that via the c3.js API we bind the chart to the element with id equal to chart1
         var qa = x.question_answer;
         var list_logos = x.logos;
+        var logos_colors = x.colors_logos;
         function get_logos(y){
           var directory_logo = "imgsrc:./"+y+".jpg";
           return directory_logo;
@@ -37,15 +38,15 @@ HTMLWidgets.widget({
             return green;
           }
         }
-        var subwheeldata = Array(wheeldata.length).fill("")
+        var subwheeldata = Array(wheeldata.length).fill("");
         var colorpalette = {
           defaultpalette: new Array(color(qa[0]), color(qa[1]), color(qa[2]), color(qa[3]),
-          color(qa[4]),color(qa[5]),color(qa[6]),color(qa[7]))}
+          color(qa[4]),color(qa[5]),color(qa[6]),color(qa[7]))};
         // var wheel_new = new wheelnav("divwheelnav");
         chart.slicePathFunction = slicePath().DonutSlice;
         chart.clockwise = false;
         chart.clickModeRotate = false;
-        chart.colors = colorpalette.defaultpalette;
+        chart.colors = logos_colors;
         
         subchart.slicePathFunction = slicePath().DonutSlice;
         subchart.slicePathCustom = slicePath().DonutSliceCustomization();

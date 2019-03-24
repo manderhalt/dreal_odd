@@ -98,4 +98,11 @@ get_all_logos_odd <- function(){
   all_logos
 }
 
-
+get_all_colors_from_list_odds <- function(list_logos){
+  all_colors <- c()
+  for (logo in list_logos){
+    cur_color <- COLORS[[logo]]
+    all_colors <- c(all_colors, cur_color)
+  }
+  all_colors
+}
