@@ -37,6 +37,7 @@ HTMLWidgets.widget({
             return green;
           }
         }
+        var subwheeldata = Array(wheeldata.length).fill("")
         var colorpalette = {
           defaultpalette: new Array(color(qa[0]), color(qa[1]), color(qa[2]), color(qa[3]),
           color(qa[4]),color(qa[5]),color(qa[6]),color(qa[7]))}
@@ -56,22 +57,12 @@ HTMLWidgets.widget({
         subchart.spreaderRadius= 85;
         subchart.clickModeRotate= false;
         subchart.clockwise=false;
+        subchart.colors = colorpalette.defaultpalette;
         
         chart.createWheel(wheeldata);
-        subchart.createWheel(["1.1", "1.2", "2.1", "2.2", "3.1", "3.2"]);
+        subchart.createWheel(subwheeldata);
         
-        var main1selected = true;
-        chart.navItems[0].navigateFunction = function () {
-          if (main1selected) {
-            subchart.navItems[0].navItem.hide();
-            subchart.navItems[1].navItem.hide();
-          }
-          else {
-            subchart.navItems[0].navItem.show();
-            subchart.navItems[1].navItem.show();
-          }
-          main1selected = !main1selected;
-        };
+        
         //el.innerText = "ODDDDO";
         // el.wheel = wheel_new;
       },
