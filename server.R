@@ -104,28 +104,36 @@ server <- function(input, output) {
                     current_question$Code_indicateur)
       })
   })
-  answers <- reactive({
+  
+  reactive_question <- eventReactive(input$submitBtn, {
   # answers <- reactive({answers <- input$question_1})
      lapply(1:nrow(QUESTION), function(question_number){
        current_question <- QUESTION[question_number,]
        question_input_id <- paste("question_",current_question$Num_question,sep='')
        bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
        response_user <- input[[question_input_id]]
-       answers[[question_input_id]] <-
-         get_correct_or_wrong_answer(reponse_user, bonne_reponse)})
+       print(get_correct_or_wrong_answer(response_user, bonne_reponse))})
+     answers
      })
-  
+  # 
+  # output$blbl <- renderText({
+  #   reactive_question()
+  #   paste("The text is",as.character(output$answers[["question_1"]]))})
+  response_all <- integer(nrow(QUESTION))
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
-    answers <- c()
+    
     lapply(1:nrow(QUESTION), function(question_number){
+      print(response_all)
       current_question <- QUESTION[question_number,]
       question_input_id <- paste("question_",current_question$Num_question,sep='')
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[question_input_id]]
-      answers <- c(answers,
-        integer(get_correct_or_wrong_answer(response_user, bonne_reponse)))
+      type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
+      response_all[[question_number]] <<- type_answer
+      print(type_answer)
+      print(response_all)
       })
-    divwheelnav(c(0,1,1,1,0,1,0,1), c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))
+    divwheelnav(response_all, c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))
   })
   
   output$nav_output <- renderDivwheelnav(event_submit_button_wheel())
