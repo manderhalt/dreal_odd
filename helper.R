@@ -89,4 +89,13 @@ logos_from_code_indic <- function(code_indicateur){
   list_logo
 }
 
+get_all_logos_odd <- function(){
+  all_logos = c()
+  for (code_indicateur in QUESTION$Code_indicateur){
+    new_logos <- logos_from_code_indic(code_indicateur)[[1]]
+    all_logos <- c(all_logos, new_logos)
+  }
+  all_logos
+}
+
 

@@ -120,6 +120,7 @@ server <- function(input, output) {
   #   reactive_question()
   #   paste("The text is",as.character(output$answers[["question_1"]]))})
   response_all <- integer(nrow(QUESTION))
+  colors_all <- 
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     
     lapply(1:nrow(QUESTION), function(question_number){
@@ -133,7 +134,7 @@ server <- function(input, output) {
       print(type_answer)
       print(response_all)
       })
-    divwheelnav(response_all, c("ODD1","ODD2","ODD3","ODD4","ODD5","ODD6","ODD7","ODD8"))
+    divwheelnav(response_all, get_all_logos_odd())
   })
   
   output$nav_output <- renderDivwheelnav(event_submit_button_wheel())

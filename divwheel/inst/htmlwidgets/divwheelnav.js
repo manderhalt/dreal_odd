@@ -7,7 +7,8 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
 
     // TODO: define shared variables for this instance
-    var chart = new wheelnav(el.id);
+    var chart = new wheelnav(el.id, null, 300,300);
+    var subchart = new wheelnav("wheel2", chart.raphael);
     return {
 
       renderValue: function(x) {
@@ -41,13 +42,36 @@ HTMLWidgets.widget({
           color(qa[4]),color(qa[5]),color(qa[6]),color(qa[7]))}
         // var wheel_new = new wheelnav("divwheelnav");
         chart.slicePathFunction = slicePath().DonutSlice;
-        chart.sliceHoverTransformFunction = sliceTransform().RotateTitleTransform;
-        chart.sliceSelectedTransformFunction = sliceTransform().MoveMiddleTransform;
-        chart.hoverPercent = 0.9;
-        chart.selectedPercent = 1.3;
-        chart.wheelRadius = chart.wheelRadius * 0.8;
+        chart.clockwise = false;
+        chart.clickModeRotate = false;
         chart.colors = colorpalette.defaultpalette;
+        
+        subchart.slicePathFunction = slicePath().DonutSlice;
+        subchart.slicePathCustom = slicePath().DonutSliceCustomization();
+        subchart.minRadius= chart.wheelRadius;
+        subchart.slicePathCustom.minRadiusPercent = 1;
+        subchart.slicePathCustom.maxRadiusPercent = 1.2;
+        subchart.sliceSelectedPathCustom = subchart.slicePathCustom;
+        subchart.sliceInitPathCustom = subchart.slicePathCustom;
+        subchart.spreaderRadius= 85;
+        subchart.clickModeRotate= false;
+        subchart.clockwise=false;
+        
         chart.createWheel(wheeldata);
+        subchart.createWheel(["1.1", "1.2", "2.1", "2.2", "3.1", "3.2"]);
+        
+        var main1selected = true;
+        chart.navItems[0].navigateFunction = function () {
+          if (main1selected) {
+            subchart.navItems[0].navItem.hide();
+            subchart.navItems[1].navItem.hide();
+          }
+          else {
+            subchart.navItems[0].navItem.show();
+            subchart.navItems[1].navItem.show();
+          }
+          main1selected = !main1selected;
+        };
         //el.innerText = "ODDDDO";
         // el.wheel = wheel_new;
       },
