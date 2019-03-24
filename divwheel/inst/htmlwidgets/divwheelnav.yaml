@@ -13,4 +13,5 @@ dependencies:
     - ./lib/wheelnav.pathHelper.js
     - ./lib/wheelnav.sliceTransform.js
     - ./lib/wheelnav.style.js
+   stylesheet: ./lib/index.css
 

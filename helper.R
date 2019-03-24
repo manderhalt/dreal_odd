@@ -76,10 +76,10 @@ get_correct_result_from_form <- function(questions, epci, dep){
 
 get_correct_or_wrong_answer <- function(reponse_user, real_answer){
   if (reponse_user == real_answer){
-    "Bonne réponse"
+    1
   }
   else {
-    "Mauvaise réponse"
+    0
   }
 }
 

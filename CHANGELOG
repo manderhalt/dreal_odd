@@ -1,3 +1,5 @@
+* 0.0.10
+	Now link between shiny and js is up, need to add the colors
 * 0.0.9
 	Execute package dependency before launching the app
 * 0.0.8

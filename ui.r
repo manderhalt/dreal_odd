@@ -1,5 +1,6 @@
 # Define UI for app that draws a histogram ----
 library(shiny)
+library(divwheel)
 if (!require("markdown"))
   install.packages("markdown")
 library(markdown)
@@ -57,6 +58,8 @@ navbarPage("DREAL Quizz",
                         )
                         ,
                         divwheelnavOutput("nav_output")
+                        ,
+                        textOutput("blbl")
                         # lapply(1:nrow(QUESTION), function(question_number){
                         #   current_question <- QUESTION[question_number,]
                         #   question_result_id <- paste("question_",current_question$Num_question,sep='')
