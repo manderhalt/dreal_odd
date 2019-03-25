@@ -20,6 +20,11 @@ divwheelnav <- function(question_answer, logos, colors_logos, width = NULL, heig
     x,
     width = width,
     height = height,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      viewer.padding = 0,
+      viewer.paneHeight = 1000,
+      browser.fill = TRUE
+    ),
     package = 'divwheel',
     elementId = elementId
   )
