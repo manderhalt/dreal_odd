@@ -7,7 +7,7 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
 
     // TODO: define shared variables for this instance
-    var chart = new wheelnav(el.id, null, 300,300);
+    var chart = new wheelnav(el.id, null, 600,600);
     var subchart = new wheelnav("wheel2", chart.raphael);
     return {
 
@@ -45,19 +45,22 @@ HTMLWidgets.widget({
         // var wheel_new = new wheelnav("divwheelnav");
         chart.slicePathFunction = slicePath().DonutSlice;
         chart.clockwise = false;
+        chart.wheelRadius = 200;
         chart.clickModeRotate = false;
         chart.colors = logos_colors;
         
         subchart.slicePathFunction = slicePath().DonutSlice;
         subchart.slicePathCustom = slicePath().DonutSliceCustomization();
         subchart.minRadius= chart.wheelRadius;
-        subchart.slicePathCustom.minRadiusPercent = 1;
-        subchart.slicePathCustom.maxRadiusPercent = 1.2;
+        subchart.slicePathCustom.minRadiusPercent = 0.65;
+        subchart.slicePathCustom.maxRadiusPercent = 0.75;
         subchart.sliceSelectedPathCustom = subchart.slicePathCustom;
         subchart.sliceInitPathCustom = subchart.slicePathCustom;
         subchart.spreaderRadius= 85;
         subchart.clickModeRotate= false;
         subchart.clockwise=false;
+        subchart.markerPathFunction = markerPath().PieLineMarker;
+        subchart.markerEnable = true;
         subchart.colors = colorpalette.defaultpalette;
         
         chart.createWheel(wheeldata);
