@@ -96,6 +96,7 @@ server <- function(input, output) {
       paste("Votre EPCI est: ", epci_2()$raison_sociale)
     })
   outgraph <- reactiveVal()
+  outtextgraph <- reactiveVal()
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     odd_text <- paste("odd_", i, "_text", sep="")
@@ -103,10 +104,11 @@ server <- function(input, output) {
       outgraph(horiz_histo(departement_2()$CodeZone,
                       epci_2()$siren,
                       "I_01_03_4"))
+      outtextgraph(ODD_TEXT[[odd_text]])
     })
   })
   output$plot_graph <- renderPlot({outgraph()})
-  
+  output$text_graph <- renderText({outtextgraph()})
   
   reactive_question <- eventReactive(input$submitBtn, {
   # answers <- reactive({answers <- input$question_1})
