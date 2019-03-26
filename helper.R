@@ -12,6 +12,9 @@ get_data <- function(departement_code, epci_code){
 }
 sourceDir <- getSrcDirectory(function(dummy) {dummy})
 horiz_histo <- function(departement_code, epci_code, question_code){
+  if (is.null(question_code)){
+    return(NULL)
+  }
   data<- get_data(departement_code, epci_code)
   departement_data <- data$departement_data
   epci_data <- data$epci_data

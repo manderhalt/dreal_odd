@@ -101,7 +101,11 @@ server <- function(input, output) {
     button <- paste("ODD_button_graph", i, sep="")
     odd_text <- paste("odd_", i, "_text", sep="")
     odd <- paste("ODD", i, sep="")
-    code_indic <- get_code_indicateur_from_odd(odd)[[1]]
+    list_code_indic <- get_code_indicateur_from_odd(odd)
+    code_indic <- NULL
+    if (length(list_code_indic)>1){
+      code_indic <-  list_code_indic[[1]]
+    }
     observeEvent(input[[button]], {
       outgraph(horiz_histo(departement_2()$CodeZone,
                       epci_2()$siren,
