@@ -58,13 +58,8 @@ navbarPage("DREAL Quizz",
                         )
                         ,
                         divwheelnavOutput("nav_output")
-                        ,
-                        textOutput("blbl")
-                        # lapply(1:nrow(QUESTION), function(question_number){
-                        #   current_question <- QUESTION[question_number,]
-                        #   question_result_id <- paste("question_",current_question$Num_question,sep='')
-                        #   textOutput(question_result_id)
-                        # })
+                        
+                        
                         
                       )
                     )
@@ -106,13 +101,23 @@ navbarPage("DREAL Quizz",
                       tags$style(type="text/css",
                                  ".shiny-output-error { visibility: hidden; }",
                                  ".shiny-output-error:before { visibility: hidden; }"),
-                      lapply(1:nrow(QUESTION), function(i){
-                        current_plot <- paste("plot_",i,sep="")
-                        plotOutput(
-                          outputId = current_plot)
+                      lapply(1:17, function(i){
+                        odd <- paste("ODD ", i, sep="")
+                        id_button <- paste("ODD_button_graph", i, sep="")
+                        odd_image <- paste("ODD", i,".jpg", sep="")
+                        tags$button(
+                          id = id_button,
+                          class = "btn action-button",
+                          img(src = odd_image,
+                              height = "75px")
+                        )
+                        
                         
                       }
-                      )
+                      ),
+                      plotOutput(
+                        outputId ="plot_graph")
+                      
                     )
                     )
            

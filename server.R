@@ -95,17 +95,18 @@ server <- function(input, output) {
     renderText({
       paste("Votre EPCI est: ", epci_2()$raison_sociale)
     })
-  
-  lapply(1:nrow(QUESTION), function(i) {
-    current_plot <- paste("plot_", i, sep = "")
-    current_question <- QUESTION[i, ]
-    output[[current_plot]] <-
-      renderPlot({
-        horiz_histo(departement_2()$CodeZone,
-                    epci_2()$siren,
-                    current_question$Code_indicateur)
-      })
+  outgraph <- reactiveVal()
+  lapply(1:17, function(i) {
+    button <- paste("ODD_button_graph", i, sep="")
+    odd_text <- paste("odd_", i, "_text", sep="")
+    observeEvent(input[[button]], {
+      outgraph(horiz_histo(departement_2()$CodeZone,
+                      epci_2()$siren,
+                      "I_01_03_4"))
+    })
   })
+  output$plot_graph <- renderPlot({outgraph()})
+  
   
   reactive_question <- eventReactive(input$submitBtn, {
   # answers <- reactive({answers <- input$question_1})
@@ -117,10 +118,7 @@ server <- function(input, output) {
        print(get_correct_or_wrong_answer(response_user, bonne_reponse))})
      answers
      })
-  # 
-  # output$blbl <- renderText({
-  #   reactive_question()
-  #   paste("The text is",as.character(output$answers[["question_1"]]))})
+  
   response_all <- integer(nrow(QUESTION))
   colors_all <- 
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
