@@ -52,6 +52,8 @@ horiz_histo <- function(departement_code, epci_code, question_code){
 }
 
 
+
+
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
@@ -105,4 +107,16 @@ get_all_colors_from_list_odds <- function(list_logos){
     all_colors <- c(all_colors, cur_color)
   }
   all_colors
+}
+
+get_code_indicateur_from_odd <- function(odd){
+  list_code_indic <- c()
+  for (row in 1:nrow(IND)){
+    odd_cur_line <- IND[row, "num_ODD"]
+    list_odd_line <- strsplit(odd_cur_line, ";")[[1]]
+    if (is.element(odd, list_odd_line)){
+      list_code_indic <- c(list_code_indic, IND[row, "code_indicateur"])
+    }
+  }
+  list_code_indic
 }

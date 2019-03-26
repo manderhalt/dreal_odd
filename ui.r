@@ -115,8 +115,8 @@ navbarPage("DREAL Quizz",
                         
                       }
                       ),
-                      plotOutput(
-                        outputId ="plot_graph")
+                      column(width = 9, align = "center", h4(textOutput("text_graph"))),
+                      plotOutput(outputId ="plot_graph")
                       
                     )
                     )
