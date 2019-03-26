@@ -100,10 +100,12 @@ server <- function(input, output) {
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     odd_text <- paste("odd_", i, "_text", sep="")
+    odd <- paste("ODD", i, sep="")
+    code_indic <- get_code_indicateur_from_odd(odd)[[1]]
     observeEvent(input[[button]], {
       outgraph(horiz_histo(departement_2()$CodeZone,
                       epci_2()$siren,
-                      "I_01_03_4"))
+                      code_indic))
       outtextgraph(ODD_TEXT[[odd_text]])
     })
   })
