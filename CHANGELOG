@@ -1,3 +1,7 @@
+* 0.4.1
+	Fixed bug that forced exit of application
+* 0.4.0
+	Now the graph and the text is good
 * 0.3.0
 	Added all the icons now need to update the graph and add the text
 * 0.2.0
