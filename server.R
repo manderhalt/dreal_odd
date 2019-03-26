@@ -34,13 +34,15 @@ server <- function(input, output) {
     )
     
   }, deleteFile = FALSE)
+  out <- reactiveVal("")
   lapply(1:17, function(i) {
-    odd_text = paste("odd_", i , "_text", sep = "")
-    output[[odd_text]] <- renderText({
-      ODD_TEXT[[odd_text]]
+    button <- paste("ODD_button_", i, sep="")
+    odd_text <- paste("odd_", i, "_text", sep="")
+    observeEvent(input[[button]], {
+      out(ODD_TEXT[[odd_text]])
     })
   })
-  
+  output$text_odd <- renderText({out()})
   output$catchphrase <- renderText({
     CATCHPHRASE
   })

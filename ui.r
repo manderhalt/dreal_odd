@@ -80,19 +80,19 @@ navbarPage("DREAL Quizz",
                       tabPanel("Les 17 ODD",
                                lapply(1:17, function(i) {
                                  odd <- paste("ODD ", i, sep="")
-                                 odd_image <- paste("odd", i, sep="")
-                                 box(title = odd,
-                                     status = "primary",
-                                     solidHeader = F,
-                                     collapsible = F,
-                                     width = 12,
-                                     fluidRow(
-                                       column(width = 2, align = "left",
-                                              img(src=paste(odd_image,".jpg", sep=""), width=100)),
-                                       column(width = 9, align = "center", h4(textOutput( paste("odd_",i,"_text",sep=""))))
-                                     ))
+                                 id_button <- paste("ODD_button_", i, sep="")
+                                 odd_image <- paste("ODD", i,".jpg", sep="")
+                                 tags$button(
+                                         id = id_button,
+                                         class = "btn action-button",
+                                         img(src = odd_image,
+                                             height = "75px")
+                                       )
+                                       
+                                     
                                }
-                               )
+                               ),
+                               column(width = 9, align = "center", h4(textOutput("text_odd")))
                       )
                     )),
            
