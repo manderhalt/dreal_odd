@@ -98,19 +98,23 @@ navbarPage("DREAL Quizz",
                  column(width = 9, align = "center", h4(textOutput("text_odd")))
                )
              )
-             ),
+           ),
            
            # TROISIEME PAGE
            tabPanel("Voir les ODD de mon territoire",
+                    
+                    # CHOIX DEPARTEMENT
                     sidebarPanel(
-                    selectInput("department_2", "Quel est votre département ?",DF_DEP$Zone),
-                    uiOutput("commune_2")),
-                   
+                      selectInput("department_2", "Quel est votre département ?",DF_DEP$Zone),
+                      uiOutput("commune_2")),
+                    
+                    # LOGOS ET GRAPHE
                     mainPanel(
-                      h4(textOutput("epci_text_2")),
                       tags$style(type="text/css",
                                  ".shiny-output-error { visibility: hidden; }",
                                  ".shiny-output-error:before { visibility: hidden; }"),
+                      # LOGOS
+                      h4(textOutput("epci_text_2")),
                       lapply(1:17, function(i){
                         odd <- paste("ODD ", i, sep="")
                         id_button <- paste("ODD_button_graph", i, sep="")
@@ -121,13 +125,12 @@ navbarPage("DREAL Quizz",
                           img(src = odd_image,
                               height = "75px")
                         )
-                        
-                        
                       }
                       ),
+                      # TEXTE
                       column(width = 9, align = "center", h4(textOutput("text_graph"))),
+                      # GRAPHE
                       plotOutput(outputId ="plot_graph")
-                      
                     )
            )
            
