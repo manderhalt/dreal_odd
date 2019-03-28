@@ -4,12 +4,13 @@ library(jpeg)
 library(gridExtra)
 library(grid)
 
-
+# HISTO
 get_data <- function(departement_code, epci_code){
   departement_data <- DF_DEP[DF_DEP$CodeZone==departement_code,]
   epci_data <- DF_EPCI[DF_EPCI$CodeZone==epci_code,]
   list("departement_data"=departement_data, "epci_data"=epci_data)
 }
+
 sourceDir <- getSrcDirectory(function(dummy) {dummy})
 horiz_histo <- function(departement_code, epci_code, question_code){
   if (is.null(question_code)){

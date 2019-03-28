@@ -80,8 +80,8 @@ server <- function(input, output) {
     )
   })
   epci_2 <- reactive({
-      epci_2 <-filter(filter(DF_DEP_EPCI, nom_membre == input$commune_string_2),
-                             dept == departement_2()$CodeZone)
+    epci_2 <-filter(filter(DF_DEP_EPCI, nom_membre == input$commune_string_2),
+                    dept == departement_2()$CodeZone)
   })
   output$epci_text_2 <-renderText({paste("Votre EPCI est: ", epci_2()$raison_sociale)})
   
