@@ -90,7 +90,8 @@ navbarPage("DREAL Quizz",
              id = id_button,
              class = "btn action-button",
              img(src = odd_image,
-                 height = "75px")
+                 height = "75px"),
+             style="background-color: #FFFFFF"
            )
          }
          ),
@@ -122,7 +123,8 @@ navbarPage("DREAL Quizz",
             id = id_button,
             class = "btn action-button",
             img(src = odd_image,
-                height = "75px")
+                height = "75px"),
+            style="background-color: #FFFFFF"
           )
         }
         ),
