@@ -3,6 +3,7 @@ library(ggplot2)
 library(jpeg)
 library(gridExtra)
 library(grid)
+sourceDir <- getSrcDirectory(function(dummy) {dummy})
 
 # HISTO
 get_data <- function(departement_code, epci_code){
@@ -11,7 +12,6 @@ get_data <- function(departement_code, epci_code){
   list("departement_data"=departement_data, "epci_data"=epci_data)
 }
 
-sourceDir <- getSrcDirectory(function(dummy) {dummy})
 horiz_histo <- function(departement_code, epci_code, question_code){
   if (is.null(question_code)){
     return(NULL)
@@ -37,8 +37,6 @@ horiz_histo <- function(departement_code, epci_code, question_code){
       ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
       theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
             panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
-    
-    
   }
   else {
     img <- readJPEG(paste("./www/",logos[[1]], ".jpg", sep=""))
@@ -55,9 +53,7 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   
 }
 
-
-
-
+# QUESTIONS
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
@@ -89,6 +85,7 @@ get_correct_or_wrong_answer <- function(reponse_user, real_answer){
   }
 }
 
+# LOGOS 
 logos_from_code_indic <- function(code_indicateur){
   odd = IND[IND$code_indicateur==code_indicateur,][["num_ODD"]]
   list_logo = strsplit(odd,";")[[1]]
