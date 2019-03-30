@@ -47,6 +47,7 @@ HTMLWidgets.widget({
         chart.clockwise = false;
         chart.wheelRadius = 200;
         chart.clickModeRotate = false;
+        chart.sliceTransformFunction  = sliceTransform().MoveMiddleTransform;
         chart.colors = logos_colors;
         
         subchart.slicePathFunction = slicePath().DonutSlice;
@@ -56,6 +57,7 @@ HTMLWidgets.widget({
         subchart.slicePathCustom.maxRadiusPercent = 0.75;
         subchart.sliceSelectedPathCustom = subchart.slicePathCustom;
         subchart.sliceInitPathCustom = subchart.slicePathCustom;
+        subchart.sliceTransformFunction  = sliceTransform().MoveMiddleTransform;
         subchart.spreaderRadius= 85;
         subchart.clickModeRotate= false;
         subchart.clockwise=false;
@@ -63,8 +65,14 @@ HTMLWidgets.widget({
         subchart.markerEnable = true;
         subchart.colors = colorpalette.defaultpalette;
         
-        chart.createWheel(wheeldata);
-        subchart.createWheel(subwheeldata);
+        chart.initWheel(wheeldata);
+        for (i=0; i<list_logos.length; i++){
+          chart.navItems[i].titleRotateAngle = -(360/list_logos.lenght)*i;
+        }
+        subchart.initWheel(subwheeldata);
+        
+        chart.createWheel();
+        subchart.createWheel();
         
         
         //el.innerText = "ODDDDO";
