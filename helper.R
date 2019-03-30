@@ -76,12 +76,15 @@ get_correct_result_from_form <- function(questions, epci, dep){
   result
 }
 
-get_correct_or_wrong_answer <- function(reponse_user, real_answer){
-  if (reponse_user == real_answer){
-    1
+get_correct_or_wrong_answer <- function(response_user, real_answer){
+  if (response_user == "NO"){
+    return (2)
+  }
+  if (response_user == real_answer){
+    return(1)
   }
   else {
-    0
+    return(0)
   }
 }
 
@@ -92,6 +95,17 @@ logos_from_code_indic <- function(code_indicateur){
   list_logo
 }
 
+number_from_code_indic <- function(code_indicateur){
+  logos <- logos_from_code_indic(code_indicateur)
+  list_number <-c()
+  for (logo in logos){
+    integer <- unlist(strsplit(logo, split='DD', fixed=TRUE))[2]
+    integer <- as.integer(integer)
+    list_number <- c(list_number, integer)
+  }
+  return (list_number)
+}
+
 get_all_logos_odd <- function(){
   all_logos = c()
   for (code_indicateur in QUESTION$Code_indicateur){
@@ -99,6 +113,15 @@ get_all_logos_odd <- function(){
     all_logos <- c(all_logos, new_logos)
   }
   all_logos
+}
+
+all_odd <- function(){
+  all_odd = c()
+  for (i in (1:17)){
+    cur_odd <- paste("ODD", i, sep="")
+    all_odd <- c(all_odd, cur_odd)
+  }
+  return (all_odd)
 }
 
 get_all_colors_from_list_odds <- function(list_logos){
