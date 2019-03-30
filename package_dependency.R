@@ -1,3 +1,5 @@
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 if (!require("htmlwidgets"))
   install.packages("htmlwidgets")
 if (!require("devtools"))
