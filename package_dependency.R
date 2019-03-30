@@ -1,5 +1,7 @@
-install.packages("htmlwidgets")
-install.packages("devtools")
+if (!require("htmlwidgets"))
+  install.packages("htmlwidgets")
+if (!require("devtools"))
+  install.packages("devtools")
 library("htmlwidgets")
 library("devtools")
 
