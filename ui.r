@@ -7,13 +7,17 @@ library(markdown)
 if (!require("shinydashboard"))
   install.packages("shinydashboard")
 library(shinydashboard)
+if (!require("shinyWidgets"))
+  install.packages("shinyWidgets")
 source("data.R")
 source("helper.R")
 
-navbarPage("DREAL Quizz",       
+navbarPage("DREAL Quizz", 
+           
    # PREMIERE PAGE
    tabPanel(
      "Home",
+     setBackgroundImage(src = "background3.jpg"),
      sidebarLayout(
        sidebarPanel(
          imageOutput("image_dreal")
