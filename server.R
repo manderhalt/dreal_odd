@@ -38,7 +38,7 @@ server <- function(input, output) {
   output$epci_text <- renderText({paste("Votre EPCI est: ", epci()$raison_sociale)})
   
   # DIVWHEEL
-  response_all <- integer(nrow(QUESTION))
+  response_all <- integer(17)+3
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     
     lapply(1:nrow(QUESTION), function(question_number){
@@ -46,11 +46,12 @@ server <- function(input, output) {
       question_input_id <- paste("question_",current_question$Num_question,sep='')
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[question_input_id]]
+      cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       
-      response_all[[question_number]] <<- type_answer
+      response_all[cur_odd] <<- type_answer
     })
-    all_logos <- get_all_logos_odd()
+    all_logos <- all_odd()
     
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), width="100%")
   })

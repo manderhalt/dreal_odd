@@ -31,21 +31,35 @@ HTMLWidgets.widget({
         function color(y){
           var green = "#2D9E46";
           var red = "#D63C22";
+          var blue = "#B0E0E6";
+          var white = "#FFFFFF";
           if (y===0){
             return red;
+          }
+          else if(y==2){
+            return blue;
+          }
+          else if(y==3){
+            return white;
           }
           else{
             return green;
           }
         }
         var subwheeldata = Array(wheeldata.length).fill("");
-        var colorpalette = {
-          defaultpalette: new Array(color(qa[0]), color(qa[1]), color(qa[2]), color(qa[3]),
-          color(qa[4]),color(qa[5]),color(qa[6]),color(qa[7]))};
+        var colorpalette = [];
+        for (i=0; i<list_logos.length; i++){
+          colorpalette.push(color(qa[i]));
+        }
         // var wheel_new = new wheelnav("divwheelnav");
-        chart.slicePathFunction = slicePath().DonutSlice;
         chart.clockwise = false;
         chart.wheelRadius = 200;
+        chart.slicePathFunction = slicePath().DonutSlice;
+        chart.slicePathCustom = slicePath().DonutSliceCustomization();
+        chart.slicePathCustom.minRadiusPercent = 0.50;
+        chart.slicePathCustom.maxRadiusPercent = 0.95;
+        chart.sliceSelectedPathCustom = chart.slicePathCustom;
+        chart.sliceInitPathCustom = chart.slicePathCustom;
         chart.clickModeRotate = false;
         chart.sliceTransformFunction  = sliceTransform().MoveMiddleTransform;
         chart.colors = logos_colors;
@@ -63,7 +77,7 @@ HTMLWidgets.widget({
         subchart.clockwise=false;
         subchart.markerPathFunction = markerPath().PieLineMarker;
         subchart.markerEnable = true;
-        subchart.colors = colorpalette.defaultpalette;
+        subchart.colors = colorpalette;
         
         chart.initWheel(wheeldata);
         for (i=0; i<list_logos.length; i++){
