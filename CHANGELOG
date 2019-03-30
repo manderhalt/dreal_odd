@@ -1,3 +1,5 @@
+* 0.5.3
+	Cleaning of package dependency
 * 0.5.2
 	Revert changes that caused crash in the app
 * 0.5.1
