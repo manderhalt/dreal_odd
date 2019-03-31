@@ -9,6 +9,8 @@ if (!require("shinydashboard"))
 library(shinydashboard)
 if (!require("shinyWidgets"))
   install.packages("shinyWidgets")
+if (!require("plotly"))
+  install.packages("plotly")
 source("data.R")
 source("helper.R")
 
@@ -131,10 +133,13 @@ navbarPage("DREAL Quizz",
       # TEXTE
       h4(textOutput("text_graph"),
       # GRAPHE
-      column(4, h4("Indicateur")),
-      column(4, h4("Taux dans votre commune et votre département"),plotOutput(outputId ="plot_graph")),
-      column(4, h4("ODD correspondant"))
-    )
+      fluidRow(column(4, h4("Indicateur")),
+      column(4, h4("Taux dans votre commune et votre département")),
+      column(4, h4("ODD correspondant"))),
+      fluidRow(column(4, textOutput("side_text_graph")),
+      column(4, plotOutput(outputId ="plot_graph")),
+      column(4, imageOutput("right_odd_image"))
+    ))
    )        
 )
 
