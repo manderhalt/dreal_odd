@@ -18,12 +18,7 @@ navbarPage("DREAL Quizz",
    tabPanel(
      "Home",
      setBackgroundImage(src = "background3.jpg"),
-     sidebarLayout(
-       sidebarPanel(
-         imageOutput("image_dreal")
-       )
-       ,
-       mainPanel(
+     
          
          # TITRES ET PARAGRAPHE D'INTRO
          h3(textOutput("caption")),
@@ -63,8 +58,8 @@ navbarPage("DREAL Quizz",
          
          # WHEEL
          divwheelnavOutput("nav_output") 
-       )
-     )
+       
+     
      
    ),
    
