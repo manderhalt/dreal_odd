@@ -89,23 +89,31 @@ server <- function(input, output) {
   # LOGOS
   outgraph <- reactiveVal()
   outtextgraph <- reactiveVal()
-  
+  sidetextgraph <- reactiveVal()
+  rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     odd_text <- paste("odd_", i, "_text", sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
+    right_img = paste("www/", odd, ".jpg", sep="")
+    
     code_indic <- NULL
     if (length(list_code_indic)>1){
       code_indic <-  list_code_indic[[1]]
     }
     observeEvent(input[[button]], {
+      print(right_img)
       outgraph(horiz_histo(departement_2()$CodeZone,
                            epci_2()$siren,
                            code_indic))
       outtextgraph(ODD_TEXT[[odd_text]])
+      sidetextgraph(IND[IND$code_indicateur==code_indic,]$libel_court)
+      rightoddimage(list(src=right_img,height = "60px"))
     })
   })
-  output$plot_graph <- renderPlot({outgraph()})
+  output$plot_graph <- renderPlot({barplot(outgraph(), horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
+  output$side_text_graph <- renderText({sidetextgraph()})
+  output$right_odd_image <- renderImage({rightoddimage()}, deleteFile = FALSE)
 }
