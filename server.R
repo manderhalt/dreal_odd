@@ -112,7 +112,7 @@ server <- function(input, output) {
       rightoddimage(list(src=right_img,height = "60px"))
     })
   })
-  output$plot_graph <- renderPlot({outgraph()})
+  output$plot_graph <- renderPlot({barplot(outgraph(), horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
   output$side_text_graph <- renderText({sidetextgraph()})
   output$right_odd_image <- renderImage({rightoddimage()}, deleteFile = FALSE)

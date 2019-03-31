@@ -19,38 +19,8 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   data<- get_data(departement_code, epci_code)
   departement_data <- data$departement_data
   epci_data <- data$epci_data
-  dat <- data.frame(
-    question_result = factor(c(departement_data$Zone,epci_data$Zone), levels=c(departement_data$Zone,epci_data$Zone)),
-    c_values = c(departement_data[[question_code]], epci_data[[question_code]]))
-  
-  logos <- logos_from_code_indic(question_code)
-  if (length(logos)>1){
-    img_1 <- readJPEG(paste("./www/",logos[[1]], ".jpg", sep=""))
-    img_2 <- readJPEG(paste("./www/",logos[[2]], ".jpg", sep=""))
-    g_1 <- rasterGrob(img_1, interpolate=TRUE)
-    g_2 <- rasterGrob(img_2, interpolate=TRUE)
-    ggplot(data=dat, aes(x=question_result, y=c_values)) +
-      geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
-      coord_flip() + theme_bw() + 
-      annotation_custom(g_1, xmin = 1, xmax = 2, ymin = 0, ymax=max(dat$c_values)/2)+
-      annotation_custom(g_2, xmin = 1, xmax = 2, ymin = max(dat$c_values)/2, ymax=Inf)+
-      ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
-      theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
-            panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
-  }
-  else {
-    img <- readJPEG(paste("./www/",logos[[1]], ".jpg", sep=""))
-    
-    g <- rasterGrob(img, interpolate=TRUE)
-    ggplot(data=dat, aes(x=question_result, y=c_values)) +
-      geom_bar(stat="identity", fill=I("#56B4E9"), width = 0.5) +
-      coord_flip() + theme_bw() + 
-      annotation_custom(g, xmin = 1, xmax = 2, ymin = -Inf, ymax=Inf)+
-      ggtitle(QUESTION[QUESTION$Code_indicateur==question_code,][["Libel"]]) +
-      theme(panel.border = element_blank(), panel.grid.major = element_blank(), aspect.ratio = 1/3,
-            panel.grid.minor = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank())
-  }
-  
+  c_values = c(departement_data[[question_code]], epci_data[[question_code]])
+  return(c_values)
 }
 
 # QUESTIONS
