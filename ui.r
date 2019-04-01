@@ -129,15 +129,16 @@ navbarPage("DREAL Quizz",
       }
       ),
       # TEXTE
-      h4(textOutput("text_graph"),
+      column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
+      
       # GRAPHE
       fluidRow(column(4, "Indicateur"),
       column(4, "Taux dans votre commune et votre département"),
       column(4, "ODD correspondant")),
-      fluidRow(column(4, textOutput("side_text_graph")),
+      fluidRow(column(4, br(),br(),br(), br(), br(), span(em(textOutput("side_text_graph")), style="font-size: 15px; display: block; margin-left: auto; margin-right: auto;")),
       column(4, plotOutput(outputId ="plot_graph")),
       column(4, imageOutput("right_odd_image"))
-    ))
+    )
    )        
 )
 
