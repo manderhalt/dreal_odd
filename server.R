@@ -4,7 +4,10 @@ source("helper.R")
 if (!require("dplyr"))
   install.packages("dplyr")
 library(dplyr)
-
+if (!require("rlist"))
+  install.packages("rlist")
+library("rlist")
+max_img <- 7
 server <- function(input, output) {
   
   # PREMIERE PAGE
@@ -96,24 +99,54 @@ server <- function(input, output) {
     odd_text <- paste("odd_", i, "_text", sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
-    right_img = paste("www/", odd, ".jpg", sep="")
+    list_image = c()
+    for (i in list_code_indic){
+      cur_logos <- logos_from_code_indic(i)
+      for (logo in cur_logos){
+        cur_img = paste("www/", logo, ".jpg", sep="")
+        list_image <- c(list_image, cur_img)
+      }
+    }
+    
     
     code_indic <- NULL
     if (length(list_code_indic)>1){
       code_indic <-  list_code_indic[[1]]
     }
     observeEvent(input[[button]], {
-      print(right_img)
+      print(list_image)
+      list_images_to_plot = list()
+      for (i in list_image){
+        cur_img <- list(src=i, height=60)
+        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+      }
+      
+      print(list_images_to_plot)
       outgraph(horiz_histo(departement_2()$CodeZone,
                            epci_2()$siren,
                            code_indic))
       outtextgraph(ODD_TEXT[[odd_text]])
       sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
-      rightoddimage(list(src=right_img,height = "60px"))
+      rightoddimage(list_images_to_plot)
+      
     })
   })
   output$plot_graph <- renderPlot({barplot(outgraph(), horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
   output$side_text_graph <- renderText({sidetextgraph()})
-  output$right_odd_image <- renderImage({rightoddimage()}, deleteFile = FALSE)
+  output$right_odd_image <- renderUI({
+    right_images <- rightoddimage()
+    plot_output_list <- lapply(1:length(right_images), function(cur_image){
+      plotname <- paste("rightimage", i , sep="")
+      cur_image
+    })
+    do.call(tagList, plot_output_list)
+    })
+  for (i in 1:max_img){
+    local({
+      my_i <- i
+      imgname <- paste("rightimage", my_i, sep="")
+      output[[imgname]] <- renderImage({rightoddimage()[[my_i]]}, deleteFile = FALSE)
+    })
+  }
 }
