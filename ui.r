@@ -137,7 +137,7 @@ navbarPage("DREAL Quizz",
       column(4, "ODD correspondant")),
       fluidRow(column(4, br(),br(),br(), br(), br(), span(em(textOutput("side_text_graph")), style="font-size: 15px; display: block; margin-left: auto; margin-right: auto;")),
       column(4, plotOutput(outputId ="plot_graph")),
-      column(4, imageOutput("right_odd_image"))
+      column(4, imageOutput("rightimage1"),imageOutput("rightimage2"),imageOutput("rightimage3"),imageOutput("rightimage4"),imageOutput("rightimage5"))
     )
    )        
 )
