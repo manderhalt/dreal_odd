@@ -108,7 +108,7 @@ server <- function(input, output) {
                            epci_2()$siren,
                            code_indic))
       outtextgraph(ODD_TEXT[[odd_text]])
-      sidetextgraph(IND[IND$code_indicateur==code_indic,]$libel_court)
+      sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
       rightoddimage(list(src=right_img,height = "60px"))
     })
   })
