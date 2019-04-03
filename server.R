@@ -137,9 +137,24 @@ server <- function(input, output) {
       
     })
   })
-  output$plot_graph <- renderPlot({barplot(outgraph()[[1]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
-  output$side_text_graph <- renderText({sidetextgraph()})
+  
+  # SIDE TEXT
+  output$side_text_graph <- renderUI({
+    side_text <- sidetextgraph()
+    text_output_list <- lapply(1:length(side_text), function(cur_text){
+      text_name <- paste("sidetext", i, sep="")
+      cur_text
+    })
+    do.call(tagList, text_output_list)
+  })
+  for(l in 1:max_plot){
+    local({
+      my_l <- l
+      textname <- paste("sidetext", my_l, sep="")
+      output[[textname]] <- renderText({sidetextgraph()[[my_l]]})
+    })
+  }
   
   output$plot_graph <- renderUI({
     plot_values <- outgraph()

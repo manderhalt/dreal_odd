@@ -8,6 +8,7 @@ IND <- read.csv('./data/Tab_passage_ind_ODD.csv',header = TRUE,sep=";", stringsA
 QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)
 # save(DF_DEP,DF_EPCI,DF_DEP_EPCI,IND, file = "./odd/data.RData")
 
+interstice <- c(br(), br(), br(), br(), br(), br(), br())
 
 # Elements de texte de la landing page
 INTRO_TEXT <- "Au coeur de l'Agenda 2030 des Nations Unies, 17 Objectifs de développement durable (ODD) ont été fixés. Ils couvrent l'intégralité des enjeux de développement dans tous les pays tels que le climat, la biodiversité, l'énergie, l'eau, la pauvreté, l'égalité des genres, la prospérité économique ou encore la paix, l'agriculture, et l'éducation.

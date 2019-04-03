@@ -135,9 +135,27 @@ navbarPage("DREAL Quizz",
       fluidRow(column(4, "Indicateur"),
       column(4, "Taux dans votre commune et votre département"),
       column(4, "ODD correspondant")),
-      fluidRow(column(4, br(),br(),br(), br(), br(), span(em(textOutput("side_text_graph")), style="font-size: 15px; display: block; margin-left: auto; margin-right: auto;")),
-      column(4, plotOutput(outputId ="plotgraph1"),plotOutput(outputId ="plotgraph2"),plotOutput(outputId ="plotgraph3"),plotOutput(outputId ="plotgraph4"),plotOutput(outputId ="plotgraph5")),
-      column(4, imageOutput("rightimage1"),imageOutput("rightimage2"),imageOutput("rightimage3"),imageOutput("rightimage4"),imageOutput("rightimage5"))
+      fluidRow(
+        column(4, span(br(), br(), br(), br(), br(), em(textOutput("sidetext1")), br(), br(), br(), br(), br(), br()), 
+                  span(br(), br(), br(), br(), br(), em(textOutput("sidetext2")), br(), br(), br(),br(), br(), br()),
+                  span(br(), br(), br(), br(), br(), em(textOutput("sidetext3")), br(), br(), br(), br(), br(), br()),
+                  span(br(), br(), br(), br(), br(), em(textOutput("sidetext4")), br(), br(), br(), br(), br(), br()),
+                  span(br(), br(), br(), br(), br(), em(textOutput("sidetext5")),br(), br(), br(), br(), br(), br())
+               ),
+        
+        column(4, plotOutput(outputId ="plotgraph1", height = "250px"),
+                  plotOutput(outputId ="plotgraph2", height = "250px"),
+                  plotOutput(outputId ="plotgraph3", height = "250px"),
+                  plotOutput(outputId ="plotgraph4", height = "250px"),
+                  plotOutput(outputId ="plotgraph5", height = "250px")
+               ),
+        
+        column(4, imageOutput("rightimage1"),
+                  imageOutput("rightimage2"),
+                  imageOutput("rightimage3"),
+                  imageOutput("rightimage4"),
+                  imageOutput("rightimage5")
+               )
     )
    )        
 )
