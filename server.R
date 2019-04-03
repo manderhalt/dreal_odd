@@ -8,6 +8,7 @@ if (!require("rlist"))
   install.packages("rlist")
 library("rlist")
 max_img <- 7
+max_plot <- 7
 server <- function(input, output) {
   
   # PREMIERE PAGE
@@ -122,25 +123,47 @@ server <- function(input, output) {
       }
       
       print(list_images_to_plot)
-      outgraph(horiz_histo(departement_2()$CodeZone,
-                           epci_2()$siren,
-                           code_indic))
+      list_graph_values_to_plot = list()
+      for (i in list_code_indic){
+        cur_values <- horiz_histo(departement_2()$CodeZone,
+                                  epci_2()$siren,
+                                  i)
+        list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
+      }
+      outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[[odd_text]])
       sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
       rightoddimage(list_images_to_plot)
       
     })
   })
-  output$plot_graph <- renderPlot({barplot(outgraph(), horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
+  output$plot_graph <- renderPlot({barplot(outgraph()[[1]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
   output$side_text_graph <- renderText({sidetextgraph()})
-  output$right_odd_image <- renderUI({
-    right_images <- rightoddimage()
-    plot_output_list <- lapply(1:length(right_images), function(cur_image){
-      plotname <- paste("rightimage", i , sep="")
-      cur_image
+  
+  output$plot_graph <- renderUI({
+    plot_values <- outgraph()
+    plot_output_list <- lapply(1:length(plot_values), function(cur_value){
+      plot_name <- paste("plotgraph", i, sep="")
+      cur_value
     })
     do.call(tagList, plot_output_list)
+  })
+  for (j in 1:max_plot){
+    local({
+      my_j <- j
+      plotname <- paste("plotgraph", my_j, sep="")
+      output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
+    })
+  }
+  # ODD IMAGE
+  output$right_odd_image <- renderUI({
+    right_images <- rightoddimage()
+    img_output_list <- lapply(1:length(right_images), function(cur_image){
+      img_name <- paste("rightimage", i , sep="")
+      cur_image
+    })
+    do.call(tagList, img_output_list)
     })
   for (i in 1:max_img){
     local({
