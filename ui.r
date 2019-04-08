@@ -16,7 +16,7 @@ navbarPage("DREAL Quizz",
            
    # PREMIERE PAGE
    tabPanel(
-     "Home",
+     "Accueil",
      setBackgroundImage(src = "background3.jpg"),
      
          

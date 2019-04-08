@@ -9,6 +9,7 @@ if (!require("rlist"))
 library("rlist")
 max_img <- 7
 max_plot <- 7
+
 server <- function(input, output) {
   
   # PREMIERE PAGE
