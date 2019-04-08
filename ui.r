@@ -66,20 +66,8 @@ navbarPage("DREAL Quizz",
    # DEBUT DEUXIEME PAGE
    tabPanel(
      "Les ODD, qu'est ce que c'est",
-     navlistPanel(
-       "Les ODD en bref",
+    
        
-       # PREMIERE CASE
-       tabPanel(
-         "Définition",
-         # TEXTE
-         h4(ODD_HEADER),
-         "",
-         ODD_BASIS),
-       
-       # DEUXIEME CASE
-       tabPanel(
-         "Les 17 ODD",
          # LES 17 LOGOS
          lapply(1:17, function(i) {
            odd <- paste("ODD ", i, sep="")
@@ -95,9 +83,7 @@ navbarPage("DREAL Quizz",
          }
          ),
          column(width = 9, align = "center", h4(textOutput("text_odd")))
-       )
-     )
-   ),
+       ),
    
    # TROISIEME PAGE
    tabPanel("Voir les ODD de mon territoire",
