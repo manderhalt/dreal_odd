@@ -101,29 +101,41 @@ server <- function(input, output) {
     odd_text <- paste("odd_", i, "_text", sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
-    list_image = c()
+    list_image_all <- list()
     for (i in list_code_indic){
+      list_image <- c()
       cur_logos <- logos_from_code_indic(i)
       for (logo in cur_logos){
+        list_image <- NULL
+        if (logo != odd){
         cur_img = paste("www/", logo, ".jpg", sep="")
         list_image <- c(list_image, cur_img)
+        }
+        else {
+          list_image <- c(list_image, "")
+        }
       }
+      list_image_all <- c(list_image_all, list(list_image))
     }
     
-    
-    code_indic <- NULL
-    if (length(list_code_indic)>1){
-      code_indic <-  list_code_indic[[1]]
-    }
     observeEvent(input[[button]], {
-      print(list_image)
-      list_images_to_plot = list()
-      for (i in list_image){
-        cur_img <- list(src=i, height=60)
-        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
-      }
       
+      list_images_to_plot = list()
+      print("THE LIST OF ALL IMAGE IS")
+      print(list_image_all)
+      for (i in list_image_all){
+        cur_img <- NULL
+        for (j in i){
+          if (j !=""){
+            cur_img <- list(src=j, height=60)
+          }
+        }
+        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+        
+      }
+      print("aaaaaaaaaaaaaaa")
       print(list_images_to_plot)
+      print("aaaaaaaaaaaaaaa")
       list_graph_values_to_plot = list()
       for (i in list_code_indic){
         cur_values <- horiz_histo(departement_2()$CodeZone,
@@ -188,4 +200,8 @@ server <- function(input, output) {
       output[[imgname]] <- renderImage({rightoddimage()[[my_i]]}, deleteFile = FALSE)
     })
   }
+  
+  url <- a("Sources ODD", href=source_odd)
+  
+  output$source_odd <- renderUI({tagList(url)})
 }

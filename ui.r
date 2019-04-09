@@ -97,7 +97,7 @@ navbarPage("DREAL Quizz",
       # CHOIX DEPARTEMENT
       column(
         12, align="center", h1("Portrait de territoire"),
-        h2("Tout savoir sur les ODD dans mon territoire")),
+        em(h2("Tout savoir sur les ODD dans mon territoire"))),
       selectInput("department_2", "Quel est votre département ?",DF_DEP$Zone),
       uiOutput("commune_2"),
     
@@ -129,29 +129,30 @@ navbarPage("DREAL Quizz",
       column(4, "ODD correspondant")),
       fluidRow(
         column(4, em(textOutput("sidetext1"))), 
-        column(4, plotOutput(outputId ="plotgraph1", height = "250px")),
+        column(4, plotOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
         column(4, imageOutput("rightimage1"))
       ), 
       fluidRow(
         column(4, em(textOutput("sidetext2"))), 
-        column(4, plotOutput(outputId ="plotgraph2", height = "250px")),
+        column(4, plotOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
         column(4, imageOutput("rightimage2"))
       ),
       fluidRow(
         column(4, em(textOutput("sidetext3"))), 
-        column(4, plotOutput(outputId ="plotgraph3", height = "250px")),
+        column(4, plotOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
         column(4, imageOutput("rightimage3"))
       ), 
       fluidRow(
         column(4, em(textOutput("sidetext4"))), 
-        column(4, plotOutput(outputId ="plotgraph4", height = "250px")),
+        column(4, plotOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
         column(4, imageOutput("rightimage4"))
       ), 
       fluidRow(
         column(4, em(textOutput("sidetext5"))), 
-        column(4, plotOutput(outputId ="plotgraph5", height = "250px")),
+        column(4, plotOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
         column(4, imageOutput("rightimage5"))
       )
+      
    )        
 )
 
