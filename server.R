@@ -4,6 +4,11 @@ source("helper.R")
 if (!require("dplyr"))
   install.packages("dplyr")
 library(dplyr)
+if (!require("rlist"))
+  install.packages("rlist")
+library("rlist")
+max_img <- 7
+max_plot <- 7
 
 server <- function(input, output) {
   
@@ -96,24 +101,91 @@ server <- function(input, output) {
     odd_text <- paste("odd_", i, "_text", sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
-    right_img = paste("www/", odd, ".jpg", sep="")
+    list_image = c()
+    for (i in list_code_indic){
+      cur_logos <- logos_from_code_indic(i)
+      for (logo in cur_logos){
+        cur_img = paste("www/", logo, ".jpg", sep="")
+        list_image <- c(list_image, cur_img)
+      }
+    }
+    
     
     code_indic <- NULL
     if (length(list_code_indic)>1){
       code_indic <-  list_code_indic[[1]]
     }
     observeEvent(input[[button]], {
-      print(right_img)
-      outgraph(horiz_histo(departement_2()$CodeZone,
-                           epci_2()$siren,
-                           code_indic))
+      print(list_image)
+      list_images_to_plot = list()
+      for (i in list_image){
+        cur_img <- list(src=i, height=60)
+        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+      }
+      
+      print(list_images_to_plot)
+      list_graph_values_to_plot = list()
+      for (i in list_code_indic){
+        cur_values <- horiz_histo(departement_2()$CodeZone,
+                                  epci_2()$siren,
+                                  i)
+        list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
+      }
+      outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[[odd_text]])
-      sidetextgraph(IND[IND$code_indicateur==code_indic,]$libel_court)
-      rightoddimage(list(src=right_img,height = "60px"))
+      sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
+      rightoddimage(list_images_to_plot)
+      
     })
   })
-  output$plot_graph <- renderPlot({barplot(outgraph(), horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
   output$text_graph <- renderText({outtextgraph()})
-  output$side_text_graph <- renderText({sidetextgraph()})
-  output$right_odd_image <- renderImage({rightoddimage()}, deleteFile = FALSE)
+  
+  # SIDE TEXT
+  output$side_text_graph <- renderUI({
+    side_text <- sidetextgraph()
+    text_output_list <- lapply(1:length(side_text), function(cur_text){
+      text_name <- paste("sidetext", i, sep="")
+      cur_text
+    })
+    do.call(tagList, text_output_list)
+  })
+  for(l in 1:max_plot){
+    local({
+      my_l <- l
+      textname <- paste("sidetext", my_l, sep="")
+      output[[textname]] <- renderText({sidetextgraph()[[my_l]]})
+    })
+  }
+  
+  output$plot_graph <- renderUI({
+    plot_values <- outgraph()
+    plot_output_list <- lapply(1:length(plot_values), function(cur_value){
+      plot_name <- paste("plotgraph", i, sep="")
+      cur_value
+    })
+    do.call(tagList, plot_output_list)
+  })
+  for (j in 1:max_plot){
+    local({
+      my_j <- j
+      plotname <- paste("plotgraph", my_j, sep="")
+      output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
+    })
+  }
+  # ODD IMAGE
+  output$right_odd_image <- renderUI({
+    right_images <- rightoddimage()
+    img_output_list <- lapply(1:length(right_images), function(cur_image){
+      img_name <- paste("rightimage", i , sep="")
+      cur_image
+    })
+    do.call(tagList, img_output_list)
+    })
+  for (i in 1:max_img){
+    local({
+      my_i <- i
+      imgname <- paste("rightimage", my_i, sep="")
+      output[[imgname]] <- renderImage({rightoddimage()[[my_i]]}, deleteFile = FALSE)
+    })
+  }
 }

@@ -22,7 +22,7 @@ navbarPage("DREAL Quizz",
            
    # PREMIERE PAGE
    tabPanel(
-     "Home",
+     "Accueil",
      setBackgroundImage(src = "background3.jpg"),
      
          
@@ -72,20 +72,8 @@ navbarPage("DREAL Quizz",
    # DEBUT DEUXIEME PAGE
    tabPanel(
      "Les ODD, qu'est ce que c'est",
-     navlistPanel(
-       "Les ODD en bref",
+    
        
-       # PREMIERE CASE
-       tabPanel(
-         "Définition",
-         # TEXTE
-         h4(ODD_HEADER),
-         "",
-         ODD_BASIS),
-       
-       # DEUXIEME CASE
-       tabPanel(
-         "Les 17 ODD",
          # LES 17 LOGOS
          lapply(1:17, function(i) {
            odd <- paste("ODD ", i, sep="")
@@ -101,9 +89,7 @@ navbarPage("DREAL Quizz",
          }
          ),
          column(width = 9, align = "center", h4(textOutput("text_odd")))
-       )
-     )
-   ),
+       ),
    
    # TROISIEME PAGE
    tabPanel("Voir les ODD de mon territoire",
@@ -141,10 +127,31 @@ navbarPage("DREAL Quizz",
       fluidRow(column(4, "Indicateur"),
       column(4, "Taux dans votre commune et votre département"),
       column(4, "ODD correspondant")),
-      fluidRow(column(4, br(),br(),br(), br(), br(), span(em(textOutput("side_text_graph")), style="font-size: 15px; display: block; margin-left: auto; margin-right: auto;")),
-      column(4, plotOutput(outputId ="plot_graph")),
-      column(4, imageOutput("right_odd_image"))
-    )
+      fluidRow(
+        column(4, em(textOutput("sidetext1"))), 
+        column(4, plotOutput(outputId ="plotgraph1", height = "250px")),
+        column(4, imageOutput("rightimage1"))
+      ), 
+      fluidRow(
+        column(4, em(textOutput("sidetext2"))), 
+        column(4, plotOutput(outputId ="plotgraph2", height = "250px")),
+        column(4, imageOutput("rightimage2"))
+      ),
+      fluidRow(
+        column(4, em(textOutput("sidetext3"))), 
+        column(4, plotOutput(outputId ="plotgraph3", height = "250px")),
+        column(4, imageOutput("rightimage3"))
+      ), 
+      fluidRow(
+        column(4, em(textOutput("sidetext4"))), 
+        column(4, plotOutput(outputId ="plotgraph4", height = "250px")),
+        column(4, imageOutput("rightimage4"))
+      ), 
+      fluidRow(
+        column(4, em(textOutput("sidetext5"))), 
+        column(4, plotOutput(outputId ="plotgraph5", height = "250px")),
+        column(4, imageOutput("rightimage5"))
+      )
    )        
 )
 
