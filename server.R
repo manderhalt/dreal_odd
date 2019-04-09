@@ -64,18 +64,6 @@ server <- function(input, output) {
   output$nav_output <- renderDivwheelnav(event_submit_button_wheel())
   
   # DEUXIEME PAGE
-  # BOUTTONS LOGOS
-  out <- reactiveVal("")
-  lapply(1:17, function(i) {
-    button <- paste("ODD_button_", i, sep="")
-    odd_text <- paste("odd_", i, "_text", sep="")
-    observeEvent(input[[button]], {
-      out(ODD_TEXT[[odd_text]])
-    })
-  })
-  output$text_odd <- renderText({out()})
-  
-  # TROISIEME PAGE
   # CHOIX DEPARTEMENT
   departement_2 <-reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department_2,]})
   output$commune_2 <- renderUI({
@@ -108,8 +96,8 @@ server <- function(input, output) {
       for (logo in cur_logos){
         list_image <- NULL
         if (logo != odd){
-        cur_img = paste("www/", logo, ".jpg", sep="")
-        list_image <- c(list_image, cur_img)
+          cur_img = paste("www/", logo, ".jpg", sep="")
+          list_image <- c(list_image, cur_img)
         }
         else {
           list_image <- c(list_image, "")
@@ -192,7 +180,7 @@ server <- function(input, output) {
       cur_image
     })
     do.call(tagList, img_output_list)
-    })
+  })
   for (i in 1:max_img){
     local({
       my_i <- i
@@ -209,4 +197,18 @@ server <- function(input, output) {
   outputOptions(output, "sidetext3", suspendWhenHidden = FALSE)
   outputOptions(output, "sidetext4", suspendWhenHidden = FALSE)
   outputOptions(output, "sidetext5", suspendWhenHidden = FALSE)
+  
+  # TROISIEME PAGE
+  # BOUTTONS LOGOS
+  out <- reactiveVal("")
+  lapply(1:17, function(i) {
+    button <- paste("ODD_button_", i, sep="")
+    odd_text <- paste("odd_", i, "_text", sep="")
+    observeEvent(input[[button]], {
+      out(ODD_TEXT[[odd_text]])
+    })
+  })
+  output$text_odd <- renderText({out()})
+  
+  
 }
