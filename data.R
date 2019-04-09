@@ -50,3 +50,5 @@ ODD_TEXT <- list("odd_1_text"=ODD_1_TEXT, "odd_2_text"=ODD_2_TEXT, "odd_3_text"=
                                   "odd_11_text"=ODD_11_TEXT, "odd_12_text"=ODD_12_TEXT, "odd_13_text"=ODD_13_TEXT, "odd_14_text"=ODD_14_TEXT, "odd_15_text"=ODD_15_TEXT,
                                    "odd_16_text"=ODD_16_TEXT, "odd_17_text"=ODD_17_TEXT)
 
+indicateur_odd_subtitle <- "Tout savoir sur les ODD dans mon territoire"
+source_odd <- "https://www.agenda-2030.fr/odd/odd1-eliminer-la-pauvrete-sous-toutes-ses-formes-et-partout-dans-le-monde-23"
