@@ -202,6 +202,11 @@ server <- function(input, output) {
   }
   
   url <- a("Sources ODD", href=source_odd)
-  
+  output$tessst <- renderText({"lol"})
   output$source_odd <- renderUI({tagList(url)})
+  outputOptions(output, "sidetext1", suspendWhenHidden = FALSE)
+  outputOptions(output, "sidetext2", suspendWhenHidden = FALSE)
+  outputOptions(output, "sidetext3", suspendWhenHidden = FALSE)
+  outputOptions(output, "sidetext4", suspendWhenHidden = FALSE)
+  outputOptions(output, "sidetext5", suspendWhenHidden = FALSE)
 }
