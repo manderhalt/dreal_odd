@@ -9,8 +9,14 @@ if (!require("shinydashboard"))
 library(shinydashboard)
 if (!require("shinyWidgets"))
   install.packages("shinyWidgets")
+
+print(list.files())
+print(list.files('./data'))
+
 source("data.R")
 source("helper.R")
+
+
 
 navbarPage("DREAL Quizz", 
            
