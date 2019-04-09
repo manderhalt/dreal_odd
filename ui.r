@@ -69,30 +69,8 @@ navbarPage("DREAL Quizz",
      
    ),
    
-   # DEBUT DEUXIEME PAGE
-   tabPanel(
-     "Les ODD, qu'est ce que c'est",
-    
-       
-         # LES 17 LOGOS
-         lapply(1:17, function(i) {
-           odd <- paste("ODD ", i, sep="")
-           id_button <- paste("ODD_button_", i, sep="")
-           odd_image <- paste("ODD", i,".jpg", sep="")
-           tags$button(
-             id = id_button,
-             class = "btn action-button",
-             img(src = odd_image,
-                 height = "75px"),
-             style="background-color: #FFFFFF"
-           )
-         }
-         ),
-         column(width = 9, align = "center", h4(textOutput("text_odd")))
-       ),
-   
-   # TROISIEME PAGE
-   tabPanel("Voir les ODD de mon territoire",
+   # DEUXIEME PAGE
+   tabPanel("Les indicateurs ODD par territoire",
             
       # CHOIX DEPARTEMENT
       column(
@@ -167,6 +145,28 @@ navbarPage("DREAL Quizz",
           column(4, imageOutput("rightimage5"))
         )
       )
-   )        
+   ),
+   
+   # DEBUT TROISIEME PAGE
+   tabPanel(
+     "Les ODD, qu'est ce que c'est ?",
+     
+     
+     # LES 17 LOGOS
+     lapply(1:17, function(i) {
+       odd <- paste("ODD ", i, sep="")
+       id_button <- paste("ODD_button_", i, sep="")
+       odd_image <- paste("ODD", i,".jpg", sep="")
+       tags$button(
+         id = id_button,
+         class = "btn action-button",
+         img(src = odd_image,
+             height = "75px"),
+         style="background-color: #FFFFFF"
+       )
+     }
+     ),
+     column(width = 9, align = "center", h4(textOutput("text_odd")))
+   )
 )
 
