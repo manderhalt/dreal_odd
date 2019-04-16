@@ -28,10 +28,12 @@ server <- function(input, output) {
   # SELECTION DEPARTEMENT
   departement <- reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department,]})
   output$commune <- renderUI({
+    list_communes <- filter(DF_DEP_EPCI, dept == departement()$CodeZone)[["nom_membre"]]
+    list_communes <- list_communes[order(list_communes)]
     selectInput(
       "commune_string",
       "Quelle est votre commune ?",
-      choices = filter(DF_DEP_EPCI, dept == departement()$CodeZone)[["nom_membre"]]
+      choices = list_communes
     )
   })
   epci <-reactive({epci <-

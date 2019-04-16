@@ -32,7 +32,7 @@ navbarPage("DREAL Quizz",
          h4(textOutput("catchphrase")),
          
          # SELECTION DEPARTEMENT COMMUNE
-         selectInput("department", "Quel est votre département ?",DF_DEP$Zone),
+         selectInput("department", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone),
          uiOutput("commune"),
          h4(textOutput("epci_text")),
          
