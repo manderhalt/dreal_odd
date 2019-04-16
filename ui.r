@@ -19,7 +19,6 @@ source("helper.R")
 
 
 navbarPage("DREAL Quizz", 
-           
    # PREMIERE PAGE
    tabPanel(
      "Accueil",
@@ -69,6 +68,13 @@ navbarPage("DREAL Quizz",
      
    ),
    
+   # Styling nav bar
+   tags$head(
+     tags$style(HTML("
+                     .navbar-nav { width: 85% }
+                     .navbar-nav>li:nth-child(4) { float: right; }
+                     "))
+     ), 
    # DEUXIEME PAGE
    tabPanel("Les indicateurs ODD par territoire",
             
