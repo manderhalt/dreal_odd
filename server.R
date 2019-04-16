@@ -26,7 +26,8 @@ server <- function(input, output) {
     )}, deleteFile = FALSE)
   
   # SELECTION DEPARTEMENT
-  departement <- reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department,]})
+  output$departement <- renderUI({selectInput("departement", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone)})
+  departement <- reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$departement,]})
   output$commune <- renderUI({
     list_communes <- filter(DF_DEP_EPCI, dept == departement()$CodeZone)[["nom_membre"]]
     list_communes <- list_communes[order(list_communes)]
@@ -67,6 +68,7 @@ server <- function(input, output) {
   
   # DEUXIEME PAGE
   # CHOIX DEPARTEMENT
+  output$departement_2 <- renderUI({selectInput("department_2", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone, selected = input$departement)})
   departement_2 <-reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department_2,]})
   output$commune_2 <- renderUI({
     list_communes_2 <- filter(DF_DEP_EPCI, dept == departement_2()$CodeZone)[["nom_membre"]]
@@ -74,7 +76,7 @@ server <- function(input, output) {
     selectInput(
       "commune_string_2",
       "Quelle est votre commune ?",
-      choices = list_communes_2
+      choices = list_communes_2, selected = input$commune_string
     )
   })
   epci_2 <- reactive({

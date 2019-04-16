@@ -31,7 +31,7 @@ navbarPage("DREAL Quizz",
          h4(textOutput("catchphrase")),
          
          # SELECTION DEPARTEMENT COMMUNE
-         selectInput("department", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone),
+         uiOutput("departement"),
          uiOutput("commune"),
          h4(textOutput("epci_text")),
          
@@ -82,7 +82,7 @@ navbarPage("DREAL Quizz",
       column(
         12, align="center", h1("Portrait de territoire"),
         em(h2("Tout savoir sur les ODD dans mon territoire"))),
-      selectInput("department_2", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone),
+      uiOutput("departement_2"),
       uiOutput("commune_2"),
     
       # LOGOS ET GRAPHE
