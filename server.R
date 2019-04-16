@@ -40,7 +40,7 @@ server <- function(input, output) {
       dept == departement()$CodeZone
     )
   })
-  output$epci_text <- renderText({paste("Votre EPCI est: ", epci()$raison_sociale)})
+  output$epci_text <- renderText({paste("Votre territoire (EPCI) est: ", epci()$raison_sociale)})
   
   # DIVWHEEL
   response_all <- integer(17)+3
