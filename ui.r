@@ -76,7 +76,7 @@ navbarPage("DREAL Quizz",
       column(
         12, align="center", h1("Portrait de territoire"),
         em(h2("Tout savoir sur les ODD dans mon territoire"))),
-      selectInput("department_2", "Quel est votre département ?",DF_DEP$Zone),
+      selectInput("department_2", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone),
       uiOutput("commune_2"),
     
       # LOGOS ET GRAPHE
