@@ -103,7 +103,7 @@ navbarPage("DREAL Quizz",
       
       # GRAPHE
       fluidRow(column(4, "Indicateur"),
-      column(4, "Taux dans votre commune et votre département"),
+      column(4, "Taux dans votre territoire et votre département"),
       column(4, "ODD correspondant")),
       conditionalPanel(
         condition = "output.sidetext1.length > 0",
