@@ -45,20 +45,21 @@ navbarPage("DREAL Quizz",
                           tags$form(
                                  lapply(1:length(QUESTION$Libel), function(question_number){
                                    current_question <- QUESTION[question_number,]
+                                   cur_libel <- current_question$Libel
                                    logos <- logos_from_code_indic(current_question$Code_indicateur)
                                    if (length(logos)>1){
                                      img_file_1 = paste(logos[[1]],".jpg", sep="")
                                      img_file_2 = paste(logos[[2]],".jpg", sep="")
                                      div(
                                        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE, selected = character(0)),
+                                                          label=cur_libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
                                        img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
                                    }
                                    else {
                                      img_file = paste(logos[[1]],".jpg", sep="")
                                      div(
                                        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE, selected = character(0)),
+                                                          label=current_question$Libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
                                        img(src=img_file, width = 50))
                                    }
                                  }), 

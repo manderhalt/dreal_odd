@@ -24,6 +24,15 @@ horiz_histo <- function(departement_code, epci_code, question_code){
 }
 
 # QUESTIONS
+get_choices_from_question<- function(question_libel){
+  det <- substr(question_libel, start=1, stop=2)
+  if (grepl("a", det)){
+    return (c("Inférieure" = 0, "Supérieure" = 1, "Je ne sais pas"=3))
+  }
+  else{
+    return (c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=3))
+  }
+}
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
