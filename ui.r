@@ -64,7 +64,7 @@ navbarPage("DREAL Quizz",
                                    }
                                  }), 
                                  br(),
-                                 actionButton("submitBtn", "Submit"),
+                                 actionButton("submitBtn", "Valider"),
                                  actionButton("refresh", "Réessayer le quizz")
          ))
          ,
