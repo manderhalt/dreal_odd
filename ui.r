@@ -50,15 +50,15 @@ navbarPage("DREAL Quizz",
                                      img_file_1 = paste(logos[[1]],".jpg", sep="")
                                      img_file_2 = paste(logos[[2]],".jpg", sep="")
                                      div(
-                                       checkboxGroupInput(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE),
+                                       radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE, selected = character(0)),
                                        img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
                                    }
                                    else {
                                      img_file = paste(logos[[1]],".jpg", sep="")
                                      div(
-                                       checkboxGroupInput(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE),
+                                       radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+                                                          label=current_question$Libel, choices=CHOICES, inline=TRUE, selected = character(0)),
                                        img(src=img_file, width = 50))
                                    }
                                  }), 
