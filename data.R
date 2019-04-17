@@ -20,7 +20,7 @@ CATCHPHRASE <- "Où en est la transition écologique dans mon territoire ? La r�
 
 
 # Différentes questions
-CHOICES <- c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"="NO")
+CHOICES <- c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=3)
 
 WHEEL_TITLE <- "Le positionnement de mon territoire par ODD"
 WHEEL_LEGEND <- "Cliquez sur les ODD correspondant aux questions du quizz pour obtenir le niveau de votre territoire par rapport au département."

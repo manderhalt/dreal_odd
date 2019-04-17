@@ -47,7 +47,10 @@ get_correct_result_from_form <- function(questions, epci, dep){
 }
 
 get_correct_or_wrong_answer <- function(response_user, real_answer){
-  if (response_user == "NO"){
+  if (is.null(response_user)){
+    return (2)
+  }
+  if (response_user == 3){
     return (2)
   }
   if (response_user == real_answer){

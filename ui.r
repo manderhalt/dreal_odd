@@ -23,8 +23,12 @@ navbarPage("DREAL Quizz",
    tabPanel(
      "Accueil",
      setBackgroundImage(src = "background3.jpg"),
-     
-         
+     sidebarLayout(
+       sidebarPanel(
+         imageOutput("image_dreal")
+       )
+       ,
+       mainPanel(
          # TITRES ET PARAGRAPHE D'INTRO
          h3(textOutput("caption")),
          textOutput("intro_text"),
@@ -69,7 +73,7 @@ navbarPage("DREAL Quizz",
        
      
      
-   ),
+   ))),
    
    # Styling nav bar
    tags$head(
