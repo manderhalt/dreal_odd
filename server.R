@@ -10,7 +10,7 @@ library("rlist")
 max_img <- 7
 max_plot <- 7
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   # PREMIERE PAGE
   # TITRE PARAGRAPHE D INTRO
@@ -53,6 +53,7 @@ server <- function(input, output) {
   output$epci_text <- renderText({paste("Votre territoire (EPCI) est: ", epci()$raison_sociale)})
   
   # DIVWHEEL
+  observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     
