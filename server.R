@@ -26,8 +26,14 @@ server <- function(input, output) {
     )}, deleteFile = FALSE)
   
   # SELECTION DEPARTEMENT
-  output$departement <- renderUI({selectInput("departement", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone)})
+  output$departement <- renderUI({
+    selectInput("departement", 
+                "Quel est votre département ?",
+                DF_DEP[order(DF_DEP$Zone),]$Zone)
+    })
+  
   departement <- reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$departement,]})
+  
   output$commune <- renderUI({
     list_communes <- filter(DF_DEP_EPCI, dept == departement()$CodeZone)[["nom_membre"]]
     list_communes <- list_communes[order(list_communes)]
@@ -37,6 +43,7 @@ server <- function(input, output) {
       choices = list_communes
     )
   })
+  
   epci <-reactive({epci <-
     filter(
       filter(DF_DEP_EPCI, nom_membre == input$commune_string),
@@ -64,11 +71,25 @@ server <- function(input, output) {
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), width="100%")
   })
   
+  wheel_title <- reactiveVal("")
+  wheel_legend <- reactiveVal("")
+  observeEvent(input$submitBtn, {
+    wheel_title(WHEEL_TITLE)
+    wheel_legend(WHEEL_LEGEND)
+  })
+  output$wheel_title <- renderText(wheel_title())
+  output$wheel_legend <- renderText(wheel_legend())
   output$nav_output <- renderDivwheelnav(event_submit_button_wheel())
   
   # DEUXIEME PAGE
   # CHOIX DEPARTEMENT
-  output$departement_2 <- renderUI({selectInput("department_2", "Quel est votre département ?",DF_DEP[order(DF_DEP$Zone),]$Zone, selected = input$departement)})
+  output$departement_2 <- renderUI({
+    selectInput("department_2", 
+                "Quel est votre département ?",
+                DF_DEP[order(DF_DEP$Zone),]$Zone, 
+                selected = input$departement)
+    })
+  
   departement_2 <-reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department_2,]})
   output$commune_2 <- renderUI({
     list_communes_2 <- filter(DF_DEP_EPCI, dept == departement_2()$CodeZone)[["nom_membre"]]
@@ -79,10 +100,12 @@ server <- function(input, output) {
       choices = list_communes_2, selected = input$commune_string
     )
   })
+  
   epci_2 <- reactive({
     epci_2 <-filter(filter(DF_DEP_EPCI, nom_membre == input$commune_string_2),
                     dept == departement_2()$CodeZone)
   })
+  
   output$epci_text_2 <-renderText({paste("Votre EPCI est: ", epci_2()$raison_sociale)})
   
   # LOGOS

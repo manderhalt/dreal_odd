@@ -62,6 +62,9 @@ navbarPage("DREAL Quizz",
          ,
          
          # WHEEL
+         h3(textOutput("wheel_title")),
+         br(),
+         textOutput("wheel_legend"),
          divwheelnavOutput("nav_output") 
        
      

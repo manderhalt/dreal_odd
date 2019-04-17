@@ -22,6 +22,8 @@ CATCHPHRASE <- "Où en est la transition écologique dans mon territoire ? La r�
 # Différentes questions
 CHOICES <- c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"="NO")
 
+WHEEL_TITLE <- "Le positionnement de mon territoire par ODD"
+WHEEL_LEGEND <- "Cliquez sur les ODD correspondant aux questions du quizz pour obtenir le niveau de votre territoire par rapport au département."
 COLORS <- c("ODD1"="#E81F2D", "ODD2"="#D09F2D", "ODD3"="#2B9B4A", "ODD4"="#C42738", "ODD5"="#ED422B", "ODD6"="#00ACD8", "ODD7"="#FBB617", 
             "ODD8"="#972E47", "ODD9"="#F16E25", "ODD10"="#DE1C83", "ODD11"="#F79C26","ODD12"="#CD8C2E", "ODD13"="#4E7A47", 
             "ODD14"="#007CBB", "ODD15"="#3DAE4A", "ODD16"="#00578B", "ODD17"="#28426E")
