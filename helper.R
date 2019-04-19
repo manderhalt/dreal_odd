@@ -24,15 +24,54 @@ horiz_histo <- function(departement_code, epci_code, question_code){
 }
 
 # QUESTIONS
-get_choices_from_question<- function(question_libel){
+get_choices_labels_from_question<- function(question_libel){
   det <- substr(question_libel, start=1, stop=2)
   if (grepl("a", det)){
-    return (c("Inférieure" = 0, "Supérieure" = 1, "Je ne sais pas"=3))
+    return (c("Inférieure", "Supérieure", "Je ne sais pas"))
   }
   else{
-    return (c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=3))
+    return (c("Inférieur", "Supérieur", "Je ne sais pas"))
   }
 }
+
+color_the_choices_to_match_response <- function(question_libel, wrong_answer, correct_answer){
+  det <- substr(question_libel, start=1, stop=2)
+  if (grepl("a", det)){
+    cur_choices <- list("0"="Inférieure","1"="Supérieure", "3"="Je ne sais pas")
+  }
+  else{
+    cur_choices <- list("0"="Inférieur", "1"="Supérieur", "3"="Je ne sais pas")
+  }
+  if (wrong_answer){
+    return (get_style_wrong_answer(cur_choices, wrong_answer))
+  }
+  else if (correct_answer){
+    return (get_style_correct_answer(cur_choices, correct_answer))
+  }
+}
+
+get_style_wrong_answer <- function(cur_choices, wrong_answer){
+  if (wrong_answer==1){
+    cur_choices["1"]=HTML(paste("<font color='red'>",cur_choices["1"], "</font>", sep=""))
+    cur_choices["0"]=HTML(paste("<font color='green'>",cur_choices["0"], "</font>", sep=""))
+  }
+  else if (wrong_answer==0){
+    cur_choices["0"]=HTML(paste("<font color='red'>",cur_choices["0"], "</font>", sep=""))
+    cur_choices["1"]=HTML(paste("<font color='green'>",cur_choices["1"], "</font>", sep=""))
+  }
+  return (cur_choices)
+}
+
+get_style_good_answer <- function(cur_choices, correct_answer){
+  if (correct_answer==1){
+    cur_choices["1"]=HTML(paste("<font color='green'>",cur_choices["1"], "</font>", sep=""))
+  }
+  else if (correct_answer==0){
+    cur_choices["0"]=HTML(paste("<font color='green'>",cur_choices["0"], "</font>", sep=""))
+  }
+  return (cur_choices)
+}
+
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]

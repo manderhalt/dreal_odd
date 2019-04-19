@@ -52,7 +52,9 @@ navbarPage("DREAL Quizz",
                                      img_file_2 = paste(logos[[2]],".jpg", sep="")
                                      div(
                                        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=cur_libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
+                                                          label=cur_libel, inline=TRUE, selected = character(0),
+                                                    choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
+                                                    ),
                                        img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
                                    }
                                    else {
