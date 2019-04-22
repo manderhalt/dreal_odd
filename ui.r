@@ -109,41 +109,41 @@ navbarPage("DREAL Quizz",
       conditionalPanel(
         condition = "output.sidetext1",
         fluidRow(
-          column(4, em(textOutput("sidetext1"))), 
-          column(4, plotOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, imageOutput("rightimage1"))
+          column(4, br(), br(), br(), em(textOutput("sidetext1"))), 
+          column(4, plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, br(), br(), br(), imageOutput("rightimage1"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext2",
         fluidRow(
-          column(4, em(textOutput("sidetext2"))), 
-          column(4, plotOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, imageOutput("rightimage2"))
+          column(4, br(), br(), br(), em(textOutput("sidetext2"))), 
+          column(4, plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, br(), br(), br(), imageOutput("rightimage2"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext3",
         fluidRow(
-          column(4, em(textOutput("sidetext3"))), 
-          column(4, plotOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, imageOutput("rightimage3"))
+          column(4, br(), br(), br(), em(textOutput("sidetext3"))), 
+          column(4, plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, br(), br(), br(), imageOutput("rightimage3"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext4",
         fluidRow(
-          column(4, em(textOutput("sidetext4"))), 
-          column(4, plotOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, imageOutput("rightimage4"))
+          column(4, br(), br(), br(), em(textOutput("sidetext4"))), 
+          column(4, plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, br(), br(), br(), imageOutput("rightimage4"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext5",
         fluidRow(
-          column(4, em(textOutput("sidetext5"))), 
-          column(4, plotOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, imageOutput("rightimage5"))
+          column(4, br(), br(), br(), em(textOutput("sidetext5"))), 
+          column(4, plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, br(), br(), br(), imageOutput("rightimage5"))
         )
       )
    ),

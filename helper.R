@@ -3,6 +3,12 @@ library(ggplot2)
 library(jpeg)
 library(gridExtra)
 library(grid)
+if (!require("plotly"))
+  install.packages("plotly")
+library(plotly)
+if (!require("stringi"))
+  install.packages('stringi')
+library('stringi')
 sourceDir <- getSrcDirectory(function(dummy) {dummy})
 
 # HISTO
@@ -19,7 +25,7 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   data<- get_data(departement_code, epci_code)
   departement_data <- data$departement_data
   epci_data <- data$epci_data
-  c_values = c(departement_data[[question_code]], epci_data[[question_code]])
+  c_values = c(epci_data[[question_code]], departement_data[[question_code]])
   return(c_values)
 }
 
@@ -155,4 +161,41 @@ get_code_indicateur_from_odd <- function(odd){
     }
   }
   list_code_indic
+}
+
+get_graph <- function(values, names){
+  colors2 <- c('#CC1480', '#FF9673', '#FF9673','#FF9673')
+  scale <- max(values)
+  ax <- list(
+    title = "",
+    zeroline = FALSE,
+    showline = FALSE,
+    showticklabels = FALSE,
+    showgrid = FALSE,
+    categoryorder = "array",
+    categoryarray = rev(names)
+  )
+  plotbar <-plot_ly(type="bar", x=values, y=names, color = colors2, showlegend=FALSE)%>%
+    layout(xaxis = ax, yaxis = ax)%>%
+    layout(
+           shapes = list(
+             list(type = "rect",
+                  fillcolor = "grey", line = list(color = "grey"), opacity = 0.3,
+                  x0 = -0.1*scale, x1 = -0.05*scale, xref = "x",
+                  y0 = 0, y1 = 3, yref = "y")))%>%
+    add_annotations(text = names,
+                    x = values/2,
+                    y = names,
+                    xref = "x",
+                    yref = "y",
+                    font = list(family = 'Arial',
+                                size = 14,
+                                color = 'rgba(245, 246, 249, 1)'),
+                    showarrow = FALSE)%>%
+    add_annotations(x = max(values)+0.25*max(values),  y = names,
+                    text = paste(round(values, 2), '%'),
+                    font = list(family = 'Arial', size = 12),
+                    showarrow = FALSE)%>%
+    add_annotations(x = max(values)/2, y=1.5, valign="middle", text=stri_dup("-",20), showarrow=FALSE)
+  return (plotbar)
 }

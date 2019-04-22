@@ -7,6 +7,7 @@ library(dplyr)
 if (!require("rlist"))
   install.packages("rlist")
 library("rlist")
+
 max_img <- 7
 max_plot <- 7
 
@@ -135,13 +136,13 @@ server <- function(input, output, session) {
   # DEUXIEME PAGE
   # CHOIX DEPARTEMENT
   output$departement_2 <- renderUI({
-    selectInput("department_2", 
+    selectInput("departement_2", 
                 "Quel est votre département ?",
                 DF_DEP[order(DF_DEP$Zone),]$Zone, 
                 selected = input$departement)
     })
   
-  departement_2 <-reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$department_2,]})
+  departement_2 <-reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$departement_2,]})
   output$commune_2 <- renderUI({
     list_communes_2 <- filter(DF_DEP_EPCI, dept == departement_2()$CodeZone)[["nom_membre"]]
     list_communes_2 <- list_communes_2[order(list_communes_2)]
@@ -243,7 +244,11 @@ server <- function(input, output, session) {
     local({
       my_j <- j
       plotname <- paste("plotgraph", my_j, sep="")
-      output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
+      output[[plotname]]<- renderPlotly({get_graph(
+        c(outgraph()[[my_j]], outgraph()[[my_j]]),
+        c("Votre EPCI", input$departement_2, "Votre région", "National")
+        )})
+      # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
     })
   }
   # ODD IMAGE
