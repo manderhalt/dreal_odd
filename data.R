@@ -60,3 +60,5 @@ ODD_TEXT <- list("odd_1_text"=ODD_1_TEXT, "odd_2_text"=ODD_2_TEXT, "odd_3_text"=
 
 indicateur_odd_subtitle <- "Tout savoir sur les ODD dans mon territoire"
 source_odd <- "https://www.agenda-2030.fr/odd/odd1-eliminer-la-pauvrete-sous-toutes-ses-formes-et-partout-dans-le-monde-23"
+
+PAS_INDICATEUR <- "Il n'y a pas d'indicateur correspondant à cet objectif de développement durable"

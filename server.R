@@ -92,9 +92,6 @@ server <- function(input, output, session) {
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[input_id]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
-      print("La good answer is")
-      print(type_answer)
-      print(bonne_reponse)
       choice_names <- as.list(get_choices_labels_from_question(cur_libel))
       choice_names <- get_colored_names(choice_names, type_answer, bonne_reponse)
      updateRadioButtons(session, 
@@ -190,7 +187,6 @@ server <- function(input, output, session) {
     }
     
     observeEvent(input[[button]], {
-      
       list_images_to_plot = list()
       for (i in list_image_all){
         cur_img <- NULL
@@ -288,5 +284,5 @@ server <- function(input, output, session) {
   })
   output$text_odd <- renderText({out()})
   
-  
+  output$no_indicateur <- renderText({PAS_INDICATEUR})
 }

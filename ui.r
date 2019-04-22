@@ -103,7 +103,11 @@ navbarPage("DREAL Quizz",
       column(4, "Taux dans votre territoire et votre département"),
       column(4, "ODD correspondant")),
       conditionalPanel(
-        condition = "output.sidetext1.length > 0",
+        condition = "!output.sidetext1",
+        h3(textOutput("no_indicateur"), align="center")
+        ),
+      conditionalPanel(
+        condition = "output.sidetext1",
         fluidRow(
           column(4, em(textOutput("sidetext1"))), 
           column(4, plotOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
@@ -111,7 +115,7 @@ navbarPage("DREAL Quizz",
         )
       ), 
       conditionalPanel(
-        condition = "output.sidetext2.length > 0",
+        condition = "output.sidetext2",
         fluidRow(
           column(4, em(textOutput("sidetext2"))), 
           column(4, plotOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
@@ -119,7 +123,7 @@ navbarPage("DREAL Quizz",
         )
       ), 
       conditionalPanel(
-        condition = "output.sidetext3.length > 0",
+        condition = "output.sidetext3",
         fluidRow(
           column(4, em(textOutput("sidetext3"))), 
           column(4, plotOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
@@ -127,7 +131,7 @@ navbarPage("DREAL Quizz",
         )
       ), 
       conditionalPanel(
-        condition = "output.sidetext4.length > 0",
+        condition = "output.sidetext4",
         fluidRow(
           column(4, em(textOutput("sidetext4"))), 
           column(4, plotOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
@@ -135,7 +139,7 @@ navbarPage("DREAL Quizz",
         )
       ), 
       conditionalPanel(
-        condition = "output.sidetext5.length > 0",
+        condition = "output.sidetext5",
         fluidRow(
           column(4, em(textOutput("sidetext5"))), 
           column(4, plotOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
