@@ -33,43 +33,34 @@ get_choices_labels_from_question<- function(question_libel){
     return (c("Inférieur", "Supérieur", "Je ne sais pas"))
   }
 }
-
-color_the_choices_to_match_response <- function(question_libel, wrong_answer, correct_answer){
-  det <- substr(question_libel, start=1, stop=2)
-  if (grepl("a", det)){
-    cur_choices <- list("0"="Inférieure","1"="Supérieure", "3"="Je ne sais pas")
+get_colored_names <- function(choice_names, type_answer, bonne_reponse){
+  if (type_answer == 2){
+    if (bonne_reponse==1){
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+    }
   }
-  else{
-    cur_choices <- list("0"="Inférieur", "1"="Supérieur", "3"="Je ne sais pas")
+  else if (type_answer==1){
+    if (bonne_reponse==1){
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+    }
   }
-  if (!is.null(wrong_answer)){
-    return (get_style_wrong_answer(cur_choices, wrong_answer))
+  else if (type_answer==0){
+    if (bonne_reponse==1){
+      choice_names[[1]] = tags$span(style = "color:red", choice_names[[1]])
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+      choice_names[[2]] = tags$span(style = "color:red", choice_names[[2]])
+    }
   }
-  else if (correct_answer){
-    return (get_style_good_answer(cur_choices, correct_answer))
-  }
-}
-
-get_style_wrong_answer <- function(cur_choices, wrong_answer){
-  if (wrong_answer==1){
-    cur_choices["1"]=paste("<font color='red'>",cur_choices["1"], "</font>", sep="")
-    cur_choices["0"]=paste("<font color='green'>",cur_choices["0"], "</font>", sep="")
-  }
-  else if (wrong_answer==0){
-    cur_choices["0"]=paste("<font color='red'>",cur_choices["0"], "</font>", sep="")
-    cur_choices["1"]=paste("<font color='green'>",cur_choices["1"], "</font>", sep="")
-  }
-  return (cur_choices)
-}
-
-get_style_good_answer <- function(cur_choices, correct_answer){
-  if (correct_answer==1){
-    cur_choices["1"]=paste("<font color='green'>",cur_choices["1"], "</font>", sep="")
-  }
-  else if (correct_answer==0){
-    cur_choices["0"]=paste("<font color='green'>",cur_choices["0"], "</font>", sep="")
-  }
-  return (cur_choices)
+  return (choice_names)
 }
 
 get_result_from_question <- function(question, epci, dep){

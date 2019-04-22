@@ -73,7 +73,10 @@ server <- function(input, output, session) {
       img_file = paste(logos[[1]],".jpg", sep="")
       list(
         radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                     label=current_question$Libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
+                     label=current_question$Libel, 
+                     choiceNames=get_choices_labels_from_question(cur_libel), 
+                     choiceValues=CHOICEVALUES, 
+                     inline=TRUE, selected = character(0)),
         img(src=img_file, width = 50))
     }
   })
@@ -85,13 +88,19 @@ server <- function(input, output, session) {
     lapply(1:length(QUESTION$Libel), function(question_number){
       current_question <- QUESTION[question_number,]
       cur_libel <- current_question$Libel
-      choices <- color_the_choices_to_match_response(question_libel = cur_libel,wrong_answer = NULL,correct_answer = 0
-      )
-      print(choices)
+      input_id <- paste("question_",current_question$Num_question,sep='')
+      bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      response_user <- input[[input_id]]
+      type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
+      print("La good answer is")
+      print(type_answer)
+      print(bonne_reponse)
+      choice_names <- as.list(get_choices_labels_from_question(cur_libel))
+      choice_names <- get_colored_names(choice_names, type_answer, bonne_reponse)
      updateRadioButtons(session, 
-                        inputId=paste("question_",current_question$Num_question,sep=''),
+                        inputId=input_id,
                         label=current_question$Libel,
-                        choiceNames=CHOICENAMES, choiceValues = CHOICEVALUES, selected = 0) 
+                        choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = input[[input_id]]) 
     })
   })
   
