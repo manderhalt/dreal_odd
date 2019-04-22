@@ -52,22 +52,22 @@ color_the_choices_to_match_response <- function(question_libel, wrong_answer, co
 
 get_style_wrong_answer <- function(cur_choices, wrong_answer){
   if (wrong_answer==1){
-    cur_choices["1"]=HTML(paste("<font color='red'>",cur_choices["1"], "</font>", sep=""))
-    cur_choices["0"]=HTML(paste("<font color='green'>",cur_choices["0"], "</font>", sep=""))
+    cur_choices["1"]=paste("<font color='red'>",cur_choices["1"], "</font>", sep="")
+    cur_choices["0"]=paste("<font color='green'>",cur_choices["0"], "</font>", sep="")
   }
   else if (wrong_answer==0){
-    cur_choices["0"]=HTML(paste("<font color='red'>",cur_choices["0"], "</font>", sep=""))
-    cur_choices["1"]=HTML(paste("<font color='green'>",cur_choices["1"], "</font>", sep=""))
+    cur_choices["0"]=paste("<font color='red'>",cur_choices["0"], "</font>", sep="")
+    cur_choices["1"]=paste("<font color='green'>",cur_choices["1"], "</font>", sep="")
   }
   return (cur_choices)
 }
 
 get_style_good_answer <- function(cur_choices, correct_answer){
   if (correct_answer==1){
-    cur_choices["1"]=HTML(paste("<font color='green'>",cur_choices["1"], "</font>", sep=""))
+    cur_choices["1"]=paste("<font color='green'>",cur_choices["1"], "</font>", sep="")
   }
   else if (correct_answer==0){
-    cur_choices["0"]=HTML(paste("<font color='green'>",cur_choices["0"], "</font>", sep=""))
+    cur_choices["0"]=paste("<font color='green'>",cur_choices["0"], "</font>", sep="")
   }
   return (cur_choices)
 }

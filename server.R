@@ -62,7 +62,7 @@ server <- function(input, output, session) {
     if (length(logos)>1){
       img_file_1 = paste(logos[[1]],".jpg", sep="")
       img_file_2 = paste(logos[[2]],".jpg", sep="")
-      div(
+      list(
         radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
                      label=cur_libel, inline=TRUE, selected = character(0),
                      choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
     }
     else {
       img_file = paste(logos[[1]],".jpg", sep="")
-      div(
+      list(
         radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
                      label=current_question$Libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
         img(src=img_file, width = 50))
@@ -79,7 +79,23 @@ server <- function(input, output, session) {
   })
     do.call(tagList, unlist(plot_and_radio_output_list, recursive=FALSE))
   })
+  
+  observeEvent(input$submitBtn, {
     
+    lapply(1:length(QUESTION$Libel), function(question_number){
+      current_question <- QUESTION[question_number,]
+      cur_libel <- current_question$Libel
+      choices <- color_the_choices_to_match_response(question_libel = cur_libel,wrong_answer = NULL,correct_answer = 0
+      )
+      print(choices)
+     updateRadioButtons(session, 
+                        inputId=paste("question_",current_question$Num_question,sep=''),
+                        label=current_question$Libel,
+                        choiceNames=CHOICENAMES, choiceValues = CHOICEVALUES, selected = 0) 
+    })
+  })
+  
+  
   # DIVWHEEL
   observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
