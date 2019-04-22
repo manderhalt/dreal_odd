@@ -42,33 +42,11 @@ navbarPage("DREAL Quizz",
          # FORM 
          conditionalPanel(condition = "input.validate_choice", 
                           h4(textOutput("epci_text")),
-                          tags$form(
-                                 lapply(1:length(QUESTION$Libel), function(question_number){
-                                   current_question <- QUESTION[question_number,]
-                                   cur_libel <- current_question$Libel
-                                   logos <- logos_from_code_indic(current_question$Code_indicateur)
-                                   if (length(logos)>1){
-                                     img_file_1 = paste(logos[[1]],".jpg", sep="")
-                                     img_file_2 = paste(logos[[2]],".jpg", sep="")
-                                     div(
-                                       radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=cur_libel, inline=TRUE, selected = character(0),
-                                                    choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
-                                                    ),
-                                       img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
-                                   }
-                                   else {
-                                     img_file = paste(logos[[1]],".jpg", sep="")
-                                     div(
-                                       radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                                                          label=current_question$Libel, choices=get_choices_from_question(cur_libel), inline=TRUE, selected = character(0)),
-                                       img(src=img_file, width = 50))
-                                   }
-                                 }), 
-                                 br(),
-                                 actionButton("submitBtn", "Valider"),
-                                 actionButton("refresh", "Réessayer le quizz")
-         ))
+                          uiOutput("plots_and_radios"),
+                          br(),
+                          actionButton("submitBtn", "Valider"),
+                          actionButton("refresh", "Réessayer le quizz")
+         )
          ,
          
          # WHEEL

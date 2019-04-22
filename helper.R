@@ -42,11 +42,11 @@ color_the_choices_to_match_response <- function(question_libel, wrong_answer, co
   else{
     cur_choices <- list("0"="Inférieur", "1"="Supérieur", "3"="Je ne sais pas")
   }
-  if (wrong_answer){
+  if (!is.null(wrong_answer)){
     return (get_style_wrong_answer(cur_choices, wrong_answer))
   }
   else if (correct_answer){
-    return (get_style_correct_answer(cur_choices, correct_answer))
+    return (get_style_good_answer(cur_choices, correct_answer))
   }
 }
 
