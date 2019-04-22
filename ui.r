@@ -110,7 +110,7 @@ navbarPage("DREAL Quizz",
         condition = "output.sidetext1",
         fluidRow(
           column(4, em(textOutput("sidetext1"))), 
-          column(4, plotOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(4, imageOutput("rightimage1"))
         )
       ), 
@@ -118,7 +118,7 @@ navbarPage("DREAL Quizz",
         condition = "output.sidetext2",
         fluidRow(
           column(4, em(textOutput("sidetext2"))), 
-          column(4, plotOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(4, imageOutput("rightimage2"))
         )
       ), 
@@ -126,7 +126,7 @@ navbarPage("DREAL Quizz",
         condition = "output.sidetext3",
         fluidRow(
           column(4, em(textOutput("sidetext3"))), 
-          column(4, plotOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(4, imageOutput("rightimage3"))
         )
       ), 
@@ -134,7 +134,7 @@ navbarPage("DREAL Quizz",
         condition = "output.sidetext4",
         fluidRow(
           column(4, em(textOutput("sidetext4"))), 
-          column(4, plotOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(4, imageOutput("rightimage4"))
         )
       ), 
@@ -142,7 +142,7 @@ navbarPage("DREAL Quizz",
         condition = "output.sidetext5",
         fluidRow(
           column(4, em(textOutput("sidetext5"))), 
-          column(4, plotOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(4, plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(4, imageOutput("rightimage5"))
         )
       )

@@ -3,6 +3,9 @@ library(ggplot2)
 library(jpeg)
 library(gridExtra)
 library(grid)
+if (!require("plotly"))
+  install.packages("plotly")
+library(plotly)
 sourceDir <- getSrcDirectory(function(dummy) {dummy})
 
 # HISTO
@@ -155,4 +158,26 @@ get_code_indicateur_from_odd <- function(odd){
     }
   }
   list_code_indic
+}
+
+get_graph <- function(values, names){
+  ax <- list(
+    title = "",
+    zeroline = FALSE,
+    showline = FALSE,
+    showticklabels = FALSE,
+    showgrid = FALSE
+  )
+  plotbar <-plot_ly(type="bar", x=values, y=names)%>%
+    layout(xaxis = ax, yaxis = ax)%>%
+    add_annotations(text = names,
+                    x = values/2,
+                    y = names,
+                    xref = "x",
+                    yref = "y",
+                    font = list(family = 'Arial',
+                                size = 14,
+                                color = 'rgba(245, 246, 249, 1)'),
+                    showarrow = FALSE)
+  return (plotbar)
 }
