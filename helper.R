@@ -24,15 +24,45 @@ horiz_histo <- function(departement_code, epci_code, question_code){
 }
 
 # QUESTIONS
-get_choices_from_question<- function(question_libel){
+get_choices_labels_from_question<- function(question_libel){
   det <- substr(question_libel, start=1, stop=2)
   if (grepl("a", det)){
-    return (c("Inférieure" = 0, "Supérieure" = 1, "Je ne sais pas"=3))
+    return (c("Inférieure", "Supérieure", "Je ne sais pas"))
   }
   else{
-    return (c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=3))
+    return (c("Inférieur", "Supérieur", "Je ne sais pas"))
   }
 }
+get_colored_names <- function(choice_names, type_answer, bonne_reponse){
+  if (type_answer == 2){
+    if (bonne_reponse==1){
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+    }
+  }
+  else if (type_answer==1){
+    if (bonne_reponse==1){
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+    }
+  }
+  else if (type_answer==0){
+    if (bonne_reponse==1){
+      choice_names[[1]] = tags$span(style = "color:red", choice_names[[1]])
+      choice_names[[2]] = tags$span(style = "color:green", choice_names[[2]])
+    }
+    else if (bonne_reponse==0){
+      choice_names[[1]] = tags$span(style = "color:green", choice_names[[1]])
+      choice_names[[2]] = tags$span(style = "color:red", choice_names[[2]])
+    }
+  }
+  return (choice_names)
+}
+
 get_result_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]

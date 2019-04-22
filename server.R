@@ -52,6 +52,59 @@ server <- function(input, output, session) {
   })
   output$epci_text <- renderText({paste("Votre territoire (EPCI) est: ", epci()$raison_sociale)})
   
+  #FORM
+  
+  output$plots_and_radios <- renderUI({
+    plot_and_radio_output_list <- lapply(1:length(QUESTION$Libel), function(question_number){
+    current_question <- QUESTION[question_number,]
+    cur_libel <- current_question$Libel
+    logos <- logos_from_code_indic(current_question$Code_indicateur)
+    if (length(logos)>1){
+      img_file_1 = paste(logos[[1]],".jpg", sep="")
+      img_file_2 = paste(logos[[2]],".jpg", sep="")
+      list(
+        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+                     label=cur_libel, inline=TRUE, selected = character(0),
+                     choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
+        ),
+        img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
+    }
+    else {
+      img_file = paste(logos[[1]],".jpg", sep="")
+      list(
+        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+                     label=current_question$Libel, 
+                     choiceNames=get_choices_labels_from_question(cur_libel), 
+                     choiceValues=CHOICEVALUES, 
+                     inline=TRUE, selected = character(0)),
+        img(src=img_file, width = 50))
+    }
+  })
+    do.call(tagList, unlist(plot_and_radio_output_list, recursive=FALSE))
+  })
+  
+  observeEvent(input$submitBtn, {
+    
+    lapply(1:length(QUESTION$Libel), function(question_number){
+      current_question <- QUESTION[question_number,]
+      cur_libel <- current_question$Libel
+      input_id <- paste("question_",current_question$Num_question,sep='')
+      bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      response_user <- input[[input_id]]
+      type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
+      print("La good answer is")
+      print(type_answer)
+      print(bonne_reponse)
+      choice_names <- as.list(get_choices_labels_from_question(cur_libel))
+      choice_names <- get_colored_names(choice_names, type_answer, bonne_reponse)
+     updateRadioButtons(session, 
+                        inputId=input_id,
+                        label=current_question$Libel,
+                        choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = input[[input_id]]) 
+    })
+  })
+  
+  
   # DIVWHEEL
   observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
@@ -139,8 +192,6 @@ server <- function(input, output, session) {
     observeEvent(input[[button]], {
       
       list_images_to_plot = list()
-      print("THE LIST OF ALL IMAGE IS")
-      print(list_image_all)
       for (i in list_image_all){
         cur_img <- NULL
         for (j in i){
@@ -151,9 +202,6 @@ server <- function(input, output, session) {
         list_images_to_plot <- list.append(list_images_to_plot, cur_img)
         
       }
-      print("aaaaaaaaaaaaaaa")
-      print(list_images_to_plot)
-      print("aaaaaaaaaaaaaaa")
       list_graph_values_to_plot = list()
       for (i in list_code_indic){
         cur_values <- horiz_histo(departement_2()$CodeZone,
