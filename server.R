@@ -95,10 +95,14 @@ server <- function(input, output, session) {
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       choice_names <- as.list(get_choices_labels_from_question(cur_libel))
       choice_names <- get_colored_names(choice_names, type_answer, bonne_reponse)
+      marker_to_select = 3
+      if (!is.null(input[[input_id]])){
+        marker_to_select = input[[input_id]]
+      }
      updateRadioButtons(session, 
                         inputId=input_id,
                         label=current_question$Libel,
-                        choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = input[[input_id]]) 
+                        choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = marker_to_select) 
     })
   })
   
@@ -112,8 +116,6 @@ server <- function(input, output, session) {
       current_question <- QUESTION[question_number,]
       question_input_id <- paste("question_",current_question$Num_question,sep='')
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
-      print("LA BONNE REPONSE EST")
-      print(bonne_reponse)
       response_user <- input[[question_input_id]]
       cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
@@ -121,8 +123,6 @@ server <- function(input, output, session) {
       response_all[cur_odd] <<- bonne_reponse
     })
     all_logos <- all_odd()
-    print("LA REPONSE EST")
-    print(response_all)
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), width="100%")
   })
   
