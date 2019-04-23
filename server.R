@@ -112,14 +112,17 @@ server <- function(input, output, session) {
       current_question <- QUESTION[question_number,]
       question_input_id <- paste("question_",current_question$Num_question,sep='')
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      print("LA BONNE REPONSE EST")
+      print(bonne_reponse)
       response_user <- input[[question_input_id]]
       cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       
-      response_all[cur_odd] <<- type_answer
+      response_all[cur_odd] <<- bonne_reponse
     })
     all_logos <- all_odd()
-    
+    print("LA REPONSE EST")
+    print(response_all)
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), width="100%")
   })
   

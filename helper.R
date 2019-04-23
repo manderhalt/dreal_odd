@@ -164,7 +164,7 @@ get_code_indicateur_from_odd <- function(odd){
 }
 
 get_graph <- function(values, names){
-  colors2 <- c('#CC1480', '#FF9673', '#FF9673','#FF9673')
+  colors2 <-c('#CC1480', '#FF9673', '#FF9673','#FF9673')
   scale <- max(values)
   ax <- list(
     title = "",
