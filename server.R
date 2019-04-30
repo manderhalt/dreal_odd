@@ -120,9 +120,9 @@ server <- function(input, output, session) {
       response_user <- input[[question_input_id]]
       cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
-      
+      numbers <- get_numbers_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_all[cur_odd] <<- bonne_reponse
-      text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = c(15,19))
+      text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = numbers)
     })
     all_logos <- all_odd()
     title_alert <- all_logos

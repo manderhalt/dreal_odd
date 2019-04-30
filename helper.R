@@ -26,6 +26,14 @@ get_divwheel_text_from_question_numbers <- function(question, numbers){
   return (final)
 }
 
+get_numbers_from_question <- function(question, epci, dep) {
+  line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
+  line_dep <- DF_DEP[DF_DEP$CodeZone == dep,]
+  answer_epci <- round(line_epci[[question]],digits = 1)
+  answer_dep <- round(line_dep[[question]], digits = 1)
+  return (c(answer_epci, answer_dep))
+}
+
 # HISTO
 get_data <- function(departement_code, epci_code){
   departement_data <- DF_DEP[DF_DEP$CodeZone==departement_code,]
