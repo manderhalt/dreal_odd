@@ -7,12 +7,14 @@ if (!require("devtools"))
 library("htmlwidgets")
 library("devtools")
 
-devtools::install("./divwheel")
+devtools::install("../divwheel")
 library(divwheel)
 all_logos <- all_odd()
+title_alert <- replicate(17, "ODD1")
+text_alert <- replicate(17, "Votre territoire a un taux d'emploi de 75 %, tandis que celui de votre département est de 60 %")
 colors <- get_all_colors_from_list_odds(all_logos)
 lgl <- integer(17)+2
-divwheelnav(lgl, all_logos, colors)
+divwheelnav(lgl, all_logos, colors, title_alert, text_alert)
 
 # create package using devtools
 #devtools::create("divwheel")  

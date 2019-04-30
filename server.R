@@ -123,7 +123,9 @@ server <- function(input, output, session) {
       response_all[cur_odd] <<- bonne_reponse
     })
     all_logos <- all_odd()
-    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), width="100%")
+    title_alert <- replicate(17, "ODD1")
+    text_alert <- replicate(17, "Votre territoire a un taux d'emploi de 75 %, tandis que celui de votre département est de 60 %")
+    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), title_alert, text_alert, width="100%")
   })
   
   wheel_title <- reactiveVal("")
