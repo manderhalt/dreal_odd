@@ -111,6 +111,7 @@ server <- function(input, output, session) {
   observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
   text_alert_all <- replicate(17, "")
+  all_logos <- replicate(17, "")
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     
     lapply(1:nrow(QUESTION), function(question_number){
@@ -122,12 +123,12 @@ server <- function(input, output, session) {
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       numbers <- get_numbers_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_all[cur_odd] <<- bonne_reponse
+      all_logos[cur_odd] <<- paste("ODD", cur_odd, sep="")
       text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = numbers)
     })
-    all_logos <- all_odd()
     title_alert <- all_logos
     
-    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), title_alert, text_alert_all, width="100%")
+    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(), title_alert, text_alert_all, width="100%")
   })
   
   wheel_title <- reactiveVal("")
