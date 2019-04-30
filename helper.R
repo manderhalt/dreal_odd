@@ -11,6 +11,15 @@ if (!require("stringi"))
 library('stringi')
 sourceDir <- getSrcDirectory(function(dummy) {dummy})
 
+
+# DIVWHEEL
+get_divwheel_text_from_question_numbers <- function(question, numbers){
+  first_part <- paste(gsub(":", " de", question$Libel), numbers[[1]], "%")
+  second_part <- paste(", tandis que celui de votre département est de", numbers[[2]], "%.")
+  final <- paste(first_part, second_part)
+  return (final)
+}
+
 # HISTO
 get_data <- function(departement_code, epci_code){
   departement_data <- DF_DEP[DF_DEP$CodeZone==departement_code,]

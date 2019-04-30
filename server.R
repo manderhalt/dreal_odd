@@ -110,6 +110,7 @@ server <- function(input, output, session) {
   # DIVWHEEL
   observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
+  text_alert_all <- replicate(17, "")
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     
     lapply(1:nrow(QUESTION), function(question_number){
@@ -121,11 +122,12 @@ server <- function(input, output, session) {
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       
       response_all[cur_odd] <<- bonne_reponse
+      text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = c(15,19))
     })
     all_logos <- all_odd()
-    title_alert <- replicate(17, "ODD1")
-    text_alert <- replicate(17, "Votre territoire a un taux d'emploi de 75 %, tandis que celui de votre département est de 60 %")
-    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), title_alert, text_alert, width="100%")
+    title_alert <- all_logos
+    
+    divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(all_logos), title_alert, text_alert_all, width="100%")
   })
   
   wheel_title <- reactiveVal("")
