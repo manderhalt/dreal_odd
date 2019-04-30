@@ -56,6 +56,12 @@ navbarPage("DREAL Quizz",
      
    ))),
    
+   headerPanel("",
+               tags$head(
+                 tags$img(src="logo.svg", width="100%")
+               )
+   ),
+   
    # Styling nav bar
    tags$head(
      tags$style(HTML("
