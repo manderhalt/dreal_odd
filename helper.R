@@ -15,7 +15,13 @@ sourceDir <- getSrcDirectory(function(dummy) {dummy})
 # DIVWHEEL
 get_divwheel_text_from_question_numbers <- function(question, numbers){
   first_part <- paste(gsub(":", " de", question$Libel), numbers[[1]], "%")
+  det <- substr(question$Libel, start=1, stop=2)
+  if (grepl("a", det)){
+    second_part <- paste(", tandis que celle de votre département est de", numbers[[2]], "%.")
+  }
+  else {
   second_part <- paste(", tandis que celui de votre département est de", numbers[[2]], "%.")
+  }
   final <- paste(first_part, second_part)
   return (final)
 }
