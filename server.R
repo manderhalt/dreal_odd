@@ -167,7 +167,7 @@ server <- function(input, output, session) {
                     dept == departement_2()$CodeZone)
   })
   
-  output$epci_text_2 <-renderText({paste("Votre EPCI est: ", epci_2()$raison_sociale)})
+  output$epci_text_2 <-renderText({paste("Votre territoire est: ", epci_2()$raison_sociale)})
   
   # LOGOS
   outgraph <- reactiveVal()
@@ -255,7 +255,7 @@ server <- function(input, output, session) {
       plotname <- paste("plotgraph", my_j, sep="")
       output[[plotname]]<- renderPlotly({get_graph(
         c(outgraph()[[my_j]], outgraph()[[my_j]]),
-        c("Votre EPCI", input$departement_2, "Votre région", "National")
+        c("Votre territoire", input$departement_2, "Votre région", "National")
         )})
       # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
     })
