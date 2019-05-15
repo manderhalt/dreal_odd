@@ -1,6 +1,7 @@
 # Define server logic required to draw a histogram ----
 source("data.R")
 source("helper.R")
+source("data_connect.R")
 if (!require("dplyr"))
   install.packages("dplyr")
 library(dplyr)
