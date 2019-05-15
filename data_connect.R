@@ -14,10 +14,18 @@ USER <- Sys.getenv("USER_DB")
 PORT <- Sys.getenv("PORT")
 DATABASE <- Sys.getenv("DATABASE")
 HOST <- Sys.getenv("HOST_DB")
-
+TABLE_ANSWER <- Sys.getenv("TABLE_ANSWER")
 con <- dbConnect(RPostgres::Postgres(),dbname = DATABASE, 
                  host = HOST,
                  port = PORT,
                  user = USER,
                  password = PW)
-dbListFields(con, "COG_2018_COMMUNE_EPCI")
+
+COG_2018_COMMUNE_EPCI <- dbReadTable(con, "COG_2018_COMMUNE_EPCI")
+DF_DEP <- dbReadTable(con, "QUIZZ_ODD_DEP_2019_03_05")
+DF_DEP <- DF_DEP[!is.na(DF_DEP$Zone),]
+DF_EPCI <- dbReadTable(con, "QUIZZ_ODD_EPCI_2019_03_05")
+DF_EPCI <- DF_EPCI[!is.na(DF_EPCI$Zone),]
+IND <- dbReadTable(con, "Tab_passage_Ind_ODD")
+DF_FR <- dbReadTable(con, "QUIZZ_ODD_FM_2019_03_05")
+DF_ANSWER <- dbReadTable(con, TABLE_ANSWER)
