@@ -221,6 +221,8 @@ get_graph <- function(values, names){
                     text = paste(round(values, 2), '%'),
                     font = list(family = 'Arial', size = 12),
                     showarrow = FALSE)%>%
+    layout(plot_bgcolor='transparent') %>% 
+    layout(paper_bgcolor='transparent') %>%
     add_annotations(x = max(values)/2, y=1.5, valign="middle", text=stri_dup("-",20), showarrow=FALSE)
   return (plotbar)
 }
