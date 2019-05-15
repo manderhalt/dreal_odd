@@ -20,16 +20,13 @@ source("helper.R")
 
 
 navbarPage("DREAL Quizz", 
+           
    # PREMIERE PAGE
    tabPanel(
      "Accueil",
      setBackgroundImage(src = "background3.jpg"),
-     sidebarLayout(
-       sidebarPanel(
-         imageOutput("image_dreal")
-       )
-       ,
-       mainPanel(
+     fluidRow(column(4, imageOutput("image_dreal")),
+     column(8,
          # TITRES ET PARAGRAPHE D'INTRO
          h3(textOutput("caption")),
          textOutput("intro_text"),
@@ -85,7 +82,7 @@ navbarPage("DREAL Quizz",
       lapply(1:17, function(i){
         odd <- paste("ODD ", i, sep="")
         id_button <- paste("ODD_button_graph", i, sep="")
-        odd_image <- paste("ODD", i,".jpg", sep="")
+        odd_image <- paste("ODD", i,".png", sep="")
         tags$button(
           id = id_button,
           class = "btn action-button",

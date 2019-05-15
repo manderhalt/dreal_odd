@@ -23,8 +23,7 @@ server <- function(input, output, session) {
     list(
       src = "logo_fr_dreal.png",
       contentType = 'image/png',
-      width = 250,
-      height = 250
+      width = "100%"
     )}, deleteFile = FALSE)
   
   # SELECTION DEPARTEMENT
@@ -62,8 +61,8 @@ server <- function(input, output, session) {
     cur_libel <- current_question$Libel
     logos <- logos_from_code_indic(current_question$Code_indicateur)
     if (length(logos)>1){
-      img_file_1 = paste(logos[[1]],".jpg", sep="")
-      img_file_2 = paste(logos[[2]],".jpg", sep="")
+      img_file_1 = paste(logos[[1]],".png", sep="")
+      img_file_2 = paste(logos[[2]],".png", sep="")
       list(
         radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
                      label=cur_libel, inline=TRUE, selected = character(0),
@@ -72,7 +71,7 @@ server <- function(input, output, session) {
         img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
     }
     else {
-      img_file = paste(logos[[1]],".jpg", sep="")
+      img_file = paste(logos[[1]],".png", sep="")
       list(
         radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
                      label=current_question$Libel, 
@@ -187,7 +186,7 @@ server <- function(input, output, session) {
       for (logo in cur_logos){
         list_image <- NULL
         if (logo != odd){
-          cur_img = paste("www/", logo, ".jpg", sep="")
+          cur_img = paste("www/", logo, ".png", sep="")
           list_image <- c(list_image, cur_img)
         }
         else {

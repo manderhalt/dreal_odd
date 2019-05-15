@@ -9,6 +9,7 @@ library("devtools")
 
 devtools::install("../divwheel")
 library(divwheel)
+reload(pkg="../divwheel")
 all_logos <- all_odd()
 title_alert <- replicate(17, "ODD1")
 text_alert <- replicate(17, "Votre territoire a un taux d'emploi de 75 %, tandis que celui de votre département est de 60 %")
