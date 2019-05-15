@@ -99,15 +99,16 @@ navbarPage("DREAL Quizz",
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
       
       # GRAPHE
-      fluidRow(column(4, "Indicateur"),
-      column(4, "Taux dans votre territoire et votre département"),
-      column(4, "ODD correspondant")),
       conditionalPanel(
         condition = "!output.sidetext1",
         h3(textOutput("no_indicateur"), align="center")
         ),
       conditionalPanel(
+        
         condition = "output.sidetext1",
+        fluidRow(column(4, "Indicateur"),
+                 column(4, "Taux dans votre territoire et votre département"),
+                 column(4, "ODD correspondant")),
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext1"))), 
           column(4, plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
