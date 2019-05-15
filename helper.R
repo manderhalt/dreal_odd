@@ -199,8 +199,9 @@ get_graph <- function(values, names){
     categoryorder = "array",
     categoryarray = rev(names)
   )
-  plotbar <-plot_ly(type="bar", x=values, y=names, color = colors2, showlegend=FALSE)%>%
+  plotbar <-plot_ly(type="bar", x=values, y=names, color = colors2, showlegend=FALSE, hoverinfo = 'none')%>%
     layout(xaxis = ax, yaxis = ax)%>%
+    config(displayModeBar = F) %>% 
     layout(
            shapes = list(
              list(type = "rect",
