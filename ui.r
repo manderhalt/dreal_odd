@@ -18,6 +18,7 @@ source("helper.R")
 
 
 
+
 navbarPage("DREAL Quizz", 
    # PREMIERE PAGE
    tabPanel(
@@ -53,8 +54,7 @@ navbarPage("DREAL Quizz",
          h3(textOutput("wheel_title")),
          br(),
          textOutput("wheel_legend"),
-         divwheelnavOutput("nav_output") 
-       
+         divwheelnavOutput("nav_output")
      
      
    ))),

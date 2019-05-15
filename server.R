@@ -129,6 +129,7 @@ server <- function(input, output, session) {
     title_alert <- all_logos
     
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(), title_alert, text_alert_all, width="100%")
+
   })
   
   wheel_title <- reactiveVal("")
