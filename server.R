@@ -102,6 +102,7 @@ server <- function(input, output, session) {
      updateRadioButtons(session, 
                         inputId=input_id,
                         label=current_question$Libel,
+                        inline=TRUE,
                         choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = marker_to_select) 
     })
   })
