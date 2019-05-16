@@ -32,3 +32,10 @@ DF_FR <- DF_FR[!is.na(DF_FR$Zone),]
 DF_REG <- dbReadTable(con, "QUIZZ_ODD_REG_2019_03_05")
 DF_REG <- DF_REG[!is.na(DF_REG$Zone),]
 DF_ANSWER <- dbReadTable(con, TABLE_ANSWER)
+
+insert_answer <- function(line){
+  query <- paste("INSERT INTO", TABLE_ANSWER, "(question_label, answer_question, right_answer, date_submit)", "VALUES", "(", line, ");")
+  res <- dbSendQuery(con, query)
+}
+
+
