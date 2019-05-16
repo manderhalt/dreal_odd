@@ -197,7 +197,9 @@ server <- function(input, output, session) {
       list_image_all <- c(list_image_all, list(list_image))
     }
     
-    observeEvent(input[[button]], {
+    observeEvent({input[[button]]
+                input[["commune_string_2"]]}
+                , {
       list_images_to_plot = list()
       for (i in list_image_all){
         cur_img <- NULL
@@ -211,6 +213,9 @@ server <- function(input, output, session) {
       }
       list_graph_values_to_plot = list()
       for (i in list_code_indic){
+        print("AGAGAGAGAGAG")
+        print(departement_2())
+        print(epci_2())
         cur_values <- horiz_histo(departement_2()$CodeZone,
                                   epci_2()$siren,
                                   i)
