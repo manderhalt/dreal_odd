@@ -24,6 +24,11 @@ navbarPage("DREAL Quizz",
    # PREMIERE PAGE
    tabPanel(
      "Accueil",
+     headerPanel("",
+                 tags$head(
+                   tags$img(src="logo.svg", width="100%")
+                 )
+     ),
      setBackgroundImage(src = "background3.jpg"),
      fluidRow(column(4, imageOutput("image_dreal")),
      column(8,
@@ -56,11 +61,17 @@ navbarPage("DREAL Quizz",
      
    ))),
    
+   
+   
    # Styling nav bar
    tags$head(
      tags$style(HTML("
                      .navbar-nav { width: 85% }
                      .navbar-nav>li:nth-child(4) { float: right; }
+                     .navbar-default {
+    background-color: #FFFFFF ;
+}
+                     
                      "))
      ), 
    # DEUXIEME PAGE
@@ -157,11 +168,12 @@ navbarPage("DREAL Quizz",
      "Les ODD, qu'est ce que c'est ?",
      
      
+     
      # LES 17 LOGOS
      lapply(1:17, function(i) {
        odd <- paste("ODD ", i, sep="")
        id_button <- paste("ODD_button_", i, sep="")
-       odd_image <- paste("ODD", i,".jpg", sep="")
+       odd_image <- paste("ODD", i,".png", sep="")
        tags$button(
          id = id_button,
          class = "btn action-button",
