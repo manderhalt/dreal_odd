@@ -36,9 +36,12 @@ get_numbers_from_question <- function(question, epci, dep) {
 
 # HISTO
 get_data <- function(departement_code, epci_code){
+  region_code <- DEP_TO_REGION[DEP_TO_REGION$DEP==departement_code, ]$REGION
+  
   departement_data <- DF_DEP[DF_DEP$CodeZone==departement_code,]
   epci_data <- DF_EPCI[DF_EPCI$CodeZone==epci_code,]
-  list("departement_data"=departement_data, "epci_data"=epci_data)
+  region_data <- DF_REG[DF_REG$CodeZone==region_code,]
+  list("departement_data"=departement_data, "epci_data"=epci_data, "region_data"=region_data, "fm_data"=DF_FR)
 }
 
 horiz_histo <- function(departement_code, epci_code, question_code){
@@ -48,7 +51,11 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   data<- get_data(departement_code, epci_code)
   departement_data <- data$departement_data
   epci_data <- data$epci_data
-  c_values = c(epci_data[[question_code]], departement_data[[question_code]])
+  region_data <- data$region_data
+  fm_data <- data$fm_data
+  
+  
+  c_values = c(epci_data[[question_code]], departement_data[[question_code]], region_data[[question_code]], fm_data[[question_code]])
   return(c_values)
 }
 
