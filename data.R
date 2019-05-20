@@ -8,12 +8,6 @@ QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', strings
 interstice <- c(br(), br(), br(), br(), br(), br(), br())
 
 # Elements de texte de la landing page
-INTRO_TEXT <- "Au coeur de l'Agenda 2030 des Nations Unies, 17 Objectifs de développement durable (ODD) ont été fixés. Ils couvrent l'intégralité des enjeux de développement dans tous les pays tels que le climat, la biodiversité, l'énergie, l'eau, la pauvreté, l'égalité des genres, la prospérité économique ou encore la paix, l'agriculture et l'éducation.
-La région Centre-Val de Loire a défini une cinquantaine d’indicateurs de suivi des ODD pour différents échelons: la région, les départements et les communes via les EPCI (Établissement public de coopération intercommunale). 
-Découvrez et comparez les avancées de votre commune et de votre département en matière de développement durable avec l’application [...] !"
-
-TITLE <- "Les objectifs de développement durable dans mon territoire"
-CATCHPHRASE <- "Où en est la transition écologique dans mon territoire ? La réponse avec le quizz Les ODDs dans mon territoire. Testez votre connaissance du territoire et découvrez les objectifs de développement durable en 8 questions !"
 
 
 # Différentes questions

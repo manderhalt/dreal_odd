@@ -33,9 +33,7 @@ navbarPage("DREAL Quizz",
      fluidRow(column(4, imageOutput("image_dreal")),
      column(8,
          # TITRES ET PARAGRAPHE D'INTRO
-         h3(textOutput("caption")),
-         textOutput("intro_text"),
-         h4(textOutput("catchphrase")),
+         includeHTML("intro.html"),
          
          # SELECTION DEPARTEMENT COMMUNE
          uiOutput("departement"),
