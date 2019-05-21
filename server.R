@@ -177,7 +177,7 @@ server <- function(input, output, session) {
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
-    odd_text <- paste("odd_", i, "_text", sep="")
+    odd_text <- paste("odd", i, sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
     list_image_all <- list()
@@ -222,7 +222,7 @@ server <- function(input, output, session) {
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
       }
       outgraph(list_graph_values_to_plot)
-      outtextgraph(ODD_TEXT[[odd_text]])
+      outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
       sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
       rightoddimage(list_images_to_plot)
       
@@ -294,15 +294,18 @@ server <- function(input, output, session) {
   
   # TROISIEME PAGE
   # BOUTTONS LOGOS
-  out <- reactiveVal("")
+  outtextgraphthird <- reactiveVal()
+  outsubtextgraphthird <- reactiveVal()
   lapply(1:17, function(i) {
     button <- paste("ODD_button_", i, sep="")
-    odd_text <- paste("odd_", i, "_text", sep="")
+    odd_text <- paste("odd", i, sep="")
     observeEvent(input[[button]], {
-      out(ODD_TEXT[[odd_text]])
+      outtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
+      outsubtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT)
     })
   })
-  output$text_odd <- renderText({out()})
+  output$text_odd <- renderText({outtextgraphthird()})
+  output$subtext_odd <- renderText({outsubtextgraphthird()})
   
   output$no_indicateur <- renderText({PAS_INDICATEUR})
 }
