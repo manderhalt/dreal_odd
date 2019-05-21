@@ -177,7 +177,7 @@ navbarPage("DREAL Quizz",
          class = "btn action-button",
          img(src = odd_image,
              height = "75px"),
-         style="background-color: #FFFFFF"
+         style="background-color: transparent"
        )
      }
      ),
