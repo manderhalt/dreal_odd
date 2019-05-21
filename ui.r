@@ -181,7 +181,7 @@ navbarPage("DREAL Quizz",
        )
      }
      ),
-     column(width = 9, align = "center", h4(textOutput("text_odd")))
+     column(width = 12, align = "center", h4(textOutput("text_odd")), textOutput("subtext_odd"))
    )
 )
 
