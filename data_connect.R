@@ -15,12 +15,15 @@ PORT <- Sys.getenv("PORT")
 DATABASE <- Sys.getenv("DATABASE")
 HOST <- Sys.getenv("HOST_DB")
 TABLE_ANSWER <- Sys.getenv("TABLE_ANSWER")
-con <- dbConnect(RPostgres::Postgres(),dbname = DATABASE, 
+establish_connection <- function(){
+  con <- dbConnect(RPostgres::Postgres(),dbname = DATABASE, 
                  host = HOST,
                  port = PORT,
                  user = USER,
                  password = PW)
-
+  return (con)
+}
+con <- establish_connection()
 COG_2018_COMMUNE_EPCI <- dbReadTable(con, "COG_2018_COMMUNE_EPCI")
 DF_DEP <- dbReadTable(con, "QUIZZ_ODD_DEP_2019_03_05")
 DF_DEP <- DF_DEP[!is.na(DF_DEP$Zone),]
@@ -33,9 +36,33 @@ DF_REG <- dbReadTable(con, "QUIZZ_ODD_REG_2019_03_05")
 DF_REG <- DF_REG[!is.na(DF_REG$Zone),]
 DF_ANSWER <- dbReadTable(con, TABLE_ANSWER)
 
-insert_answer <- function(line){
-  query <- paste("INSERT INTO", TABLE_ANSWER, "(question_label, answer_question, right_answer, date_submit)", "VALUES", "(", line, ");")
+insert_answer <- function(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id){
+  question_sql_label <- paste("'", question_label, "'", sep='')
+  date_submit_sql <- paste("'", date_submit, "'", sep='')
+  line <- paste(question_sql_label, answer_question, right_answer, date_submit_sql, dep, epci, questionnaire_id, sep=", ")
+  query <- paste("INSERT INTO", TABLE_ANSWER, "(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id)", "VALUES", "(", line, ");")
   res <- dbSendQuery(con, query)
+}
+get_last_questionnaire_id <- function(){
+  result <- tryCatch(
+    {
+      query <- "SELECT MAX(questionnaire_id) FROM test_answer"
+      my_query <- dbSendQuery(con, query)
+      result <- dbFetch(my_query)
+      return (result)
+    },
+    error=function(cond) {
+      message(paste("No connection available:", DATABASE))
+    },
+    finally={
+      con <<- establish_connection()
+      query <- "SELECT MAX(questionnaire_id) FROM test_answer"
+      my_query <- dbSendQuery(con, query)
+      result <- dbFetch(my_query)
+      return (result)
+    }
+  )
+  return (result)
 }
 
 

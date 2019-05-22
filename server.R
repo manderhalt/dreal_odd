@@ -114,6 +114,7 @@ server <- function(input, output, session) {
   text_alert_all <- replicate(17, "")
   all_logos <- replicate(17, "")
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
+    questionnaire_id <- get_last_questionnaire_id()[[1]]+1
     
     lapply(1:nrow(QUESTION), function(question_number){
       current_question <- QUESTION[question_number,]
@@ -126,6 +127,20 @@ server <- function(input, output, session) {
       response_all[cur_odd] <<- bonne_reponse
       all_logos[cur_odd] <<- paste("ODD", cur_odd, sep="")
       text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = numbers)
+      if (is.null(response_user)){
+        response_to_send_sql <- 3
+      }
+      else {
+        response_to_send_sql <- response_user
+      }
+      insert_answer(question_label = current_question$Libel, 
+                    answer_question = response_to_send_sql, 
+                    right_answer = type_answer,
+                    date_submit = Sys.Date(),
+                    dep = departement()$CodeZone,
+                    epci = epci()$siren,
+                    questionnaire_id = questionnaire_id
+                    )
     })
     title_alert <- all_logos
     
