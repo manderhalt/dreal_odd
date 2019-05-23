@@ -1,17 +1,3 @@
-# Define server logic required to draw a histogram ----
-source("data.R")
-source("helper.R")
-source("data_connect.R")
-if (!require("dplyr"))
-  install.packages("dplyr")
-library(dplyr)
-if (!require("rlist"))
-  install.packages("rlist")
-library("rlist")
-
-max_img <- 7
-max_plot <- 7
-
 server <- function(input, output, session) {
   
   # PREMIERE PAGE
@@ -228,9 +214,6 @@ server <- function(input, output, session) {
       }
       list_graph_values_to_plot = list()
       for (i in list_code_indic){
-        print("AGAGAGAGAGAG")
-        print(departement_2())
-        print(epci_2())
         cur_values <- horiz_histo(departement_2()$CodeZone,
                                   epci_2()$siren,
                                   i)

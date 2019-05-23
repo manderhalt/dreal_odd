@@ -1,17 +1,3 @@
-source("data.R")
-library(ggplot2)
-library(jpeg)
-library(gridExtra)
-library(grid)
-if (!require("plotly"))
-  install.packages("plotly")
-library(plotly)
-if (!require("stringi"))
-  install.packages('stringi')
-library('stringi')
-sourceDir <- getSrcDirectory(function(dummy) {dummy})
-
-
 # DIVWHEEL
 get_divwheel_text_from_question_numbers <- function(question, numbers){
   first_part <- paste(gsub(":", " de", question$Libel), numbers[[1]], "%")
