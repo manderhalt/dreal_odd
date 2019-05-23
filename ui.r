@@ -9,6 +9,9 @@ navbarPage("DREAL Quizz",
                  )
      ),
      setBackgroundImage(src = "background3.jpg"),
+     tags$head(
+    includeCSS("www/CSS.css")
+  ),
      fluidRow(column(4, imageOutput("image_dreal")),
      column(8,
          # TITRES ET PARAGRAPHE D'INTRO
@@ -33,7 +36,7 @@ navbarPage("DREAL Quizz",
          h3(textOutput("wheel_title")),
          br(),
          textOutput("wheel_legend"),
-         divwheelnavOutput("nav_output")
+         divwheelnavOutput("nav_output", width = 900)
      
      
    ))),
@@ -75,7 +78,7 @@ navbarPage("DREAL Quizz",
           id = id_button,
           class = "btn action-button",
           img(src = odd_image,
-              height = "75px"),
+              height = "125px"),
           tags$style(type = 'text/css', 
                      HTML('.action-button { background-color: transparent;
 .active {
@@ -98,44 +101,44 @@ navbarPage("DREAL Quizz",
         
         condition = "output.sidetext1",
         fluidRow(column(4, "Indicateur"),
-                 column(4, "Taux dans votre territoire et votre département"),
-                 column(4, "ODD correspondant")),
+                 column(6, "Taux dans votre territoire et votre département"),
+                 column(2, "ODD correspondant")),
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext1"))), 
-          column(4, plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, br(), br(), br(), imageOutput("rightimage1"))
+          column(6, plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, br(), br(), br(), imageOutput("rightimage1"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext2",
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext2"))), 
-          column(4, plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, br(), br(), br(), imageOutput("rightimage2"))
+          column(6, plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, br(), br(), br(), imageOutput("rightimage2"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext3",
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext3"))), 
-          column(4, plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, br(), br(), br(), imageOutput("rightimage3"))
+          column(6, plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, br(), br(), br(), imageOutput("rightimage3"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext4",
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext4"))), 
-          column(4, plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, br(), br(), br(), imageOutput("rightimage4"))
+          column(6, plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, br(), br(), br(), imageOutput("rightimage4"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext5",
         fluidRow(
           column(4, br(), br(), br(), em(textOutput("sidetext5"))), 
-          column(4, plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(4, br(), br(), br(), imageOutput("rightimage5"))
+          column(6, plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, br(), br(), br(), imageOutput("rightimage5"))
         )
       )
    ),
@@ -155,12 +158,14 @@ navbarPage("DREAL Quizz",
          id = id_button,
          class = "btn action-button",
          img(src = odd_image,
-             height = "75px"),
+             height = "125px"),
          style="background-color: transparent"
        )
      }
      ),
-     column(width = 12, align = "center", h4(textOutput("text_odd")), textOutput("subtext_odd"))
+     column(width = 12, align = "center", h4(textOutput("text_odd"))),
+     column(width = 8, offset=2, align = "center", textOutput("subtext_odd"), br(), br())
+     
    )
 )
 

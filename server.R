@@ -1,10 +1,7 @@
 server <- function(input, output, session) {
   
   # PREMIERE PAGE
-  # TITRE PARAGRAPHE D INTRO
-  output$caption <-  renderText({ TITLE})
-  output$intro_text <- renderText({INTRO_TEXT})
-  output$catchphrase <- renderText({ CATCHPHRASE})
+  # Logo gauche
   output$image_dreal <- renderImage({
     list(
       src = "logo_fr_dreal.png",

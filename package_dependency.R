@@ -9,6 +9,7 @@ library("devtools")
 
 devtools::install("../divwheel")
 library(divwheel)
+runApp()
 reload(pkg="../divwheel")
 all_logos <- all_odd()
 title_alert <- replicate(17, "ODD1")

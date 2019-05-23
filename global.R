@@ -22,14 +22,7 @@ library(RPostgres)
 if (!require("dotenv"))
   install.packages("dotenv")
 library(dotenv)
-sourceDir <- getSrcDirectory(function(dummy) {dummy})
-load_dot_env()
 library(DBI)
-
-
-source("data.R")
-source("helper.R")
-source("data_connect.R")
 if (!require("dplyr"))
   install.packages("dplyr")
 library(dplyr)
@@ -37,5 +30,13 @@ if (!require("rlist"))
   install.packages("rlist")
 library("rlist")
 
+sourceDir <- getSrcDirectory(function(dummy) {dummy})
+load_dot_env()
+
+source("data.R")
+source("helper.R")
+source("data_connect.R")
+
 max_img <- 7
 max_plot <- 7
+
