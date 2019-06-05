@@ -3,17 +3,12 @@ navbarPage("DREAL Quizz",
    # PREMIERE PAGE
    tabPanel(
      "Accueil",
-     headerPanel("",
-                 tags$head(
-                   tags$img(src="logo.svg", width="100%")
-                 )
-     ),
      setBackgroundImage(src = "background3.jpg"),
      tags$head(
     includeCSS("www/CSS.css")
   ),
-     fluidRow(column(4, imageOutput("image_dreal")),
-     column(8,
+     fluidRow(column(2, imageOutput("image_dreal")),
+       column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
          includeHTML("intro.html"),
          
@@ -57,10 +52,12 @@ navbarPage("DREAL Quizz",
    # DEUXIEME PAGE
    tabPanel("Les indicateurs ODD par territoire",
             
+      column(8, tags$img(src="logo.svg", width="70%")),
       # CHOIX DEPARTEMENT
       column(
-        12, align="center", h1("Portrait de territoire"),
-        em(h2("Tout savoir sur les ODD dans mon territoire"))),
+        12, align="left", br(), h3("Portrait de territoire - Tout savoir sur les ODD dans mon territoire"), br()
+      ),
+        
       uiOutput("departement_2"),
       uiOutput("commune_2"),
     
