@@ -1,4 +1,4 @@
-DEP_TO_REGION <- read.csv('./data/depts2018.csv', header=TRUE, sep="\t")
+DEP_TO_REGION <- read.csv('./data/depts2018.csv', header=TRUE, sep="\t", encoding = "utf-8")
 DF_DEP_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
 IND <- read.csv('./data/Tab_passage_Ind_ODD.csv',header = TRUE,sep=";", stringsAsFactors = FALSE)
 QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)

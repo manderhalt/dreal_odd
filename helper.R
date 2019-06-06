@@ -30,6 +30,12 @@ get_data <- function(departement_code, epci_code){
   list("departement_data"=departement_data, "epci_data"=epci_data, "region_data"=region_data, "fm_data"=DF_FR)
 }
 
+get_region_name_from_dep <- function(departement){
+  region_code <- DEP_TO_REGION[DEP_TO_REGION$DEP==departement, ]$REGION
+  region <- DF_REG[DF_REG$CodeZone==region_code, ]$Zone
+  return(region)
+}
+
 horiz_histo <- function(departement_code, epci_code, question_code){
   if (is.null(question_code)){
     return(NULL)
