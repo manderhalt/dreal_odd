@@ -73,7 +73,7 @@ server <- function(input, output, session) {
       current_question <- QUESTION[question_number,]
       cur_libel <- current_question$Libel
       input_id <- paste("question_",current_question$Num_question,sep='')
-      bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      bonne_reponse <- get_under_over_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[input_id]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       choice_names <- as.list(get_choices_labels_from_question(cur_libel))

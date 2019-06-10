@@ -91,7 +91,7 @@ get_colored_names <- function(choice_names, type_answer, bonne_reponse){
   return (choice_names)
 }
 
-get_result_from_question <- function(question, epci, dep){
+get_under_over_from_question <- function(question, epci, dep){
   # code indicateur de la question, code zone, numéro de dep
   line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
   line_dep <- DF_DEP[DF_DEP$CodeZone == dep,]
@@ -102,6 +102,34 @@ get_result_from_question <- function(question, epci, dep){
   }
   else {
     0
+  }
+}
+
+get_result_from_question <- function(question, epci, dep){
+  # code indicateur de la question, code zone, numéro de dep
+  line_epci <- DF_EPCI[DF_EPCI$CodeZone == epci,]
+  line_dep <- DF_DEP[DF_DEP$CodeZone == dep,]
+  answer_epci <- line_epci[[question]]
+  answer_dep <- line_dep[[question]]
+  ind <- IND[IND$code_indicateur==question,]
+  if (ind$Objectif_EPCI_vs_DEP == "plus"){
+    if (answer_epci> answer_dep) {
+      return (1)
+    }
+    else {
+      return (0)
+    }
+  }
+  if (ind$Objectif_EPCI_vs_DEP == "moins"){
+    if (answer_epci< answer_dep) {
+      return (1)
+    }
+    else {
+      return (0)
+    }
+  }
+  else {
+    return (2)
   }
 }
 
@@ -205,7 +233,7 @@ get_graph <- function(values, names){
     layout(
            shapes = list(
              list(type = "rect",
-                  fillcolor = '#F2F2F2', line = list(color = '#F2F2F2'),
+                  fillcolor = '#F2F2F2', line = list(color = '#F2F2F2'), 
                   x0 = -0.1*scale, x1 = -0.05*scale, xref = "x",
                   y0 = 0, y1 = 3, yref = "y")))%>%
     add_annotations(text = names,
