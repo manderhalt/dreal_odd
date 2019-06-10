@@ -289,18 +289,13 @@ server <- function(input, output, session) {
   
   # TROISIEME PAGE
   # BOUTTONS LOGOS
-  outtextgraphthird <- reactiveVal()
-  outsubtextgraphthird <- reactiveVal()
   lapply(1:17, function(i) {
-    button <- paste("ODD_button_", i, sep="")
     odd_text <- paste("odd", i, sep="")
-    observeEvent(input[[button]], {
-      outtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
-      outsubtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT)
+    cur_text <- paste("text_odd_", i, sep="")
+    cur_subtext <- paste("subtext_odd_", i, sep="")
+    output[[cur_text]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE})
+    output[[cur_subtext]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT})
     })
-  })
-  output$text_odd <- renderText({outtextgraphthird()})
-  output$subtext_odd <- renderText({outsubtextgraphthird()})
   
   output$no_indicateur <- renderText({PAS_INDICATEUR})
 }

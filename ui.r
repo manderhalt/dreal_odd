@@ -138,20 +138,16 @@ navbarPage("DREAL Quiz",
      
      # LES 17 LOGOS
      lapply(1:17, function(i) {
-       odd <- paste("ODD ", i, sep="")
-       id_button <- paste("ODD_button_", i, sep="")
        odd_image <- paste("ODD", i,".png", sep="")
-       tags$button(
-         id = id_button,
-         class = "btn action-button",
-         img(src = odd_image,
-             height = "125px"),
-         style="background-color: transparent"
+       odd_text <- paste("text_odd_", i, sep="")
+       odd_subtext <- paste("subtext_odd_", i, sep="")
+       fluidRow(
+       column(width = 4, align="center", tags$img(src=odd_image, width='60%'), br(), br()),
+       column(width = 8, align = "center", h4(textOutput(odd_text)), textOutput(odd_subtext), br(), br())
        )
+       
      }
-     ),
-     column(width = 12, align = "center", h4(textOutput("text_odd"))),
-     column(width = 8, offset=2, align = "center", textOutput("subtext_odd"), br(), br())
+     )
      
    )
 )
