@@ -1,8 +1,8 @@
-navbarPage("DREAL Quiz", 
+navbarPage("Les ODD dans mon territoire", 
            
    # PREMIERE PAGE
    tabPanel(
-     "Accueil",
+     "Accueil-Quiz",
      setBackgroundImage(src = "background3.jpg"),
      tags$head(tags$style("* { font-family: NEUZEIT S LT STD – BOOK; }")),
      fluidRow(column(2, imageOutput("image_dreal")),
@@ -48,14 +48,16 @@ navbarPage("DREAL Quiz",
                      "))
      ), 
    # DEUXIEME PAGE
-   tabPanel("Les indicateurs ODD par territoire",
+   tabPanel("Les indicateurs ODD de mon territoire",
             
       column(8, tags$img(src="logo.svg", width="70%")),
       # CHOIX DEPARTEMENT
       column(
-        12, align="left", br(), h3("Portrait de territoire - Tout savoir sur les ODD dans mon territoire"), br()
+        12, align="left", br(), h3("Portrait de territoire - Tout les indicateurs ODD de mon territoire"),
+        h4("Sélectionnez votre territoire et cliquez sur chaque bloc ODD pour visualiser le positionnement de votre territoire 
+        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(), "Un indicateur peut être relié à plusieurs ODD.", br())
       ),
-        
+      
       uiOutput("departement_2"),
       uiOutput("commune_2"),
     
