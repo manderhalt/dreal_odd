@@ -5,8 +5,16 @@ QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', strings
 ODD_TEXT <- read.csv('./data/texte_odd.csv', header=TRUE, sep=';', stringsAsFactors = FALSE)
 # save(DF_DEP,DF_EPCI,DF_DEP_EPCI,IND, file = "./odd/data.RData")
 
-# Elements de texte de la landing page
+# TEXT TROISIEME PAGE
+TEXT_ODD_PRES_1 <- "En septembre 2015, les 193 États membres de l’ONU ont adopté le programme de développement durable à l’horizon 2030, intitulé Agenda 2030. 
+C'est un agenda pour les populations, pour  la planète, pour la prospérité, pour la paix pour les partenariats. 
+Il porte une vision de transformation de notre monde en éradiquant la pauvreté et en assurant sa transition vers un développement durable."
 
+TEXT_ODD_PRES_2 <- "L'Agenda 2030 a fusionné l'agenda du développement et celui des Sommets de la Terre. 
+Il est universel, c’est-à-dire qu'il s’applique à tous les pays, du Nord comme du Sud. 
+À cet égard, tous les pays sont « en voie de développement durable ». Avec ses 17 Objectifs de développement durable et 169 cibles (ou sous-objectifs), 
+il dessine une feuille de route détaillée et couvre pratiquement toutes les questions de société.
+"
 
 # Différentes questions
 CHOICES <- c("Inférieur" = 0, "Supérieur" = 1, "Je ne sais pas"=3)

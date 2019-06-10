@@ -134,6 +134,23 @@ navbarPage("DREAL Quiz",
    tabPanel(
      div(tags$img(src="wheel_to_text.png", height="20px"),"Les ODD, qu'est ce que c'est ?"),
      
+     column(8, tags$img(src="logo.svg", width="70%")),
+     column(12, style = "font-size: 150%", br(), TEXT_ODD_PRES_1, 
+            br(), br(), TEXT_ODD_PRES_2, br(), br(),
+            tags$b("Rendez-vous sur le site des ODD pour la France:"),
+            a("https://www.agenda-2030.fr", href="https://www.agenda-2030.fr"), br(), br(),
+            tags$ul(
+              tags$li(a("Présentation: origines et principes", href="https://www.agenda-2030.fr/agenda2030/presentation-principes-specificites-origines-18")),
+              tags$li(a("Les indicateurs de suivi des Objectifs de développement durable", href="https://www.agenda-2030.fr/agenda2030/dispositif-de-suivi-les-indicateurs-19")),
+              tags$li(a("Situation et organisation de la mise en œuvre en France", href="https://www.agenda-2030.fr/agenda2030/situation-de-la-france-21")),
+              tags$li(a("Mobilisation des acteurs", href="https://www.agenda-2030.fr/agenda2030/mobilisation-des-acteurs-non-etatiques-en-france-40")),
+              tags$li(a("En Europe et à l'international", href="https://www.agenda-2030.fr/agenda2030/en-europe-et-linternational-22"))
+            ),
+            br(), br(),
+            "Les ODD sur le site de l'ONU:", tags$a(href="https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/", 
+                                                    "https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/"),
+            br(), br()
+      ),
      
      
      # LES 17 LOGOS
