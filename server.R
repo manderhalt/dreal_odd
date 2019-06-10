@@ -293,8 +293,10 @@ server <- function(input, output, session) {
     odd_text <- paste("odd", i, sep="")
     cur_text <- paste("text_odd_", i, sep="")
     cur_subtext <- paste("subtext_odd_", i, sep="")
+    cur_link <- paste("link_odd_", i, sep="")
     output[[cur_text]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE})
     output[[cur_subtext]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT})
+    output[[cur_link]] <- renderUI({a("Agenda-2030.fr", href=ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_LINK)})
     })
   
   output$no_indicateur <- renderText({PAS_INDICATEUR})
