@@ -145,7 +145,7 @@ navbarPage("DREAL Quiz",
        text_link <- paste("En savoir plus sur l'ODD", i, "sur le site")
        fluidRow(
        column(width = 4, align="center", tags$img(src=odd_image, width='60%'), br(), br()),
-       column(width = 8, h4(textOutput(odd_text)), textOutput(odd_subtext), br(), text_link, uiOutput(odd_link),br())
+       column(width = 7, style = "font-size: 150%", h4(textOutput(odd_text), style="font-size: 200%; color:cornflowerblue"), textOutput(odd_subtext), br(), text_link, uiOutput(odd_link),br())
        )
        
      }
