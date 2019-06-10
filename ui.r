@@ -132,7 +132,7 @@ navbarPage("DREAL Quiz",
    
    # DEBUT TROISIEME PAGE
    tabPanel(
-     "Les ODD, qu'est ce que c'est ?",
+     div(tags$img(src="wheel_to_text.png", height="20px"),"Les ODD, qu'est ce que c'est ?"),
      
      
      
