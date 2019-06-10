@@ -4,9 +4,6 @@ navbarPage("DREAL Quizz",
    tabPanel(
      "Accueil",
      setBackgroundImage(src = "background3.jpg"),
-     tags$head(
-    includeCSS("www/CSS.css")
-  ),
      fluidRow(column(2, imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
