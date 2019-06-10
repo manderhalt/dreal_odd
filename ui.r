@@ -1,9 +1,10 @@
-navbarPage("DREAL Quizz", 
+navbarPage("DREAL Quiz", 
            
    # PREMIERE PAGE
    tabPanel(
      "Accueil",
      setBackgroundImage(src = "background3.jpg"),
+     tags$head(tags$style("* { font-family: NEUZEIT S LT STD – BOOK; }")),
      fluidRow(column(2, imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
@@ -20,7 +21,7 @@ navbarPage("DREAL Quizz",
                           uiOutput("plots_and_radios"),
                           br(),
                           actionButton("submitBtn", "Valider"),
-                          actionButton("refresh", "Réessayer le quizz")
+                          actionButton("refresh", "Réessayer le quiz")
          )
          ,
          
