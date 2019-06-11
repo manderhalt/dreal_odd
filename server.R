@@ -90,6 +90,11 @@ server <- function(input, output, session) {
     })
   })
   
+  event_submit_legend_wheel <- eventReactive(input$submitBtn, {
+    "./www/green_tile.png"
+  })
+  output$green_tile <- renderImage({list(src=event_submit_legend_wheel(),contentType = 'image/png'
+  )}, deleteFile = FALSE)
   
   # DIVWHEEL
   observeEvent(input$refresh, {session$reload()})

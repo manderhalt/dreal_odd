@@ -3,7 +3,6 @@ navbarPage("Les ODD dans mon territoire",
    # PREMIERE PAGE
    tabPanel(
      "Accueil-Quiz",
-     setBackgroundImage(src = "background3.jpg"),
      tags$head(tags$style("* { font-family: NEUZEIT S LT STD – BOOK; }")),
      fluidRow(column(2, imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
@@ -27,8 +26,12 @@ navbarPage("Les ODD dans mon territoire",
          
          # WHEEL
          h3(textOutput("wheel_title")),
-         br(),
-         textOutput("wheel_legend"),
+         h4(textOutput("wheel_legend")),
+         conditionalPanel(condition = "input.submitBtn",
+         div(tags$img(src="green_tile.png", height="20px"),"Votre territoire est en moyenne supérieur à son département"),
+         div(tags$img(src="red_tile.png", height="20px"),"Votre territoire est en moyenne inférieur à son département"),
+         div(tags$img(src="blue_tile.png", height="22px"),"Cet objectif est simplement informatif")
+         ),
          divwheelnavOutput("nav_output", width = 900)
      
      
