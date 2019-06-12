@@ -294,15 +294,37 @@ server <- function(input, output, session) {
   
   # TROISIEME PAGE
   # BOUTTONS LOGOS
+  outtextgraphthird <- reactiveVal()
+  outsubtextgraphthird <- reactiveVal()
+  outtextgraphthirdlink <- reactiveVal()
+  imgoutgraphthird <- reactiveVal()
+  textwithlink <- reactiveVal()
   lapply(1:17, function(i) {
+    button <- paste("ODD_button_", i, sep="")
     odd_text <- paste("odd", i, sep="")
     cur_text <- paste("text_odd_", i, sep="")
+    odd_img <- paste("www/ODD", i, ".png", sep="")
     cur_subtext <- paste("subtext_odd_", i, sep="")
     cur_link <- paste("link_odd_", i, sep="")
-    output[[cur_text]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE})
-    output[[cur_subtext]] <- renderText({ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT})
-    output[[cur_link]] <- renderUI({a("Agenda-2030.fr", href=ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_LINK)})
+    text_link <- paste("En savoir plus sur l'ODD", i, "sur le site")
+    observeEvent(input[[button]], {
+      outtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
+      outsubtextgraphthird(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_SUBTEXT)
+      outtextgraphthirdlink(a("Agenda-2030.fr", href=ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_LINK))
+      imgoutgraphthird(odd_img)
+      textwithlink(text_link)
     })
+    })
+  output$text_odd <- renderText({outtextgraphthird()})
+  output$subtext_odd <- renderText({outsubtextgraphthird()})
+  output$third_link <- renderUI({outtextgraphthirdlink()})
+  output$third_image <-renderImage({
+    list(
+      src = imgoutgraphthird(),
+      contentType = 'image/png',
+      width = "60%"
+    )}, deleteFile = FALSE)
+  output$third_text_with_link <- renderText({textwithlink()})
   
   output$no_indicateur <- renderText({PAS_INDICATEUR})
 }
