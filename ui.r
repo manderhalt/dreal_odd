@@ -3,7 +3,7 @@ navbarPage("Les ODD dans mon territoire",
    # PREMIERE PAGE
    tabPanel(
      "Accueil-Quiz",
-     tags$head(tags$style("* { font-family: NEUZEIT S LT STD – BOOK; }")),
+     tags$head(tags$style("* { font-family: Open Sans; }")),
      fluidRow(column(2, imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
