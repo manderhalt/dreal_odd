@@ -11,9 +11,10 @@ server <- function(input, output, session) {
   
   # SELECTION DEPARTEMENT
   output$departement <- renderUI({
+    DF_GOOD_DEP <- subset(DF_DEP, DF_DEP$CodeZone %in% ACCEPTED_DEPT)
     selectInput("departement", 
                 "Quel est votre département ?",
-                DF_DEP[order(DF_DEP$Zone),]$Zone)
+                DF_GOOD_DEP[order(DF_GOOD_DEP$Zone),]$Zone)
     })
   
   departement <- reactive({departement_number <- DF_DEP[DF_DEP$Zone == input$departement,]})
@@ -34,7 +35,7 @@ server <- function(input, output, session) {
       dept == departement()$CodeZone
     )
   })
-  output$epci_text <- renderText({paste("Votre territoire (EPCI) est: ", epci()$raison_sociale)})
+  output$epci_text <- renderText({paste("Votre territoire (EPCI) est : ", epci()$raison_sociale)})
   
   #FORM
   
@@ -150,9 +151,10 @@ server <- function(input, output, session) {
   # DEUXIEME PAGE
   # CHOIX DEPARTEMENT
   output$departement_2 <- renderUI({
+    DF_GOOD_DEP <- subset(DF_DEP, DF_DEP$CodeZone %in% ACCEPTED_DEPT)
     selectInput("departement_2", 
                 "Quel est votre département ?",
-                DF_DEP[order(DF_DEP$Zone),]$Zone, 
+                DF_GOOD_DEP[order(DF_GOOD_DEP$Zone),]$Zone, 
                 selected = input$departement)
     })
   
@@ -172,12 +174,13 @@ server <- function(input, output, session) {
                     dept == departement_2()$CodeZone)
   })
   
-  output$epci_text_2 <-renderText({paste("Votre territoire est: ", epci_2()$raison_sociale)})
+  output$epci_text_2 <-renderText({paste("Votre territoire est : ", epci_2()$raison_sociale)})
   
   # LOGOS
   outgraph <- reactiveVal()
   outtextgraph <- reactiveVal()
   sidetextgraph <- reactiveVal()
+  no_indicateur <- reactiveVal()
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
@@ -202,7 +205,7 @@ server <- function(input, output, session) {
     }
     
     observeEvent({input[[button]]
-                input[["commune_string_2"]]}
+                }
                 , {
       list_images_to_plot = list()
       for (i in list_image_all){
@@ -221,6 +224,9 @@ server <- function(input, output, session) {
                                   epci_2()$siren,
                                   i)
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
+      }
+      if (length(list_graph_values_to_plot)==0){
+        no_indicateur(PAS_INDICATEUR)
       }
       outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
@@ -327,5 +333,5 @@ server <- function(input, output, session) {
     )}, deleteFile = FALSE)
   output$third_text_with_link <- renderText({textwithlink()})
   
-  output$no_indicateur <- renderText({PAS_INDICATEUR})
+  output$no_indicateur <- renderText({no_indicateur()})
 }

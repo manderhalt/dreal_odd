@@ -4,7 +4,7 @@ navbarPage("Les ODD dans mon territoire",
    tabPanel(
      "Accueil-Quiz",
      tags$head(tags$style("* { font-family: Open Sans; }")),
-     fluidRow(column(2, imageOutput("image_dreal")),
+     fluidRow(column(1, align="center", imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
          includeHTML("intro.html"),
@@ -16,7 +16,10 @@ navbarPage("Les ODD dans mon territoire",
          
          # FORM 
          conditionalPanel(condition = "input.validate_choice", 
+                          br(),
                           h4(textOutput("epci_text")),
+                          br(),
+                          h4("Par rapport à votre département..."),
                           uiOutput("plots_and_radios"),
                           br(),
                           actionButton("submitBtn", "Valider"),
@@ -28,9 +31,8 @@ navbarPage("Les ODD dans mon territoire",
          h3(textOutput("wheel_title")),
          h4(textOutput("wheel_legend")),
          conditionalPanel(condition = "input.submitBtn",
-         div(tags$img(src="green_tile.png", height="20px"),"Votre territoire est en moyenne supérieur à son département"),
-         div(tags$img(src="red_tile.png", height="20px"),"Votre territoire est en moyenne inférieur à son département"),
-         div(tags$img(src="blue_tile.png", height="22px"),"Cet objectif est simplement informatif")
+         div(tags$img(src="green_tile.png", height="20px"),"Votre territoire est mieux positionné que votre département pour contribuer à l’ODD"),
+         div(tags$img(src="red_tile.png", height="20px"),"Votre territoire est moins bien positionné que votre département pour contribuer à l’ODD")
          ),
          tags$head(tags$script('
                         var dimension = [0, 0];
@@ -155,17 +157,17 @@ navbarPage("Les ODD dans mon territoire",
      column(8, tags$img(src="logo.svg", width="70%")),
      column(12, style = "font-size: 150%", br(), TEXT_ODD_PRES_1, 
             br(), br(), TEXT_ODD_PRES_2, br(), br(),
-            tags$b("Rendez-vous sur le site des ODD pour la France:"),
+            tags$b("Rendez-vous sur le site des ODD pour la France :"),
             a("https://www.agenda-2030.fr", href="https://www.agenda-2030.fr"), br(), br(),
             tags$ul(
-              tags$li(a("Présentation: origines et principes", href="https://www.agenda-2030.fr/agenda2030/presentation-principes-specificites-origines-18")),
+              tags$li(a("Présentation : origines et principes", href="https://www.agenda-2030.fr/agenda2030/presentation-principes-specificites-origines-18")),
               tags$li(a("Les indicateurs de suivi des Objectifs de développement durable", href="https://www.agenda-2030.fr/agenda2030/dispositif-de-suivi-les-indicateurs-19")),
               tags$li(a("Situation et organisation de la mise en œuvre en France", href="https://www.agenda-2030.fr/agenda2030/situation-de-la-france-21")),
               tags$li(a("Mobilisation des acteurs", href="https://www.agenda-2030.fr/agenda2030/mobilisation-des-acteurs-non-etatiques-en-france-40")),
               tags$li(a("En Europe et à l'international", href="https://www.agenda-2030.fr/agenda2030/en-europe-et-linternational-22"))
             ),
             br(), br(),
-            "Les ODD sur le site de l'ONU:", tags$a(href="https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/", 
+            "Les ODD sur le site de l'ONU :", tags$a(href="https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/", 
                                                     "https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/"),
             br(), br()
       ),

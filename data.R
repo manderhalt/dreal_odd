@@ -2,6 +2,7 @@ DEP_TO_REGION <- read.csv('./data/depts2018.csv', header=TRUE, sep="\t", encodin
 DF_DEP_EPCI <- read.csv('./data/EPCICOM2019.csv', header=TRUE, sep=",", stringsAsFactors = FALSE)
 QUESTION <- read.csv('./data/Questions_libel.csv', header=TRUE, sep=',', stringsAsFactors = FALSE)
 ODD_TEXT <- read.csv('./data/texte_odd.csv', header=TRUE, sep=';', stringsAsFactors = FALSE)
+ACCEPTED_DEPT <- c("18", "28", "36", "37", "41", "45")
 # save(DF_DEP,DF_EPCI,DF_DEP_EPCI,IND, file = "./odd/data.RData")
 
 # TEXT TROISIEME PAGE
