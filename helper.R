@@ -230,12 +230,7 @@ get_graph <- function(values, names){
                     marker= list(color=colors2))%>%
     layout(xaxis = ax, yaxis = ax)%>%
     config(displayModeBar = F) %>% 
-    layout(
-           shapes = list(
-             list(type = "rect",
-                  fillcolor = '#F2F2F2', line = list(color = '#F2F2F2'), 
-                  x0 = -0.1*scale, x1 = -0.05*scale, xref = "x",
-                  y0 = 0, y1 = 3, yref = "y")))%>%
+  
     add_annotations(text = names,
                     x = values/2,
                     y = names,
