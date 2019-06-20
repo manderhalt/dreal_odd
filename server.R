@@ -268,7 +268,7 @@ server <- function(input, output, session) {
       plotname <- paste("plotgraph", my_j, sep="")
       output[[plotname]]<- renderPlotly({get_graph(
         outgraph()[[my_j]],
-        c(input$commune_string_2, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France")
+        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France")
         )})
       # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
     })
