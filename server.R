@@ -39,34 +39,30 @@ server <- function(input, output, session) {
   
   #FORM
   
-  output$plots_and_radios <- renderUI({
-    plot_and_radio_output_list <- lapply(1:length(QUESTION$Libel), function(question_number){
+  lapply(1:length(QUESTION$Libel), function(question_number){
+    size_img <- "30%"
     current_question <- QUESTION[question_number,]
     cur_libel <- current_question$Libel
+    radio_button <- paste("radio_button_", question_number, sep="")
+    radio_img <- paste("radio_img_", question_number, sep="")
     logos <- logos_from_code_indic(current_question$Code_indicateur)
     if (length(logos)>1){
       img_file_1 = paste(logos[[1]],".png", sep="")
       img_file_2 = paste(logos[[2]],".png", sep="")
-      list(
-        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                     label=cur_libel, inline=TRUE, selected = character(0),
-                     choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
-        ),
-        img(src=img_file_1, width = 50), img(src=img_file_2, width = 50))
+      
+     output[[radio_img]] <- renderUI({ list(img(src=img_file_1, width = size_img), img(src=img_file_2, width = size_img))})
     }
     else {
       img_file = paste(logos[[1]],".png", sep="")
-      list(
-        radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
-                     label=current_question$Libel, 
-                     choiceNames=get_choices_labels_from_question(cur_libel), 
-                     choiceValues=CHOICEVALUES, 
-                     inline=TRUE, selected = character(0)),
-        img(src=img_file, width = 50))
+      
+        output[[radio_img]] <- renderUI({img(src=img_file, width = size_img)})
     }
+    output[[radio_button]] <- renderUI({ radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+                                         label=cur_libel, inline=TRUE, selected = character(0),
+                                         choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
+    )})
   })
-    do.call(tagList, unlist(plot_and_radio_output_list, recursive=FALSE))
-  })
+  
   
   observeEvent(input$submitBtn, {
     

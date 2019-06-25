@@ -20,7 +20,12 @@ navbarPage("Les ODD dans mon territoire",
                           h4(textOutput("epci_text")),
                           br(),
                           h4("Par rapport à votre département..."),
-                          uiOutput("plots_and_radios"),
+                          lapply(1:length(QUESTION$Libel), function(i){
+                            radio_button <- paste("radio_button_", i, sep="")
+                            radio_img <- paste("radio_img_", i, sep="")
+                            fluidRow(column(3,align = "center",uiOutput(radio_img), br()),
+                            column(5,uiOutput(radio_button)))
+                          }),
                           br(),
                           actionButton("submitBtn", "Valider"),
                           actionButton("refresh", "Réessayer le quiz")
