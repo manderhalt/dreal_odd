@@ -220,8 +220,23 @@ get_code_indicateur_from_odd <- function(odd){
 }
 
 get_graph <- function(values, names){
-  colors2 <-c('#A9D0F5', '#F2F2F2', '#F2F2F2', '#F2F2F2')
   scale <- max(values)
+  if (scale>100){
+    unit = 'kg'
+  }
+  else {
+    unit="%"
+  }
+  list_to_keep <- c()
+  for (i in 1:4){
+    if (values[[i]]!=0){
+      list_to_keep <- c(list_to_keep, i)
+    }
+  }
+  colors2 <-c('#A9D0F5', '#F2F2F2', '#F2F2F2', '#F2F2F2')
+  values <- values[list_to_keep]
+  colors2 <- colors2[list_to_keep]
+  names <- names[list_to_keep]
   ax <- list(
     title = "",
     zeroline = FALSE,
@@ -246,7 +261,7 @@ get_graph <- function(values, names){
                                 color = 'black'),
                     showarrow = FALSE)%>%
     add_annotations(x = max(values)+0.25*max(values),  y = names,
-                    text = paste(round(values, 2), '%'),
+                    text = paste(round(values, 2), unit),
                     font = list(family = 'Arial', size = 12),
                     showarrow = FALSE)%>%
     layout(plot_bgcolor='transparent') %>% 
