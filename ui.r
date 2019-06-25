@@ -62,13 +62,12 @@ navbarPage("Les ODD dans mon territoire",
    # Styling nav bar
    tags$head(
      tags$style(HTML("
+                     .navbar-default .navbar-brand {background-color: #5392CB; color: black}
                      .navbar-nav { width: 85% }
-                     .navbar-nav>li:nth-child(4) { float: right; }
-                     .navbar-default {
-    background-color: #FFFFFF ;
-}
-                     
-                     "))
+                     .navbar-nav>li:nth-child(4) { float: right;}
+                     .navbar-default {background-color: #FFFFFF ;}
+                       
+                       "))
      ), 
    # DEUXIEME PAGE
    tabPanel("Les indicateurs ODD de mon territoire",
