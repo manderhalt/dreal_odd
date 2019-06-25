@@ -128,8 +128,13 @@ get_result_from_question <- function(question, epci, dep){
       return (0)
     }
   }
-  else {
-    return (2)
+  if (ind$Objectif_EPCI_vs_DEP=="50-50") {
+    if (abs(50-answer_epci)< abs(50-answer_dep)) {
+      return (1)
+    }
+    else {
+      return (0)
+    }
   }
 }
 

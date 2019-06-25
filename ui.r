@@ -116,35 +116,35 @@ navbarPage("Les ODD dans mon territoire",
         
         condition = "output.sidetext1",
         fluidRow(
-          column(6, h4(textOutput("sidetext1")), plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
-          column(2, br(), br(), br(), imageOutput("rightimage1"))
+          column(6, h4(tags$b(textOutput("sidetext1"))), plotlyOutput(outputId ="plotgraph1", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(2, h4(tags$b("Autres ODD concernés")), br(), br(), br(), imageOutput("rightimage1"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext2",
         fluidRow(
-          column(6, h4(textOutput("sidetext2")), plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(6, h4(tags$b(textOutput("sidetext2"))), plotlyOutput(outputId ="plotgraph2", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(2, br(), br(), br(), imageOutput("rightimage2"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext3",
         fluidRow(
-          column(6, h4(textOutput("sidetext3")), plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(6, h4(tags$b(textOutput("sidetext3"))), plotlyOutput(outputId ="plotgraph3", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(2, br(), br(), br(), imageOutput("rightimage3"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext4",
         fluidRow(
-          column(6, h4(textOutput("sidetext4")), plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(6, h4(tags$b(textOutput("sidetext4"))), plotlyOutput(outputId ="plotgraph4", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(2, br(), br(), br(), imageOutput("rightimage4"))
         )
       ), 
       conditionalPanel(
         condition = "output.sidetext5",
         fluidRow(
-          column(6, h4(textOutput("sidetext5")), plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
+          column(6, h4(tags$b(textOutput("sidetext5"))), plotlyOutput(outputId ="plotgraph5", height = "250px"), h5("Source ODD", a("Link", href=source_odd))),
           column(2, br(), br(), br(), imageOutput("rightimage5"))
         )
       )
