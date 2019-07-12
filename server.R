@@ -177,6 +177,7 @@ server <- function(input, output, session) {
   outtextgraph <- reactiveVal()
   sidetextgraph <- reactiveVal()
   no_indicateur <- reactiveVal()
+  source_entity <- reactiveVal()
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
@@ -204,6 +205,7 @@ server <- function(input, output, session) {
                 }
                 , {
       list_images_to_plot = list()
+      list_source_entity = list()
       for (i in list_image_all){
         cur_img <- NULL
         for (j in i){
@@ -220,6 +222,9 @@ server <- function(input, output, session) {
                                   epci_2()$siren,
                                   i)
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
+        
+        cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
+        list_source_entity <- list.append(list_source_entity, cur_source)
       }
       if (length(list_graph_values_to_plot)==0){
         no_indicateur(PAS_INDICATEUR)
@@ -228,6 +233,7 @@ server <- function(input, output, session) {
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
       sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
       rightoddimage(list_images_to_plot)
+      source_entity(list_source_entity)
       
     })
   })
@@ -247,6 +253,22 @@ server <- function(input, output, session) {
       my_l <- l
       textname <- paste("sidetext", my_l, sep="")
       output[[textname]] <- renderText({sidetextgraph()[[my_l]]})
+    })
+  }
+  
+  output$source_entity <- renderText({
+    source_plot <- source_entity()
+    source_output_list <- lapply(1:length(source_plot), function(cur_source){
+      source_name <- paste("source_text", i, sep="")
+      cur_source
+    })
+    do.call(tagList, source_output_list)
+  })
+  for (i in 1:max_plot){
+    local({
+      my_i <- i
+      source_name <- paste("source_text", i, sep="")
+      output[[source_name]] <- renderText({source_entity()[[my_i]]})
     })
   }
   
