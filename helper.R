@@ -219,14 +219,8 @@ get_code_indicateur_from_odd <- function(odd){
   list_code_indic
 }
 
-get_graph <- function(values, names){
+get_graph <- function(values, names, unit){
   scale <- max(values)
-  if (scale>100){
-    unit = 'kg'
-  }
-  else {
-    unit="%"
-  }
   list_to_keep <- c()
   for (i in 1:4){
     if (values[[i]]!=0){

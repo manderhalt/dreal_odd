@@ -178,6 +178,7 @@ server <- function(input, output, session) {
   sidetextgraph <- reactiveVal()
   no_indicateur <- reactiveVal()
   source_entity <- reactiveVal()
+  code_indic <- reactiveVal()
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
@@ -234,6 +235,7 @@ server <- function(input, output, session) {
       sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
       rightoddimage(list_images_to_plot)
       source_entity(list_source_entity)
+      code_indic(list_code_indic)
       
     })
   })
@@ -284,9 +286,13 @@ server <- function(input, output, session) {
     local({
       my_j <- j
       plotname <- paste("plotgraph", my_j, sep="")
-      output[[plotname]]<- renderPlotly({get_graph(
+      output[[plotname]]<- renderPlotly({
+        cur_indic <- code_indic()[[my_j]]
+        unit <- IND[IND$code_indicateur==cur_indic,]$unite
+        
+        get_graph(
         outgraph()[[my_j]],
-        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France")
+        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
         )})
       # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
     })
