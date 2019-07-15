@@ -223,7 +223,7 @@ get_graph <- function(values, names, unit){
   scale <- max(values)
   list_to_keep <- c()
   for (i in 1:4){
-    if (values[[i]]!=0){
+    if (values[[i]]!=0 & !is.na(values[[i]])){
       list_to_keep <- c(list_to_keep, i)
     }
   }

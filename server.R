@@ -218,21 +218,26 @@ server <- function(input, output, session) {
         
       }
       list_graph_values_to_plot = list()
+      list_side_text = list()
       for (i in list_code_indic){
         cur_values <- horiz_histo(departement_2()$CodeZone,
                                   epci_2()$siren,
                                   i)
+        if (length(cur_values)>1){
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         
         cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
         list_source_entity <- list.append(list_source_entity, cur_source)
+        list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
+        }
       }
       if (length(list_graph_values_to_plot)==0){
         no_indicateur(PAS_INDICATEUR)
       }
+      
       outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
-      sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
+      sidetextgraph(list_side_text)
       rightoddimage(list_images_to_plot)
       source_entity(list_source_entity)
       code_indic(list_code_indic)
@@ -289,7 +294,6 @@ server <- function(input, output, session) {
       output[[plotname]]<- renderPlotly({
         cur_indic <- code_indic()[[my_j]]
         unit <- IND[IND$code_indicateur==cur_indic,]$unite
-        
         get_graph(
         outgraph()[[my_j]],
         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
