@@ -20,13 +20,13 @@ DF_DEP <- dbReadTable(con, "QUIZZ_ODD_DEP_2019_03_05")
 DF_DEP <- DF_DEP[!is.na(DF_DEP$Zone),]
 DF_EPCI <- dbReadTable(con, "QUIZZ_ODD_EPCI_2019_03_05")
 DF_EPCI <- DF_EPCI[!is.na(DF_EPCI$Zone),]
-IND <- dbReadTable(con, "Tab_passage_Ind_ODD")
+IND <- dbReadTable(con, "tab_passage_ind_odd")
 DF_FR <- dbReadTable(con, "QUIZZ_ODD_FM_2019_03_05")
 DF_FR <- DF_FR[!is.na(DF_FR$Zone),]
 DF_REG <- dbReadTable(con, "QUIZZ_ODD_REG_2019_03_05")
 DF_REG <- DF_REG[!is.na(DF_REG$Zone),]
 DF_ANSWER <- dbReadTable(con, TABLE_ANSWER)
-QUESTION <- dbReadTable(con, "Tab_passage_Ind_ODD")
+QUESTION <- dbReadTable(con, "tab_passage_ind_odd")
 QUESTION <- QUESTION[QUESTION[["Indicateurs.QUIZ"]]=="OUI",]
 insert_answer <- function(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id){
   question_sql_label <- str_replace_all(question_label, "'", " ")

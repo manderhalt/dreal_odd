@@ -19,7 +19,7 @@ navbarPage("Les ODD dans mon territoire",
                           h4(textOutput("epci_text")),
                           br(),
                           h4("Par rapport à votre département..."),
-                          lapply(1:length(QUESTION$libel_long), function(i){
+                          lapply(1:length(QUESTION[["Question.QUIZ"]]), function(i){
                             radio_button <- paste("radio_button_", i, sep="")
                             radio_img <- paste("radio_img_", i, sep="")
                             fluidRow(column(3,align = "center",uiOutput(radio_img), br()),
@@ -111,19 +111,11 @@ navbarPage("Les ODD dans mon territoire",
         ))),
       # TEXTE
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
-      uiOutput("all_odd"),
+      uiOutput("all_odd")
       # GRAPHE
       
       
-      lapply(1:76, function(i){
-        sd_text <- paste("sidetext_small", i, sep="")
-        src_text <- paste("source_text_small", i, sep="")
-        plot_name <- paste("plotgraph_small", i, sep="")
-        img_name <- paste("rightimage_small", i , sep="")
-        fluidRow(
-          column(6, h4(tags$b(textOutput(sd_text))), plotlyOutput(outputId =plot_name, height = "250px"), h5(textOutput(src_text) )),
-          column(2, br(), br(), br(), imageOutput(img_name)))
-      })
+      
       
       
       

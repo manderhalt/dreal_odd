@@ -40,10 +40,10 @@ server <- function(input, output, session) {
   
   #FORM
   
-  lapply(1:length(QUESTION$libel_long), function(question_number){
+  lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
     size_img <- "30%"
     current_question <- QUESTION[question_number,]
-    cur_libel <- current_question$libel_long
+    cur_libel <- current_question[["Question.QUIZ"]]
     radio_button <- paste("radio_button_", question_number, sep="")
     radio_img <- paste("radio_img_", question_number, sep="")
     logos <- logos_from_code_indic(current_question$code_indicateur)
@@ -67,9 +67,9 @@ server <- function(input, output, session) {
   
   observeEvent(input$submitBtn, {
     
-    lapply(1:length(QUESTION$libel_long), function(question_number){
+    lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
       current_question <- QUESTION[question_number,]
-      cur_libel <- current_question$libel_long
+      cur_libel <- current_question[["Question.QUIZ"]]
       input_id <- paste("question_",question_number,sep='')
       bonne_reponse <- get_under_over_from_question(current_question$code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[input_id]]
@@ -82,7 +82,7 @@ server <- function(input, output, session) {
       }
      updateRadioButtons(session, 
                         inputId=input_id,
-                        label=current_question$libel_long,
+                        label=current_question[["Question.QUIZ"]],
                         inline=TRUE,
                         choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = marker_to_select) 
     })
@@ -120,7 +120,7 @@ server <- function(input, output, session) {
       else {
         response_to_send_sql <- response_user
       }
-      insert_answer(question_label = current_question$libel_long, 
+      insert_answer(question_label = current_question[["Question.QUIZ"]], 
                     answer_question = response_to_send_sql, 
                     right_answer = type_answer,
                     date_submit = Sys.Date(),
@@ -229,7 +229,7 @@ server <- function(input, output, session) {
         if (length(cur_values)>1){
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         
-        cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
+        cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, IND[IND$code_indicateur==i,]$annee)
         list_source_entity <- list.append(list_source_entity, cur_source)
         list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
