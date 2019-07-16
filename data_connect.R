@@ -26,9 +26,11 @@ DF_FR <- DF_FR[!is.na(DF_FR$Zone),]
 DF_REG <- dbReadTable(con, "QUIZZ_ODD_REG_2019_03_05")
 DF_REG <- DF_REG[!is.na(DF_REG$Zone),]
 DF_ANSWER <- dbReadTable(con, TABLE_ANSWER)
-
+QUESTION <- dbReadTable(con, "Tab_passage_Ind_ODD")
+QUESTION <- QUESTION[QUESTION[["Indicateurs.QUIZ"]]=="OUI",]
 insert_answer <- function(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id){
-  question_sql_label <- paste("'", question_label, "'", sep='')
+  question_sql_label <- str_replace_all(question_label, "'", " ")
+  question_sql_label <- paste("'", question_sql_label, "'", sep='')
   date_submit_sql <- paste("'", date_submit, "'", sep='')
   line <- paste(question_sql_label, answer_question, right_answer, date_submit_sql, dep, epci, questionnaire_id, sep=", ")
   query <- paste("INSERT INTO", TABLE_ANSWER, "(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id)", "VALUES", "(", line, ");")
