@@ -70,18 +70,10 @@ navbarPage("Les ODD dans mon territoire",
       column(8, tags$img(src="logo.svg", width="70%")),
       # CHOIX DEPARTEMENT
       column(
-        10, align="left", br(), h3("Portrait de territoire - Tous les indicateurs ODD de mon territoire"),
+        12, align="left", br(), h3("Portrait de territoire - Tous les indicateurs ODD de mon territoire"),
         h4(style = "line-height:1.3em","Sélectionnez votre territoire et cliquez sur chaque bloc ODD pour visualiser le positionnement de votre territoire 
-        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(),br(), "Un indicateur peut être relié à plusieurs ODD.", br(),br(),
-           br(), "Pour afficher l'ensemble des indicateurs cliquez sur la roue",
-           tags$button(
-             id="wheel_small_button",
-             class = "btn action-button",
-             img(src="wheel_to_text.png", height="50px")
-           )
-           )
-      ),
-      
+        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(),br(), "Un indicateur peut être relié à plusieurs ODD.", br(),br()
+        )),
       uiOutput("departement_2"),
       uiOutput("commune_2"),
     
@@ -110,6 +102,13 @@ navbarPage("Les ODD dans mon territoire",
         )
       }
       ),
+      column(
+        12, align="left", br(),h4(style = "line-height:1.3em","Pour afficher l'ensemble des indicateurs, cliquez sur la roue (le chargement peut être long)",
+          tags$button(
+            id="wheel_small_button",
+            class = "btn action-button",
+            img(src="wheel_to_text.png", height="50px")
+        ))),
       # TEXTE
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
       

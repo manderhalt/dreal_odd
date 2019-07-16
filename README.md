@@ -18,8 +18,6 @@ Il vous faudra une version de R et Rstudio à jour
 
 ### Installation du repos
 
-
-
 ```
 git clone https://github.com/manderhalt/dreal.git
 ```
@@ -44,6 +42,10 @@ Il faudra executer le fichier *package_dependency.R* afin d'importer le package 
 ## Versioning
 
 Versioning classique, à jour sur le changelog
+
+### Déploiement
+
+psql -h ec2-46-137-170-51.eu-west-1.compute.amazonaws.com -d dfc1pthbflg0oa -U tqzzczaqbdfgsn -p 5432 -f dump.sql
 
 
 
