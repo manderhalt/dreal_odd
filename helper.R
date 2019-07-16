@@ -1,7 +1,7 @@
 # DIVWHEEL
 get_divwheel_text_from_question_numbers <- function(question, numbers){
-  first_part <- paste(gsub(":", " de", question$Libel), numbers[[1]], "%")
-  det <- substr(question$Libel, start=1, stop=2)
+  first_part <- paste(gsub(":", " de", question$libel_long), numbers[[1]], "%")
+  det <- substr(question$libel_long, start=1, stop=2)
   if (grepl("a", det)){
     second_part <- paste(", tandis que celle de votre département est de", numbers[[2]], "%.")
   }
