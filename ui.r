@@ -63,7 +63,6 @@ navbarPage("Les ODD dans mon territoire",
      tags$style(HTML("
                      .navbar-default .navbar-brand {background-color: #FFFFFF; color: black}
                      .navbar-default {background-color: #FFFFFF ;}
-                       
                        "))
      ), 
    # DEUXIEME PAGE
@@ -73,7 +72,14 @@ navbarPage("Les ODD dans mon territoire",
       column(
         10, align="left", br(), h3("Portrait de territoire - Tous les indicateurs ODD de mon territoire"),
         h4(style = "line-height:1.3em","Sélectionnez votre territoire et cliquez sur chaque bloc ODD pour visualiser le positionnement de votre territoire 
-        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(),br(), "Un indicateur peut être relié à plusieurs ODD.", br(),br())
+        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(),br(), "Un indicateur peut être relié à plusieurs ODD.", br(),br(),
+           br(), "Pour afficher l'ensemble des indicateurs cliquez sur la roue",
+           tags$button(
+             id="wheel_small_button",
+             class = "btn action-button",
+             img(src="wheel_to_text.png", height="50px")
+           )
+           )
       ),
       
       uiOutput("departement_2"),
@@ -147,7 +153,17 @@ navbarPage("Les ODD dans mon territoire",
           column(6, h4(tags$b(textOutput("sidetext5"))), plotlyOutput(outputId ="plotgraph5", height = "250px"), h5(textOutput("source_text5") )),
           column(2, br(), br(), br(), imageOutput("rightimage5"))
         )
-      )
+      ),
+      
+      lapply(1:76, function(i){
+        sd_text <- paste("sidetext_small", i, sep="")
+        src_text <- paste("source_text_small", i, sep="")
+        plot_name <- paste("plotgraph_small", i, sep="")
+        img_name <- paste("rightimage_small", i , sep="")
+        fluidRow(
+          column(6, h4(tags$b(textOutput(sd_text))), plotlyOutput(outputId =plot_name, height = "250px"), h5(textOutput(src_text) )),
+          column(2, br(), br(), br(), imageOutput(img_name)))
+      })
    ),
    
    # DEBUT TROISIEME PAGE

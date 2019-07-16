@@ -104,10 +104,11 @@ server <- function(input, output, session) {
     lapply(1:nrow(QUESTION), function(question_number){
       current_question <- QUESTION[question_number,]
       question_input_id <- paste("question_",current_question$Num_question,sep='')
+      
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      type_answer <- get_under_over_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[question_input_id]]
       cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
-      type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       numbers <- get_numbers_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_all[cur_odd] <<- bonne_reponse
       all_logos[cur_odd] <<- paste("ODD", cur_odd, sep="")
@@ -182,6 +183,9 @@ server <- function(input, output, session) {
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
+    observeEvent({input[[button]]
+    }
+    , {
     odd_text <- paste("odd", i, sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
@@ -202,9 +206,7 @@ server <- function(input, output, session) {
       list_image_all <- c(list_image_all, list(list_image))
     }
     
-    observeEvent({input[[button]]
-                }
-                , {
+    
       list_images_to_plot = list()
       list_source_entity = list()
       for (i in list_image_all){
@@ -218,24 +220,30 @@ server <- function(input, output, session) {
         
       }
       list_graph_values_to_plot = list()
+      list_side_text = list()
       for (i in list_code_indic){
         cur_values <- horiz_histo(departement_2()$CodeZone,
                                   epci_2()$siren,
                                   i)
+        if (length(cur_values)>1){
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         
         cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
         list_source_entity <- list.append(list_source_entity, cur_source)
+        list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
+        }
       }
       if (length(list_graph_values_to_plot)==0){
         no_indicateur(PAS_INDICATEUR)
       }
+      print(length(list_graph_values_to_plot))
       outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
-      sidetextgraph(subset(IND, IND$code_indicateur %in% list_code_indic)$libel_court)
+      sidetextgraph(list_side_text)
       rightoddimage(list_images_to_plot)
       source_entity(list_source_entity)
       code_indic(list_code_indic)
+      
       
     })
   })
@@ -290,8 +298,6 @@ server <- function(input, output, session) {
         #print(IND)
         cur_indic <- code_indic()[[my_j]]
         unit <- IND[IND$code_indicateur==cur_indic,]$unite
-        #print(unit)
-        #print(cur_indic)
         get_graph(
         outgraph()[[my_j]],
         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
@@ -324,6 +330,147 @@ server <- function(input, output, session) {
   outputOptions(output, "sidetext3", suspendWhenHidden = FALSE)
   outputOptions(output, "sidetext4", suspendWhenHidden = FALSE)
   outputOptions(output, "sidetext5", suspendWhenHidden = FALSE)
+  
+  
+  ### BOUTTON 
+  outgraph_small <- reactiveVal()
+  outtextgraph_small <- reactiveVal()
+  sidetextgraph_small <- reactiveVal()
+  no_indicateur_small <- reactiveVal()
+  source_entity_small <- reactiveVal()
+  code_indic_small <- reactiveVal()
+  rightoddimage_small <- reactiveVal(NULL)
+  observeEvent({input$wheel_small_button},{
+    list_images_to_plot = list()
+    list_source_entity = list()
+    list_graph_values_to_plot = list()
+    list_code_indic = c()
+    list_side_text = list()
+  lapply(1:17, function(i) {
+    
+    odd_text <- paste("odd", i, sep="")
+    odd <- paste("ODD", i, sep="")
+    list_code_indic <<- c(list_code_indic,get_code_indicateur_from_odd(odd))
+    cur_list_indic <- get_code_indicateur_from_odd(odd)
+    list_image_all <- list()
+    for (i in cur_list_indic){
+      list_image <- c()
+      cur_logos <- logos_from_code_indic(i)
+      for (logo in cur_logos){
+          cur_img = paste("www/", logo, ".png", sep="")
+          list_image <- c(list_image, cur_img)
+      }
+      list_image_all <- c(list_image_all, list(list_image))
+    }
+    
+      for (i in list_image_all){
+        cur_img <- NULL
+        for (j in i){
+          if (j !=""){
+            cur_img <- list(src=j, height=60)
+          }
+        }
+        list_images_to_plot <<- list.append(list_images_to_plot, cur_img)
+        print(list_images_to_plot)
+        
+      }
+      
+      for (i in cur_list_indic){
+        cur_values <- horiz_histo(departement_2()$CodeZone,
+                                  epci_2()$siren,
+                                  i)
+        if (length(cur_values)>1){
+          list_graph_values_to_plot <<- list.append(list_graph_values_to_plot, cur_values)
+          
+          cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
+          list_source_entity <<- list.append(list_source_entity, cur_source)
+          list_side_text <<- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
+        }
+      }
+      
+      outgraph_small(list_graph_values_to_plot)
+      outtextgraph_small(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
+      sidetextgraph_small(list_side_text)
+      rightoddimage_small(list_images_to_plot)
+      source_entity_small(list_source_entity)
+      code_indic_small(list_code_indic)
+      
+    })
+  })
+  output$text_graph_small <- renderText({outtextgraph_small()})
+  
+  # SIDE TEXT
+  output$side_text_graph_small <- renderUI({
+    side_text <- sidetextgraph_small()
+    text_output_list <- lapply(1:length(side_text), function(cur_text){
+      text_name <- paste("sidetext_small", i, sep="")
+      cur_text
+    })
+    do.call(tagList, text_output_list)
+  })
+  for(l in 1:76){
+    local({
+      my_l <- l
+      textname <- paste("sidetext_small", my_l, sep="")
+      output[[textname]] <- renderText({sidetextgraph_small()[[my_l]]})
+    })
+  }
+  
+  output$source_entity_small <- renderText({
+    source_plot <- source_entity_small()
+    source_output_list <- lapply(1:length(source_plot), function(cur_source){
+      source_name <- paste("source_text_small", i, sep="")
+      cur_source
+    })
+    do.call(tagList, source_output_list)
+  })
+  for (i in 1:76){
+    local({
+      my_i <- i
+      source_name <- paste("source_text_small", i, sep="")
+      output[[source_name]] <- renderText({source_entity_small()[[my_i]]})
+    })
+  }
+  
+  output$plot_graph_small <- renderUI({
+    plot_values <- outgraph_small()
+    plot_output_list <- lapply(1:length(plot_values), function(cur_value){
+      plot_name <- paste("plotgraph_small", i, sep="")
+      cur_value
+    })
+    do.call(tagList, plot_output_list)
+  })
+  for (j in 1:76){
+    local({
+      my_j <- j
+      plotname <- paste("plotgraph_small", my_j, sep="")
+      output[[plotname]]<- renderPlotly({
+        cur_indic <- code_indic_small()[[my_j]]
+        unit <- IND[IND$code_indicateur==cur_indic,]$unite
+        get_graph(
+          outgraph_small()[[my_j]],
+          c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
+        )})
+      # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
+    })
+  } 
+  # ODD IMAGE
+  output$right_odd_image <- renderUI({
+    right_images <- rightoddimage_small()
+    img_output_list <- lapply(1:length(right_images), function(cur_image){
+      img_name <- paste("rightimage_small", i , sep="")
+      cur_image
+    })
+    do.call(tagList, img_output_list)
+  })
+  for (i in 1:75){
+    local({
+      my_i <- i
+      imgname <- paste("rightimage_small", my_i, sep="")
+      output[[imgname]] <- renderImage({rightoddimage_small()[[my_i]]}, deleteFile = FALSE)
+    })
+  }
+  
   
   # TROISIEME PAGE
   # BOUTTONS LOGOS
