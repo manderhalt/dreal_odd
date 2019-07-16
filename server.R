@@ -195,14 +195,8 @@ server <- function(input, output, session) {
       list_image <- c()
       cur_logos <- logos_from_code_indic(i)
       for (logo in cur_logos){
-        list_image <- NULL
-        if (logo != odd){
-          cur_img = paste("www/", logo, ".png", sep="")
+          cur_img = paste(logo, ".png", sep="")
           list_image <- c(list_image, cur_img)
-        }
-        else {
-          list_image <- c(list_image, "")
-        }
       }
       list_image_all <- c(list_image_all, list(list_image))
     }
@@ -211,14 +205,13 @@ server <- function(input, output, session) {
       list_images_to_plot = list()
       list_source_entity = list()
       for (i in list_image_all){
-        cur_img <- NULL
+        cur_img = c()
         for (j in i){
           if (j !=""){
-            cur_img <- list(src=j, height=60)
+            cur_img <- c(cur_img, j)
           }
+          list_images_to_plot <- list.append(list_images_to_plot, cur_img)
         }
-        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
-        
       }
       list_graph_values_to_plot = list()
       list_side_text = list()
@@ -252,6 +245,8 @@ server <- function(input, output, session) {
   # SIDE TEXT
   output$all_odd <- renderUI({
     lapply(1:length(sidetextgraph()), function(cur_odd){
+      print(rightoddimage()[[cur_odd]])
+      if (length(rightoddimage()[[cur_odd]])>1){
       fluidRow(
         column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
                renderPlotly({
@@ -264,12 +259,34 @@ server <- function(input, output, session) {
                       )
                       }}),
         h5(source_entity()[[cur_odd]])),
-        column(2, br(), br(), br(), renderImage({
-          if (cur_odd<=length(rightoddimage())){
-            rightoddimage()[[cur_odd]]
-          }
-        }, deleteFile = FALSE))
+        column(6, br(), br(), br(), 
+          
+          tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70),
+                   img(src = rightoddimage()[[cur_odd]][[2]], width = 70, height = 70))
+        
+        )
       )
+      }
+      else {
+        fluidRow(
+          column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
+                 renderPlotly({
+                   if (cur_odd<=length(code_indic())){
+                     cur_indic <- code_indic()[[cur_odd]]
+                     unit <- IND[IND$code_indicateur==cur_indic,]$unite
+                     get_graph(
+                       outgraph()[[cur_odd]],
+                       c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
+                     )
+                   }}),
+                 h5(source_entity()[[cur_odd]])),
+          column(6, br(), br(), br(), 
+                 
+                 tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70))
+                 
+          )
+        )
+      }
     })
   })
   
