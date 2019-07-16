@@ -112,48 +112,9 @@ navbarPage("Les ODD dans mon territoire",
       ),
       # TEXTE
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
-      
+      uiOutput("all_odd"),
       # GRAPHE
-      conditionalPanel(
-        condition = "!output.sidetext1",
-        h3(textOutput("no_indicateur"), align="center")
-        ),
-      conditionalPanel(
-        
-        condition = "output.sidetext1",
-        fluidRow(
-          column(6, h4(tags$b(textOutput("sidetext1"))), plotlyOutput(outputId ="plotgraph1", height = "250px"), h5(textOutput("source_text1") )),
-          column(2, h4(tags$b("Autres ODD concernés")), br(), br(), br(), imageOutput("rightimage1"))
-        )
-      ), 
-      conditionalPanel(
-        condition = "output.sidetext2",
-        fluidRow(
-          column(6, h4(tags$b(textOutput("sidetext2"))), plotlyOutput(outputId ="plotgraph2", height = "250px"), h5(textOutput("source_text2") )),
-          column(2, br(), br(), br(), imageOutput("rightimage2"))
-        )
-      ), 
-      conditionalPanel(
-        condition = "output.sidetext3",
-        fluidRow(
-          column(6, h4(tags$b(textOutput("sidetext3"))), plotlyOutput(outputId ="plotgraph3", height = "250px"), h5(textOutput("source_text3") )),
-          column(2, br(), br(), br(), imageOutput("rightimage3"))
-        )
-      ), 
-      conditionalPanel(
-        condition = "output.sidetext4",
-        fluidRow(
-          column(6, h4(tags$b(textOutput("sidetext4"))), plotlyOutput(outputId ="plotgraph4", height = "250px"), h5(textOutput("source_text4") )),
-          column(2, br(), br(), br(), imageOutput("rightimage4"))
-        )
-      ), 
-      conditionalPanel(
-        condition = "output.sidetext5",
-        fluidRow(
-          column(6, h4(tags$b(textOutput("sidetext5"))), plotlyOutput(outputId ="plotgraph5", height = "250px"), h5(textOutput("source_text5") )),
-          column(2, br(), br(), br(), imageOutput("rightimage5"))
-        )
-      ),
+      
       
       lapply(1:76, function(i){
         sd_text <- paste("sidetext_small", i, sep="")
@@ -164,6 +125,8 @@ navbarPage("Les ODD dans mon territoire",
           column(6, h4(tags$b(textOutput(sd_text))), plotlyOutput(outputId =plot_name, height = "250px"), h5(textOutput(src_text) )),
           column(2, br(), br(), br(), imageOutput(img_name)))
       })
+      
+      
       
    ),
    

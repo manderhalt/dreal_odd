@@ -242,7 +242,7 @@ get_graph <- function(values, names, unit){
     categoryarray = rev(names)
   )
   plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
-                    marker= list(color=colors2))%>%
+                    marker= list(color=colors2), height=250)%>%
    
     layout(xaxis = ax, yaxis = ax)%>%
     config(displayModeBar = F) %>%

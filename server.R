@@ -250,99 +250,28 @@ server <- function(input, output, session) {
   output$text_graph <- renderText({outtextgraph()})
   
   # SIDE TEXT
-  
-  output$side_text_graph <- renderUI({
-    side_text <- sidetextgraph()
-    text_output_list <- lapply(1:length(side_text), function(cur_text){
-      text_name <- paste("sidetext", i, sep="")
-      cur_text
+  output$all_odd <- renderUI({
+    lapply(1:length(sidetextgraph()), function(cur_odd){
+      fluidRow(
+        column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
+               renderPlotly({
+                    if (cur_odd<=length(code_indic())){
+                      cur_indic <- code_indic()[[cur_odd]]
+                      unit <- IND[IND$code_indicateur==cur_indic,]$unite
+                      get_graph(
+                        outgraph()[[cur_odd]],
+                        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
+                      )
+                      }}),
+        h5(source_entity()[[cur_odd]])),
+        column(2, br(), br(), br(), renderImage({
+          if (cur_odd<=length(rightoddimage())){
+            rightoddimage()[[cur_odd]]
+          }
+        }, deleteFile = FALSE))
+      )
     })
-    do.call(tagList, text_output_list)
   })
-  for(l in 1:max_plot){
-    local({
-      my_l <- l
-      textname <- paste("sidetext", my_l, sep="")
-      output[[textname]] <- renderText({
-        if (my_l<=length(sidetextgraph())){
-        sidetextgraph()[[my_l]]
-      }
-    })
-  })
-  }
-  
-  output$source_entity <- renderText({
-    source_plot <- source_entity()
-    source_output_list <- lapply(1:length(source_plot), function(cur_source){
-      source_name <- paste("source_text", i, sep="")
-      cur_source
-    })
-    do.call(tagList, source_output_list)
-  })
-  for (i in 1:max_plot){
-    local({
-      my_i <- i
-      source_name <- paste("source_text", i, sep="")
-      output[[source_name]] <- renderText({
-        if (my_i<=length(source_entity())){
-        source_entity()[[my_i]]
-        }    
-      })
-    })
-  }
-  
-  output$plot_graph <- renderUI({
-    plot_values <- outgraph()
-    plot_output_list <- lapply(1:length(plot_values), function(cur_value){
-      plot_name <- paste("plotgraph", i, sep="")
-      cur_value
-    })
-    do.call(tagList, plot_output_list)
-  })
-  for (j in 1:max_plot){
-    local({
-      my_j <- j
-      plotname <- paste("plotgraph", my_j, sep="")
-      output[[plotname]]<- renderPlotly({
-        if (my_j<=length(code_indic())){
-        cur_indic <- code_indic()[[my_j]]
-        unit <- IND[IND$code_indicateur==cur_indic,]$unite
-        get_graph(
-        outgraph()[[my_j]],
-        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
-        )
-        }
-        })
-      # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
-    })
-  } 
-  # ODD IMAGE
-  output$right_odd_image <- renderUI({
-    right_images <- rightoddimage()
-    img_output_list <- lapply(1:length(right_images), function(cur_image){
-      img_name <- paste("rightimage", i , sep="")
-      cur_image
-    })
-    do.call(tagList, img_output_list)
-  })
-  for (i in 1:max_img){
-    local({
-      my_i <- i
-      imgname <- paste("rightimage", my_i, sep="")
-      output[[imgname]] <- renderImage({
-        if (my_i<=length(rightoddimage)){
-        rightoddimage()[[my_i]]
-        }
-      }, deleteFile = FALSE)
-    })
-  }
-  
-  outputOptions(output, "sidetext1", suspendWhenHidden = FALSE)
-  outputOptions(output, "sidetext2", suspendWhenHidden = FALSE)
-  outputOptions(output, "sidetext3", suspendWhenHidden = FALSE)
-  outputOptions(output, "sidetext4", suspendWhenHidden = FALSE)
-  outputOptions(output, "sidetext5", suspendWhenHidden = FALSE)
-  
   
   ### BOUTTON 
   outgraph_small <- reactiveVal()
