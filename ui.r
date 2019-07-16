@@ -1,9 +1,8 @@
-navbarPage("Les ODD dans mon territoire", 
-           
+navbarPage("Les ODD dans mon territoire",
    # PREMIERE PAGE
    tabPanel(
      "Accueil-Quiz",
-     tags$head(tags$style("* { font-family: Open Sans; }")),
+     tags$head(tags$style("* { font-family: Open Sans; line-height:1.3em};.h4 {line-height:1.3em}")),
      fluidRow(column(1, align="center", imageOutput("image_dreal")),
        column(8, tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
@@ -62,22 +61,19 @@ navbarPage("Les ODD dans mon territoire",
    # Styling nav bar
    tags$head(
      tags$style(HTML("
-                     .navbar-default .navbar-brand {background-color: #5392CB; color: black}
-                     .navbar-nav { width: 85% }
-                     .navbar-nav>li:nth-child(4) { float: right;}
+                     .navbar-default .navbar-brand {background-color: #FFFFFF; color: black}
                      .navbar-default {background-color: #FFFFFF ;}
                        
                        "))
      ), 
    # DEUXIEME PAGE
    tabPanel("Les indicateurs ODD de mon territoire",
-            
       column(8, tags$img(src="logo.svg", width="70%")),
       # CHOIX DEPARTEMENT
       column(
-        12, align="left", br(), h3("Portrait de territoire - Tout les indicateurs ODD de mon territoire"),
-        h4("Sélectionnez votre territoire et cliquez sur chaque bloc ODD pour visualiser le positionnement de votre territoire 
-        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(), "Un indicateur peut être relié à plusieurs ODD.", br())
+        10, align="left", br(), h3("Portrait de territoire - Tous les indicateurs ODD de mon territoire"),
+        h4(style = "line-height:1.3em","Sélectionnez votre territoire et cliquez sur chaque bloc ODD pour visualiser le positionnement de votre territoire 
+        par rapport aux échelles territoriales supérieures (département, région, France métropolitaine).", br(),br(), "Un indicateur peut être relié à plusieurs ODD.", br(),br())
       ),
       
       uiOutput("departement_2"),
@@ -159,20 +155,20 @@ navbarPage("Les ODD dans mon territoire",
      div(tags$img(src="wheel_to_text.png", height="20px"),"Les ODD, qu'est-ce que c'est ?"),
      
      column(8, tags$img(src="logo.svg", width="70%")),
-     column(12, style = "font-size: 150%", br(), TEXT_ODD_PRES_1, 
+     column(12, style = "font-size: 130%", br(), TEXT_ODD_PRES_1, 
             br(), br(), TEXT_ODD_PRES_2, br(), br(),
             tags$b("Rendez-vous sur le site des ODD pour la France :"),
             a("https://www.agenda-2030.fr", href="https://www.agenda-2030.fr"), br(), br(),
             tags$ul(
-              tags$li(a("Présentation : origines et principes", href="https://www.agenda-2030.fr/agenda2030/presentation-principes-specificites-origines-18")),
-              tags$li(a("Les indicateurs de suivi des Objectifs de développement durable", href="https://www.agenda-2030.fr/agenda2030/dispositif-de-suivi-les-indicateurs-19")),
-              tags$li(a("Situation et organisation de la mise en œuvre en France", href="https://www.agenda-2030.fr/agenda2030/situation-de-la-france-21")),
-              tags$li(a("Mobilisation des acteurs", href="https://www.agenda-2030.fr/agenda2030/mobilisation-des-acteurs-non-etatiques-en-france-40")),
-              tags$li(a("En Europe et à l'international", href="https://www.agenda-2030.fr/agenda2030/en-europe-et-linternational-22"))
+              tags$li(a("Présentation : origines et principes", href="https://www.agenda-2030.fr/agenda2030/presentation-principes-specificites-origines-18",target="_blank",rel="noopener noreferrer")),
+              tags$li(a("Les indicateurs de suivi des Objectifs de développement durable", href="https://www.agenda-2030.fr/agenda2030/dispositif-de-suivi-les-indicateurs-19",target="_blank",rel="noopener noreferrer")),
+              tags$li(a("Situation et organisation de la mise en œuvre en France", href="https://www.agenda-2030.fr/agenda2030/situation-de-la-france-21",target="_blank",rel="noopener noreferrer")),
+              tags$li(a("Mobilisation des acteurs", href="https://www.agenda-2030.fr/agenda2030/mobilisation-des-acteurs-non-etatiques-en-france-40",target="_blank",rel="noopener noreferrer")),
+              tags$li(a("En Europe et à l'international", href="https://www.agenda-2030.fr/agenda2030/en-europe-et-linternational-22",target="_blank",rel="noopener noreferrer"))
             ),
             br(), br(),
             "Les ODD sur le site de l'ONU :", tags$a(href="https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/", 
-                                                    "https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/"),
+                                                    "https://www.un.org/sustainabledevelopment/fr/objectifs-de-developpement-durable/",target="_blank",rel="noopener noreferrer"),
             br(), br()
       ),
      
@@ -193,9 +189,9 @@ navbarPage("Les ODD dans mon territoire",
      ),
      fluidRow(
        column(width = 4, align = "center", br(), imageOutput("third_image")),
-       column(width = 7, style = "font-size: 150%", 
+       column(width = 7, style = "font-size: 150%;margin-top:30px", 
               h4(textOutput("text_odd"), 
-                 style="font-size: 200%; color:cornflowerblue"), 
+                 style="font-size: 150%"), 
               textOutput("subtext_odd"), br(), 
               textOutput("third_text_with_link"), 
               uiOutput("third_link"),br())

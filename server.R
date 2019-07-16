@@ -287,9 +287,11 @@ server <- function(input, output, session) {
       my_j <- j
       plotname <- paste("plotgraph", my_j, sep="")
       output[[plotname]]<- renderPlotly({
+        #print(IND)
         cur_indic <- code_indic()[[my_j]]
         unit <- IND[IND$code_indicateur==cur_indic,]$unite
-        
+        #print(unit)
+        #print(cur_indic)
         get_graph(
         outgraph()[[my_j]],
         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit

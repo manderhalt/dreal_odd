@@ -227,8 +227,9 @@ get_graph <- function(values, names, unit){
       list_to_keep <- c(list_to_keep, i)
     }
   }
-  colors2 <-c('#A9D0F5', '#F2F2F2', '#F2F2F2', '#F2F2F2')
+  colors2 <-c('#00AFEC', '#F2F2F2', '#F2F2F2', '#F2F2F2')
   values <- values[list_to_keep]
+  #print(values)
   colors2 <- colors2[list_to_keep]
   names <- names[list_to_keep]
   ax <- list(
@@ -242,8 +243,10 @@ get_graph <- function(values, names, unit){
   )
   plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
                     marker= list(color=colors2))%>%
-    layout(xaxis = ax, yaxis = ax)%>%
-    config(displayModeBar = F) %>% 
+   
+    layout(xaxis = ax, yaxis = ax,fixedrange=TRUE)%>%
+    config(displayModeBar = F) %>%
+    layout(xaxis=list(fixedrange=TRUE)) %>% layout(yaxis=list(fixedrange=TRUE)) %>%
   
     add_annotations(text = names,
                     x = values/2,
