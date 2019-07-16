@@ -19,7 +19,7 @@ navbarPage("Les ODD dans mon territoire",
                           h4(textOutput("epci_text")),
                           br(),
                           h4("Par rapport à votre département..."),
-                          lapply(1:length(QUESTION$Libel), function(i){
+                          lapply(1:length(QUESTION$libel_long), function(i){
                             radio_button <- paste("radio_button_", i, sep="")
                             radio_img <- paste("radio_img_", i, sep="")
                             fluidRow(column(3,align = "center",uiOutput(radio_img), br()),

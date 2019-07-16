@@ -40,13 +40,13 @@ server <- function(input, output, session) {
   
   #FORM
   
-  lapply(1:length(QUESTION$Libel), function(question_number){
+  lapply(1:length(QUESTION$libel_long), function(question_number){
     size_img <- "30%"
     current_question <- QUESTION[question_number,]
-    cur_libel <- current_question$Libel
+    cur_libel <- current_question$libel_long
     radio_button <- paste("radio_button_", question_number, sep="")
     radio_img <- paste("radio_img_", question_number, sep="")
-    logos <- logos_from_code_indic(current_question$Code_indicateur)
+    logos <- logos_from_code_indic(current_question$code_indicateur)
     if (length(logos)>1){
       img_file_1 = paste(logos[[1]],".png", sep="")
       img_file_2 = paste(logos[[2]],".png", sep="")
@@ -58,7 +58,7 @@ server <- function(input, output, session) {
       
         output[[radio_img]] <- renderUI({img(src=img_file, width = size_img)})
     }
-    output[[radio_button]] <- renderUI({ radioButtons(inputId=paste("question_",current_question$Num_question,sep=''), 
+    output[[radio_button]] <- renderUI({ radioButtons(inputId=paste("question_",question_number,sep=''), 
                                          label=cur_libel, inline=TRUE, selected = character(0),
                                          choiceNames=get_choices_labels_from_question(cur_libel), choiceValues=CHOICEVALUES
     )})
@@ -67,11 +67,11 @@ server <- function(input, output, session) {
   
   observeEvent(input$submitBtn, {
     
-    lapply(1:length(QUESTION$Libel), function(question_number){
+    lapply(1:length(QUESTION$libel_long), function(question_number){
       current_question <- QUESTION[question_number,]
-      cur_libel <- current_question$Libel
-      input_id <- paste("question_",current_question$Num_question,sep='')
-      bonne_reponse <- get_under_over_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      cur_libel <- current_question$libel_long
+      input_id <- paste("question_",question_number,sep='')
+      bonne_reponse <- get_under_over_from_question(current_question$code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[input_id]]
       type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       choice_names <- as.list(get_choices_labels_from_question(cur_libel))
@@ -82,7 +82,7 @@ server <- function(input, output, session) {
       }
      updateRadioButtons(session, 
                         inputId=input_id,
-                        label=current_question$Libel,
+                        label=current_question$libel_long,
                         inline=TRUE,
                         choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = marker_to_select) 
     })
@@ -104,13 +104,13 @@ server <- function(input, output, session) {
     
     lapply(1:nrow(QUESTION), function(question_number){
       current_question <- QUESTION[question_number,]
-      question_input_id <- paste("question_",current_question$Num_question,sep='')
+      question_input_id <- paste("question_",question_number,sep='')
       
-      bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
-      type_answer <- get_under_over_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      bonne_reponse <- get_result_from_question(current_question$code_indicateur,epci()$siren, departement()$CodeZone)
+      type_answer <- get_under_over_from_question(current_question$code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[question_input_id]]
-      cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
-      numbers <- get_numbers_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      cur_odd <- number_from_code_indic(current_question$code_indicateur)[[1]]
+      numbers <- get_numbers_from_question(current_question$code_indicateur,epci()$siren, departement()$CodeZone)
       response_all[cur_odd] <<- bonne_reponse
       all_logos[cur_odd] <<- paste("ODD", cur_odd, sep="")
       text_alert_all[cur_odd] <<- get_divwheel_text_from_question_numbers(question = current_question, numbers = numbers)
@@ -120,7 +120,7 @@ server <- function(input, output, session) {
       else {
         response_to_send_sql <- response_user
       }
-      insert_answer(question_label = current_question$Libel, 
+      insert_answer(question_label = current_question$libel_long, 
                     answer_question = response_to_send_sql, 
                     right_answer = type_answer,
                     date_submit = Sys.Date(),
