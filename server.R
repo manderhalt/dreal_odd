@@ -104,10 +104,11 @@ server <- function(input, output, session) {
     lapply(1:nrow(QUESTION), function(question_number){
       current_question <- QUESTION[question_number,]
       question_input_id <- paste("question_",current_question$Num_question,sep='')
+      
       bonne_reponse <- get_result_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
+      type_answer <- get_under_over_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_user <- input[[question_input_id]]
       cur_odd <- number_from_code_indic(current_question$Code_indicateur)[[1]]
-      type_answer <- get_correct_or_wrong_answer(response_user, bonne_reponse)
       numbers <- get_numbers_from_question(current_question$Code_indicateur,epci()$siren, departement()$CodeZone)
       response_all[cur_odd] <<- bonne_reponse
       all_logos[cur_odd] <<- paste("ODD", cur_odd, sep="")
@@ -182,6 +183,9 @@ server <- function(input, output, session) {
   rightoddimage <- reactiveVal(NULL)
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
+    observeEvent({input[[button]]
+    }
+    , {
     odd_text <- paste("odd", i, sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
@@ -202,9 +206,7 @@ server <- function(input, output, session) {
       list_image_all <- c(list_image_all, list(list_image))
     }
     
-    observeEvent({input[[button]]
-                }
-                , {
+    
       list_images_to_plot = list()
       list_source_entity = list()
       for (i in list_image_all){
@@ -234,13 +236,14 @@ server <- function(input, output, session) {
       if (length(list_graph_values_to_plot)==0){
         no_indicateur(PAS_INDICATEUR)
       }
-      
+      print(length(list_graph_values_to_plot))
       outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
       sidetextgraph(list_side_text)
       rightoddimage(list_images_to_plot)
       source_entity(list_source_entity)
       code_indic(list_code_indic)
+      
       
     })
   })
@@ -404,7 +407,7 @@ server <- function(input, output, session) {
     })
     do.call(tagList, text_output_list)
   })
-  for(l in 1:50){
+  for(l in 1:76){
     local({
       my_l <- l
       textname <- paste("sidetext_small", my_l, sep="")
@@ -420,7 +423,7 @@ server <- function(input, output, session) {
     })
     do.call(tagList, source_output_list)
   })
-  for (i in 1:50){
+  for (i in 1:76){
     local({
       my_i <- i
       source_name <- paste("source_text_small", i, sep="")
@@ -436,7 +439,7 @@ server <- function(input, output, session) {
     })
     do.call(tagList, plot_output_list)
   })
-  for (j in 1:50){
+  for (j in 1:76){
     local({
       my_j <- j
       plotname <- paste("plotgraph_small", my_j, sep="")
@@ -459,7 +462,7 @@ server <- function(input, output, session) {
     })
     do.call(tagList, img_output_list)
   })
-  for (i in 1:50){
+  for (i in 1:75){
     local({
       my_i <- i
       imgname <- paste("rightimage_small", my_i, sep="")

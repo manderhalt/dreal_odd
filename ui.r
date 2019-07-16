@@ -161,7 +161,7 @@ navbarPage("Les ODD dans mon territoire",
         )
       ),
       
-      lapply(1:50, function(i){
+      lapply(1:76, function(i){
         sd_text <- paste("sidetext_small", i, sep="")
         src_text <- paste("source_text_small", i, sep="")
         plot_name <- paste("plotgraph_small", i, sep="")
