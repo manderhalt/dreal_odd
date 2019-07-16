@@ -1,7 +1,7 @@
 # DIVWHEEL
 get_divwheel_text_from_question_numbers <- function(question, numbers){
-  first_part <- paste(gsub(":", " de", question$Libel), numbers[[1]], "%")
-  det <- substr(question$Libel, start=1, stop=2)
+  first_part <- paste(gsub(":", " de", question$libel_long), numbers[[1]], "%")
+  det <- substr(question$libel_long, start=1, stop=2)
   if (grepl("a", det)){
     second_part <- paste(", tandis que celle de votre département est de", numbers[[2]], "%.")
   }
@@ -242,7 +242,7 @@ get_graph <- function(values, names, unit){
     categoryarray = rev(names)
   )
   plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
-                    marker= list(color=colors2))%>%
+                    marker= list(color=colors2), height=250)%>%
    
     layout(xaxis = ax, yaxis = ax)%>%
     config(displayModeBar = F) %>%
