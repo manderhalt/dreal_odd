@@ -244,7 +244,7 @@ get_graph <- function(values, names, unit){
   plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
                     marker= list(color=colors2))%>%
    
-    layout(xaxis = ax, yaxis = ax,fixedrange=TRUE)%>%
+    layout(xaxis = ax, yaxis = ax)%>%
     config(displayModeBar = F) %>%
     layout(xaxis=list(fixedrange=TRUE)) %>% layout(yaxis=list(fixedrange=TRUE)) %>%
   

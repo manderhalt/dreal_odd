@@ -163,6 +163,7 @@ navbarPage("Les ODD dans mon territoire",
           column(6, h4(tags$b(textOutput(sd_text))), plotlyOutput(outputId =plot_name, height = "250px"), h5(textOutput(src_text) )),
           column(2, br(), br(), br(), imageOutput(img_name)))
       })
+      
    ),
    
    # DEBUT TROISIEME PAGE
