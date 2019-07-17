@@ -210,8 +210,9 @@ server <- function(input, output, session) {
           if (j !=""){
             cur_img <- c(cur_img, j)
           }
-          list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+          
         }
+        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
       }
       list_graph_values_to_plot = list()
       list_side_text = list()
@@ -243,9 +244,8 @@ server <- function(input, output, session) {
   output$text_graph <- renderText({outtextgraph()})
   
   # SIDE TEXT
-  output$all_odd <- renderUI({
+  output$cur_odd <- renderUI({
     lapply(1:length(sidetextgraph()), function(cur_odd){
-      print(rightoddimage()[[cur_odd]])
       if (length(rightoddimage()[[cur_odd]])>1){
       fluidRow(
         column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
@@ -290,158 +290,148 @@ server <- function(input, output, session) {
     })
   })
   
-  ### BOUTTON 
-  outgraph_small <- reactiveVal()
-  outtextgraph_small <- reactiveVal()
-  sidetextgraph_small <- reactiveVal()
-  no_indicateur_small <- reactiveVal()
-  source_entity_small <- reactiveVal()
-  code_indic_small <- reactiveVal()
-  rightoddimage_small <- reactiveVal(NULL)
-  observeEvent({input$wheel_small_button},{
-    list_images_to_plot = list()
-    list_source_entity = list()
-    list_graph_values_to_plot = list()
-    list_code_indic = c()
-    list_side_text = list()
+  
+  ###BUTTON
+  
+  outgraph_all <- reactiveVal()
+  outtextgraph_all <- reactiveVal()
+  sidetextgraph_all <- reactiveVal()
+  source_entity_all <- reactiveVal()
+  code_indic_all <- reactiveVal()
+  rightoddimage_all <- reactiveVal()
+  observeEvent({input[["wheel_small_button"]]
+  }
+  , {
+    list_text_main <- list()
+    list_side_text_all <- list()
+    list_source_entity_all <- list()
+    list_code_indic_all <- list()
+    list_right_odd_image_all <- list()
+    list_graph_all <- list()
   lapply(1:17, function(i) {
     
-    odd_text <- paste("odd", i, sep="")
-    odd <- paste("ODD", i, sep="")
-    list_code_indic <<- c(list_code_indic,get_code_indicateur_from_odd(odd))
-    cur_list_indic <- get_code_indicateur_from_odd(odd)
-    list_image_all <- list()
-    for (i in cur_list_indic){
-      list_image <- c()
-      cur_logos <- logos_from_code_indic(i)
-      for (logo in cur_logos){
-          cur_img = paste("www/", logo, ".png", sep="")
+      odd_text <- paste("odd", i, sep="")
+      odd <- paste("ODD", i, sep="")
+      list_code_indic <- get_code_indicateur_from_odd(odd)
+      list_image_all <- list()
+      for (i in list_code_indic){
+        list_image <- c()
+        cur_logos <- logos_from_code_indic(i)
+        for (logo in cur_logos){
+          cur_img = paste(logo, ".png", sep="")
           list_image <- c(list_image, cur_img)
-      }
-      list_image_all <- c(list_image_all, list(list_image))
-    }
-    
-      for (i in list_image_all){
-        cur_img <- NULL
-        for (j in i){
-          if (j !=""){
-            cur_img <- list(src=j, height=60)
-          }
         }
-        list_images_to_plot <<- list.append(list_images_to_plot, cur_img)
-        
+        list_image_all <- c(list_image_all, list(list_image))
       }
       
-      for (i in cur_list_indic){
+      
+      list_images_to_plot = list()
+      list_source_entity = list()
+      for (i in list_image_all){
+        cur_img = c()
+        for (j in i){
+          if (j !=""){
+            cur_img <- c(cur_img, j)
+          }
+          
+        }
+        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+      }
+      list_graph_values_to_plot = list()
+      list_side_text = list()
+      for (i in list_code_indic){
         cur_values <- horiz_histo(departement_2()$CodeZone,
                                   epci_2()$siren,
                                   i)
         if (length(cur_values)>1){
-          list_graph_values_to_plot <<- list.append(list_graph_values_to_plot, cur_values)
+          list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
           
-          cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source)
-          list_source_entity <<- list.append(list_source_entity, cur_source)
-          list_side_text <<- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
+          cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, IND[IND$code_indicateur==i,]$annee)
+          list_source_entity <- list.append(list_source_entity, cur_source)
+          list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
       }
-      outgraph_small(list_graph_values_to_plot)
-      outtextgraph_small(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
-      sidetextgraph_small(list_side_text)
-      rightoddimage_small(list_images_to_plot)
-      source_entity_small(list_source_entity)
-      code_indic_small(list_code_indic)
+      if (length(list_graph_values_to_plot)==0){
+        no_indicateur(PAS_INDICATEUR)
+      }
+      
+      list_right_odd_image_all <<- list.append(list_right_odd_image_all, list_images_to_plot)
+      list_code_indic_all <<- list.append(list_code_indic_all, list_code_indic)
+      list_graph_all <<- list.append(list_graph_all, list_graph_values_to_plot)
+      list_side_text_all <<- list.append(list_side_text_all, list_side_text)
+      list_source_entity_all <<- list.append(list_source_entity_all, list_source_entity)
+      list_text_main <<- list.append(list_text_main, ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
+    
       
     })
-  })
-  output$text_graph_small <- renderText({outtextgraph_small()})
+  print(list_graph_all)
+  print(list_text_main)
+  print(list_side_text_all)
+  print(list_code_indic_all)
+  print(list_right_odd_image_all)
   
-  # SIDE TEXT
-  output$side_text_graph_small <- renderUI({
-    side_text <- sidetextgraph_small()
-    text_output_list <- lapply(1:length(side_text), function(cur_text){
-      text_name <- paste("sidetext_small", i, sep="")
-      cur_text
-    })
-    do.call(tagList, text_output_list)
+  outgraph_all(list_graph_all)
+  outtextgraph_all(list_text_main)
+  sidetextgraph_all(list_side_text_all)
+  rightoddimage_all(list_right_odd_image_all)
+  source_entity_all(list_source_entity_all)
+  code_indic_all(list_code_indic_all)
+  
+  
   })
-  for(l in 1:76){
-    local({
-      my_l <- l
-      textname <- paste("sidetext_small", my_l, sep="")
-      output[[textname]] <- renderText({
-        if (my_l<=length(sidetextgraph_small())){
-        sidetextgraph_small()[[my_l]]
+  lapply(1:17, function(cur_odd){
+      odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
+      odd_main_text <- paste("odd_main_text", cur_odd, sep="")
+      output[[odd_main_text]]<- renderText({outtextgraph_all()[[cur_odd]]})
+      output[[odd_all_cur]] <- renderUI({
+        
+        if(length(rightoddimage_all()[[cur_odd]])>=1){
+      lapply(1:length(outgraph_all()[[cur_odd]]), function(cur_code){
+        if (length(rightoddimage_all()[[cur_odd]][[cur_code]])>1){
+          fluidRow(
+            column(6, h4(tags$b(sidetextgraph_all()[[cur_odd]][[cur_code]])), 
+                   renderPlotly({
+                     if (cur_odd<=length(code_indic_all()[[cur_odd]])){
+                       cur_indic <- code_indic_all()[[cur_odd]][[cur_code]]
+                       unit <- IND[IND$code_indicateur==cur_indic,]$unite
+                       get_graph(
+                         outgraph_all()[[cur_odd]][[cur_code]],
+                         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
+                       )
+                     }}),
+                   h5(source_entity_all()[[cur_odd]][[cur_code]])),
+            column(6, br(), br(), br(), 
+                   
+                   tags$div(img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[1]], width = 70, height = 70),
+                            img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[2]], width = 70, height = 70))
+                   
+            )
+          )
+        }
+        else {
+          fluidRow(
+            column(6, h4(tags$b(sidetextgraph_all()[[cur_odd]][[cur_code]])), 
+                   renderPlotly({
+                     if (cur_odd<=length(code_indic_all()[[cur_odd]])){
+                       cur_indic <- code_indic_all()[[cur_odd]][[cur_code]]
+                       unit <- IND[IND$code_indicateur==cur_indic,]$unite
+                       get_graph(
+                         outgraph_all()[[cur_odd]][[cur_code]],
+                         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
+                       )
+                     }}),
+                   h5(source_entity_all()[[cur_odd]][[cur_code]])),
+            column(6, br(), br(), br(), 
+                   
+                   tags$div(img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[1]], width = 70, height = 70))
+                   
+            )
+          )
         }
       })
-    })
-  }
-  
-  output$source_entity_small <- renderText({
-    source_plot <- source_entity_small()
-    source_output_list <- lapply(1:length(source_plot), function(cur_source){
-      source_name <- paste("source_text_small", i, sep="")
-      cur_source
-    })
-    do.call(tagList, source_output_list)
-  })
-  for (i in 1:76){
-    local({
-      my_i <- i
-      source_name <- paste("source_text_small", i, sep="")
-      output[[source_name]] <- renderText({
-        if (my_i<=length(source_entity_small())){
-        source_entity_small()[[my_i]]
         }
-      })
     })
-  }
-  
-  output$plot_graph_small <- renderUI({
-    plot_values <- outgraph_small()
-    plot_output_list <- lapply(1:length(plot_values), function(cur_value){
-      plot_name <- paste("plotgraph_small", i, sep="")
-      cur_value
-    })
-    do.call(tagList, plot_output_list)
   })
-  for (j in 1:75){
-    local({
-      my_j <- j
-      plotname <- paste("plotgraph_small", my_j, sep="")
-      output[[plotname]]<- renderPlotly({
-        if (my_j<=length(code_indic_small())){
-        cur_indic <- code_indic_small()[[my_j]]
-        unit <- IND[IND$code_indicateur==cur_indic,]$unite
-        get_graph(
-          outgraph_small()[[my_j]],
-          c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
-        )
-        }  
-      })
-      # output[[plotname]]<- renderPlot({barplot(outgraph()[[my_j]], horiz=TRUE,names.arg=c("Dep", "EPCI"), col="deepskyblue2")})
-    })
-  } 
-  # ODD IMAGE
-  output$right_odd_image <- renderUI({
-    right_images <- rightoddimage_small()
-    img_output_list <- lapply(1:length(right_images), function(cur_image){
-      img_name <- paste("rightimage_small", i , sep="")
-      cur_image
-    })
-    do.call(tagList, img_output_list)
-  })
-  for (i in 1:75){
-    local({
-      my_i <- i
-      imgname <- paste("rightimage_small", my_i, sep="")
-      output[[imgname]] <- renderImage({
-        if (my_i<=length(rightoddimage_small())){
-        rightoddimage_small()[[my_i]]
-        }
-      }, deleteFile = FALSE)
-    })
-  }
-  
   
   # TROISIEME PAGE
   # BOUTTONS LOGOS

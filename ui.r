@@ -111,7 +111,15 @@ navbarPage("Les ODD dans mon territoire",
         ))),
       # TEXTE
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
-      uiOutput("all_odd")
+      
+        uiOutput("cur_odd"),
+      lapply(1:17, function(cur_odd){
+        odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
+        odd_main_text <- paste("odd_main_text", cur_odd, sep="")
+        column(12, align="center", h3(textOutput(odd_main_text), br(), style="display: block; margin-left: auto; margin-right: auto;"))
+        uiOutput(odd_all_cur)
+      })
+      
       # GRAPHE
       
       
