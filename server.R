@@ -241,6 +241,7 @@ server <- function(input, output, session) {
       
     })
   })
+  output$no_indicateur <- renderText({no_indicateur()})
   output$text_graph <- renderText({outtextgraph()})
   
   # SIDE TEXT
@@ -299,6 +300,7 @@ server <- function(input, output, session) {
   source_entity_all <- reactiveVal()
   code_indic_all <- reactiveVal()
   rightoddimage_all <- reactiveVal()
+  no_indicateur_all <- reactiveVal()
   observeEvent({input[["wheel_small_button"]]
   }
   , {
@@ -370,6 +372,7 @@ server <- function(input, output, session) {
   print(list_code_indic_all)
   print(list_right_odd_image_all)
   
+  no_indicateur_all(PAS_INDICATEUR)
   outgraph_all(list_graph_all)
   outtextgraph_all(list_text_main)
   sidetextgraph_all(list_side_text_all)
@@ -391,7 +394,7 @@ server <- function(input, output, session) {
           fluidRow(
             column(6, h4(tags$b(sidetextgraph_all()[[cur_odd]][[cur_code]])), 
                    renderPlotly({
-                     if (cur_odd<=length(code_indic_all()[[cur_odd]])){
+                     if (cur_code<=length(code_indic_all()[[cur_odd]])){
                        cur_indic <- code_indic_all()[[cur_odd]][[cur_code]]
                        unit <- IND[IND$code_indicateur==cur_indic,]$unite
                        get_graph(
@@ -412,7 +415,7 @@ server <- function(input, output, session) {
           fluidRow(
             column(6, h4(tags$b(sidetextgraph_all()[[cur_odd]][[cur_code]])), 
                    renderPlotly({
-                     if (cur_odd<=length(code_indic_all()[[cur_odd]])){
+                     if (cur_code<=length(code_indic_all()[[cur_odd]])){
                        cur_indic <- code_indic_all()[[cur_odd]][[cur_code]]
                        unit <- IND[IND$code_indicateur==cur_indic,]$unite
                        get_graph(
@@ -429,6 +432,9 @@ server <- function(input, output, session) {
           )
         }
       })
+        }
+        else{
+          h3(no_indicateur_all(), align="center")
         }
     })
   })
@@ -467,5 +473,5 @@ server <- function(input, output, session) {
     )}, deleteFile = FALSE)
   output$third_text_with_link <- renderText({textwithlink()})
   
-  output$no_indicateur <- renderText({no_indicateur()})
+  
 }
