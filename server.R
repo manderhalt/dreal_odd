@@ -187,6 +187,19 @@ server <- function(input, output, session) {
     observeEvent({input[[button]]
     }
     , {
+      lapply(1:17, function(cur_odd){
+        odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
+        odd_main_text <- paste("odd_main_text", cur_odd, sep="")
+        hide(odd_all_cur)
+        hide(odd_main_text)
+      })
+      show("cur_odd")
+      show("no_indicateur")
+      show("text_graph")
+      
+      
+      
+      
     odd_text <- paste("odd", i, sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
@@ -304,6 +317,17 @@ server <- function(input, output, session) {
   observeEvent({input[["wheel_small_button"]]
   }
   , {
+    hide("cur_odd")
+    hide("no_indicateur")
+    hide("text_graph")
+    lapply(1:17, function(cur_odd){
+      odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
+      odd_main_text <- paste("odd_main_text", cur_odd, sep="")
+      show(odd_all_cur)
+      show(odd_main_text)
+    })
+    
+    
     list_text_main <- list()
     list_side_text_all <- list()
     list_source_entity_all <- list()
@@ -353,10 +377,6 @@ server <- function(input, output, session) {
           list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
       }
-      if (length(list_graph_values_to_plot)==0){
-        no_indicateur(PAS_INDICATEUR)
-      }
-      
       list_right_odd_image_all <<- list.append(list_right_odd_image_all, list_images_to_plot)
       list_code_indic_all <<- list.append(list_code_indic_all, list_code_indic)
       list_graph_all <<- list.append(list_graph_all, list_graph_values_to_plot)
