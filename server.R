@@ -246,7 +246,7 @@ server <- function(input, output, session) {
         if (length(cur_values)>1){
         list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         
-        cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, IND[IND$code_indicateur==i,]$annee)
+        cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, ",", IND[IND$code_indicateur==i,]$annee)
         list_source_entity <- list.append(list_source_entity, cur_source)
         list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
@@ -387,7 +387,7 @@ server <- function(input, output, session) {
         if (length(cur_values)>1){
           list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
           
-          cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, IND[IND$code_indicateur==i,]$annee)
+          cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, ",", IND[IND$code_indicateur==i,]$annee)
           list_source_entity <- list.append(list_source_entity, cur_source)
           list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
