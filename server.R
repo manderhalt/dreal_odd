@@ -35,8 +35,8 @@ server <- function(input, output, session) {
       filter(DF_DEP_EPCI, nom_membre == input$commune_string),
       dept == departement()$CodeZone
     )
-  })
-  output$epci_text <- renderText({paste("Votre territoire (EPCI) est : ", epci()$raison_sociale)})
+  }) 
+  output$epci_text <- renderText({epci()$raison_sociale})
   
   #FORM
   
@@ -172,7 +172,7 @@ server <- function(input, output, session) {
                     dept == departement_2()$CodeZone)
   })
   
-  output$epci_text_2 <-renderText({paste("Votre territoire est : ", epci_2()$raison_sociale)})
+  output$epci_text_2 <-renderText({epci_2()$raison_sociale})
   nb_commune_update <- 0
   observeEvent({input[["commune_string_2"]]},
                {nb_commune_update<<-nb_commune_update+1})

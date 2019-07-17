@@ -16,7 +16,11 @@ navbarPage("Les ODD dans mon territoire",
          # FORM 
          conditionalPanel(condition = "input.validate_choice", 
                           br(),
-                          h4(textOutput("epci_text")),
+                          tags$head(tags$style("
+                                  #epci_text{
+                                  display:inline
+                                  }")),
+                          h4("Votre territoire (EPCI) est : ", tags$b(textOutput("epci_text")), style="display:inline"),
                           br(),
                           h4("Par rapport à votre département..."),
                           lapply(1:length(QUESTION[["Question.QUIZ"]]), function(i){
@@ -82,7 +86,12 @@ navbarPage("Les ODD dans mon territoire",
                  ".shiny-output-error { visibility: hidden; }",
                  ".shiny-output-error:before { visibility: hidden; }"),
       # LOGOS
-      h4(textOutput("epci_text_2")),
+      tags$head(tags$style("
+                                  #epci_text_2{
+                                  display:inline
+                                  }")),
+      h4("Votre territoire (EPCI) est : ", tags$b(textOutput("epci_text_2")), style="display:inline"),
+      br(),
       lapply(1:17, function(i){
         odd <- paste("ODD ", i, sep="")
         id_button <- paste("ODD_button_graph", i, sep="")
