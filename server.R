@@ -173,7 +173,13 @@ server <- function(input, output, session) {
   })
   
   output$epci_text_2 <-renderText({paste("Votre territoire est : ", epci_2()$raison_sociale)})
-  
+  nb_commune_update <- 0
+  observeEvent({input[["commune_string_2"]]},
+               {nb_commune_update<<-nb_commune_update+1})
+  lapply(1:17, function(i) {
+    button <- paste("ODD_button_graph", i, sep="")
+    observeEvent({input[[button]]}, 
+                 {nb_commune_update<<-nb_commune_update+1})})
   # LOGOS
   outgraph <- reactiveVal()
   outtextgraph <- reactiveVal()
@@ -188,6 +194,7 @@ server <- function(input, output, session) {
       input[["commune_string_2"]]
     }
     , {
+      if (nb_commune_update>=2){
       lapply(1:17, function(cur_odd){
         odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
         odd_main_text <- paste("odd_main_text", cur_odd, sep="")
@@ -245,6 +252,9 @@ server <- function(input, output, session) {
       if (length(list_graph_values_to_plot)==0){
         no_indicateur(PAS_INDICATEUR)
       }
+      else {
+        no_indicateur(list())
+      }
       outgraph(list_graph_values_to_plot)
       outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
       sidetextgraph(list_side_text)
@@ -252,7 +262,7 @@ server <- function(input, output, session) {
       source_entity(list_source_entity)
       code_indic(list_code_indic)
       
-      
+      }
     })
   })
   output$no_indicateur <- renderText({no_indicateur()})
@@ -316,8 +326,10 @@ server <- function(input, output, session) {
   rightoddimage_all <- reactiveVal()
   no_indicateur_all <- reactiveVal()
   observeEvent({input[["wheel_small_button"]]
+    input[["commune_string_2"]]
   }
   , {
+    if (nb_commune_update>=2){
     hide("cur_odd")
     hide("no_indicateur")
     hide("text_graph")
@@ -400,7 +412,7 @@ server <- function(input, output, session) {
   rightoddimage_all(list_right_odd_image_all)
   source_entity_all(list_source_entity_all)
   code_indic_all(list_code_indic_all)
-  
+    }
   
   })
   lapply(1:17, function(cur_odd){
