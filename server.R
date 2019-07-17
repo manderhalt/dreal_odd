@@ -185,6 +185,7 @@ server <- function(input, output, session) {
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     observeEvent({input[[button]]
+      input[["commune_string_2"]]
     }
     , {
       lapply(1:17, function(cur_odd){
