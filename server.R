@@ -180,6 +180,8 @@ server <- function(input, output, session) {
     button <- paste("ODD_button_graph", i, sep="")
     observeEvent({input[[button]]}, 
                  {nb_commune_update<<-nb_commune_update+1})})
+  observeEvent({input[["wheel_small_button"]]}, 
+               {nb_commune_update<<-nb_commune_update+1})
   # LOGOS
   outgraph <- reactiveVal()
   outtextgraph <- reactiveVal()
@@ -292,7 +294,7 @@ server <- function(input, output, session) {
         )
       )
       }
-      else {
+      else if(length(rightoddimage()[[cur_odd]]==1)){
         fluidRow(
           column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
                  renderPlotly({
@@ -399,11 +401,7 @@ server <- function(input, output, session) {
     
       
     })
-  print(list_graph_all)
-  print(list_text_main)
-  print(list_side_text_all)
-  print(list_code_indic_all)
-  print(list_right_odd_image_all)
+  
   
   no_indicateur_all(PAS_INDICATEUR)
   outgraph_all(list_graph_all)
