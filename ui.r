@@ -2,9 +2,9 @@ navbarPage("Les ODD dans mon territoire",
    # PREMIERE PAGE
    tabPanel(
      "Accueil-Quiz",
-     tags$head(tags$style("* { font-family: Open Sans; line-height:1.3em};.h4 {line-height:1.3em}")),
+     tags$head(tags$style("* { font-family: Arial; line-height:1.3em};.h4 {line-height:1.3em}")),
      fluidRow(column(1, align="center", imageOutput("image_dreal")),
-       column(8, tags$img(src="logo.svg", width="70%"),
+       column(8, br(), br(), tags$img(src="logo.svg", width="70%"),
          # TITRES ET PARAGRAPHE D'INTRO
          includeHTML("intro.html"),
          

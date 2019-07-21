@@ -286,7 +286,7 @@ server <- function(input, output, session) {
                       )
                       }}),
         h5(source_entity()[[cur_odd]])),
-        column(6, br(), br(), br(), 
+        column(6, br(),  h4(tags$b("ODD concernés")),
           
           tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70),
                    img(src = rightoddimage()[[cur_odd]][[2]], width = 70, height = 70))
@@ -307,7 +307,7 @@ server <- function(input, output, session) {
                      )
                    }}),
                  h5(source_entity()[[cur_odd]])),
-          column(6, br(), br(), br(), 
+          column(6, br(),  h4(tags$b("ODD concernés")),
                  
                  tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70))
                  
@@ -434,7 +434,7 @@ server <- function(input, output, session) {
                        )
                      }}),
                    h5(source_entity_all()[[cur_odd]][[cur_code]])),
-            column(6, br(), br(), br(), 
+            column(6, br(),  h4(tags$b("ODD concernés")),
                    
                    tags$div(img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[1]], width = 70, height = 70),
                             img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[2]], width = 70, height = 70))
@@ -455,7 +455,7 @@ server <- function(input, output, session) {
                        )
                      }}),
                    h5(source_entity_all()[[cur_odd]][[cur_code]])),
-            column(6, br(), br(), br(), 
+            column(6, br(),  h4(tags$b("ODD concernés")),
                    
                    tags$div(img(src = rightoddimage_all()[[cur_odd]][[cur_code]][[1]], width = 70, height = 70))
                    
