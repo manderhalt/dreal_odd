@@ -1,3 +1,5 @@
+# SERVER SIDE OF THE APP
+
 server <- function(input, output, session) {
  
   
@@ -39,7 +41,6 @@ server <- function(input, output, session) {
   output$epci_text <- renderText({epci()$raison_sociale})
   
   #FORM
-  
   lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
     size_img <- "30%"
     current_question <- QUESTION[question_number,]
@@ -64,7 +65,7 @@ server <- function(input, output, session) {
     )})
   })
   
-  
+  # UPDATE AFTER VALIDATION
   observeEvent(input$submitBtn, {
     
     lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
@@ -88,17 +89,12 @@ server <- function(input, output, session) {
     })
   })
   
-  event_submit_legend_wheel <- eventReactive(input$submitBtn, {
-    "./www/green_tile.png"
-  })
-  output$green_tile <- renderImage({list(src=event_submit_legend_wheel(),contentType = 'image/png'
-  )}, deleteFile = FALSE)
-  
   # DIVWHEEL
   observeEvent(input$refresh, {session$reload()})
   response_all <- integer(17)+3
   text_alert_all <- replicate(17, "")
   all_logos <- replicate(17, "")
+  
   event_submit_button_wheel <- eventReactive(input$submitBtn, {
     questionnaire_id <- get_last_questionnaire_id()[[1]]+1
     
@@ -120,6 +116,7 @@ server <- function(input, output, session) {
       else {
         response_to_send_sql <- response_user
       }
+      # SEND ANSWER TO SQL
       insert_answer(question_label = current_question[["Question.QUIZ"]], 
                     answer_question = response_to_send_sql, 
                     right_answer = type_answer,
@@ -132,7 +129,7 @@ server <- function(input, output, session) {
     title_alert <- all_logos
     
     divwheelnav(response_all, all_logos, get_all_colors_from_list_odds(), title_alert, text_alert_all, 
-                width = (0.95*as.numeric(input$dimension[1])), height = (0.95*as.numeric(input$dimension[1])))
+                width = (0.95*as.numeric(input$dimension[1])), height = (0.95*as.numeric(input$dimension[1])), imgwidth=input$dimension[1]/18)
 
   })
   
@@ -176,13 +173,17 @@ server <- function(input, output, session) {
   nb_commune_update <- 0
   observeEvent({input[["commune_string_2"]]},
                {nb_commune_update<<-nb_commune_update+1})
+  
+  # Display after click
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     observeEvent({input[[button]]}, 
                  {nb_commune_update<<-nb_commune_update+1})})
   observeEvent({input[["wheel_small_button"]]}, 
                {nb_commune_update<<-nb_commune_update+1})
-  # LOGOS
+  
+  
+  # GRAPH AND TEXT IF ONLY ONE SELECTED
   outgraph <- reactiveVal()
   outtextgraph <- reactiveVal()
   sidetextgraph <- reactiveVal()
@@ -190,6 +191,7 @@ server <- function(input, output, session) {
   source_entity <- reactiveVal()
   code_indic <- reactiveVal()
   rightoddimage <- reactiveVal(NULL)
+  
   lapply(1:17, function(i) {
     button <- paste("ODD_button_graph", i, sep="")
     observeEvent({input[[button]]
@@ -207,9 +209,6 @@ server <- function(input, output, session) {
       show("no_indicateur")
       show("text_graph")
       
-      
-      
-      
     odd_text <- paste("odd", i, sep="")
     odd <- paste("ODD", i, sep="")
     list_code_indic <- get_code_indicateur_from_odd(odd)
@@ -223,54 +222,50 @@ server <- function(input, output, session) {
       }
       list_image_all <- c(list_image_all, list(list_image))
     }
-    
-    
-      list_images_to_plot = list()
-      list_source_entity = list()
-      for (i in list_image_all){
-        cur_img = c()
-        for (j in i){
-          if (j !=""){
-            cur_img <- c(cur_img, j)
-          }
-          
+    list_images_to_plot = list()
+    list_source_entity = list()
+    for (i in list_image_all){
+      cur_img = c()
+      for (j in i){
+        if (j !=""){
+          cur_img <- c(cur_img, j)
         }
-        list_images_to_plot <- list.append(list_images_to_plot, cur_img)
-      }
-      list_graph_values_to_plot = list()
-      list_side_text = list()
-      for (i in list_code_indic){
-        cur_values <- horiz_histo(departement_2()$CodeZone,
-                                  epci_2()$siren,
-                                  i)
-        if (length(cur_values)>1){
-        list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         
+      }
+      list_images_to_plot <- list.append(list_images_to_plot, cur_img)
+    }
+    list_graph_values_to_plot = list()
+    list_side_text = list()
+    for (i in list_code_indic){
+      cur_values <- horiz_histo(departement_2()$CodeZone,
+                                epci_2()$siren,
+                                  i)
+      if (length(cur_values)>1){
+        list_graph_values_to_plot <- list.append(list_graph_values_to_plot, cur_values)
         cur_source = paste("Source:",IND[IND$code_indicateur==i,]$source, ",", IND[IND$code_indicateur==i,]$annee)
         list_source_entity <- list.append(list_source_entity, cur_source)
         list_side_text <- list.append(list_side_text, IND[IND$code_indicateur==i,]$libel_court)
         }
       }
-      if (length(list_graph_values_to_plot)==0){
-        no_indicateur(PAS_INDICATEUR)
-      }
-      else {
-        no_indicateur(list())
-      }
-      outgraph(list_graph_values_to_plot)
-      outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
-      sidetextgraph(list_side_text)
-      rightoddimage(list_images_to_plot)
-      source_entity(list_source_entity)
-      code_indic(list_code_indic)
-      
-      }
+    if (length(list_graph_values_to_plot)==0){
+      no_indicateur(PAS_INDICATEUR)
+    }
+    else {
+      no_indicateur(list())
+    }
+    outgraph(list_graph_values_to_plot)
+    outtextgraph(ODD_TEXT[ODD_TEXT[["ODD"]]==odd_text,]$ODD_TITLE)
+    sidetextgraph(list_side_text)
+    rightoddimage(list_images_to_plot)
+    source_entity(list_source_entity)
+    code_indic(list_code_indic)
+    }
     })
   })
   output$no_indicateur <- renderText({no_indicateur()})
   output$text_graph <- renderText({outtextgraph()})
   
-  # SIDE TEXT
+  # ONE OUTPUT
   output$cur_odd <- renderUI({
     lapply(1:length(sidetextgraph()), function(cur_odd){
       if (length(rightoddimage()[[cur_odd]])>1){
@@ -318,7 +313,7 @@ server <- function(input, output, session) {
   })
   
   
-  ###BUTTON
+  # ALL OUTPUTS
   
   outgraph_all <- reactiveVal()
   outtextgraph_all <- reactiveVal()

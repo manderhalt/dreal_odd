@@ -51,6 +51,55 @@ horiz_histo <- function(departement_code, epci_code, question_code){
   return(c_values)
 }
 
+get_graph <- function(values, names, unit){
+  scale <- max(values)
+  list_to_keep <- c()
+  for (i in 1:4){
+    if (values[[i]]!=0 & !is.na(values[[i]])){
+      list_to_keep <- c(list_to_keep, i)
+    }
+  }
+  colors2 <-c('#00AFEC', '#F2F2F2', '#F2F2F2', '#F2F2F2')
+  values <- values[list_to_keep]
+  #print(values)
+  colors2 <- colors2[list_to_keep]
+  names <- names[list_to_keep]
+  ax <- list(
+    title = "",
+    zeroline = FALSE,
+    showline = FALSE,
+    showticklabels = FALSE,
+    showgrid = FALSE,
+    categoryorder = "array",
+    categoryarray = rev(names)
+  )
+  plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
+                    marker= list(color=colors2), height=250)%>%
+   
+    layout(xaxis = ax, yaxis = ax)%>%
+    config(displayModeBar = F) %>%
+    layout(xaxis=list(fixedrange=TRUE)) %>% layout(yaxis=list(fixedrange=TRUE)) %>%
+  
+    add_annotations(text = names,
+                    x = values/2,
+                    y = names,
+                    xref = "x",
+                    yref = "y",
+                    font = list(family = 'Roboto',
+                                size = 16,
+                                color = 'black'),
+                    showarrow = FALSE)%>%
+    add_annotations(x = max(values)+0.25*max(values),  y = names,
+                    text = paste(round(values, 2), unit),
+                    font = list(family = 'Arial', size = 12),
+                    showarrow = FALSE)%>%
+    layout(plot_bgcolor='transparent') %>% 
+    layout(paper_bgcolor='transparent') %>%
+    add_annotations(x = max(values)/2, y=1.5, valign="middle", text=stri_dup("-",20), showarrow=FALSE)
+  return (plotbar)
+}
+
+
 # QUESTIONS
 get_choices_labels_from_question<- function(question_libel){
   det <- substr(question_libel, start=1, stop=2)
@@ -219,50 +268,3 @@ get_code_indicateur_from_odd <- function(odd){
   list_code_indic
 }
 
-get_graph <- function(values, names, unit){
-  scale <- max(values)
-  list_to_keep <- c()
-  for (i in 1:4){
-    if (values[[i]]!=0 & !is.na(values[[i]])){
-      list_to_keep <- c(list_to_keep, i)
-    }
-  }
-  colors2 <-c('#00AFEC', '#F2F2F2', '#F2F2F2', '#F2F2F2')
-  values <- values[list_to_keep]
-  #print(values)
-  colors2 <- colors2[list_to_keep]
-  names <- names[list_to_keep]
-  ax <- list(
-    title = "",
-    zeroline = FALSE,
-    showline = FALSE,
-    showticklabels = FALSE,
-    showgrid = FALSE,
-    categoryorder = "array",
-    categoryarray = rev(names)
-  )
-  plotbar <-plot_ly(type="bar", x=values, y=names, showlegend=FALSE, hoverinfo = 'none',
-                    marker= list(color=colors2), height=250)%>%
-   
-    layout(xaxis = ax, yaxis = ax)%>%
-    config(displayModeBar = F) %>%
-    layout(xaxis=list(fixedrange=TRUE)) %>% layout(yaxis=list(fixedrange=TRUE)) %>%
-  
-    add_annotations(text = names,
-                    x = values/2,
-                    y = names,
-                    xref = "x",
-                    yref = "y",
-                    font = list(family = 'Roboto',
-                                size = 16,
-                                color = 'black'),
-                    showarrow = FALSE)%>%
-    add_annotations(x = max(values)+0.25*max(values),  y = names,
-                    text = paste(round(values, 2), unit),
-                    font = list(family = 'Arial', size = 12),
-                    showarrow = FALSE)%>%
-    layout(plot_bgcolor='transparent') %>% 
-    layout(paper_bgcolor='transparent') %>%
-    add_annotations(x = max(values)/2, y=1.5, valign="middle", text=stri_dup("-",20), showarrow=FALSE)
-  return (plotbar)
-}

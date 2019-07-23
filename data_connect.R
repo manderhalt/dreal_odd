@@ -1,5 +1,5 @@
-# create a connection
-# save the password that we can "hide" it as best as we can by collapsing it
+# HANDLE CONNECTION WITH DATABASE
+
 PW <- Sys.getenv("PASSWORD_DB")
 USER <- Sys.getenv("USER_DB")
 PORT <- Sys.getenv("PORT")
@@ -14,6 +14,8 @@ establish_connection <- function(){
                  password = PW)
   return (con)
 }
+
+# GET ALL THE TABLES NEEDED
 con <- establish_connection()
 COG_2018_COMMUNE_EPCI <- dbReadTable(con, "COG_2018_COMMUNE_EPCI")
 DF_DEP <- dbReadTable(con, "QUIZZ_ODD_DEP_2019_03_05")
@@ -36,6 +38,7 @@ insert_answer <- function(question_label, answer_question, right_answer, date_su
   query <- paste("INSERT INTO", TABLE_ANSWER, "(question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id)", "VALUES", "(", line, ");")
   res <- dbSendQuery(con, query)
 }
+
 get_last_questionnaire_id <- function(){
   result <- tryCatch(
     {

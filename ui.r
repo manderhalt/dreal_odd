@@ -1,10 +1,15 @@
+# UI side of the APP
+
 navbarPage("Les ODD dans mon territoire",
+           
    # PREMIERE PAGE
    tabPanel(
      "Accueil-Quiz",
      tags$head(tags$style("* { font-family: Arial; line-height:1.3em};.h4 {line-height:1.3em}")),
+     
      fluidRow(column(1, align="center", imageOutput("image_dreal")),
        column(8, br(), br(), tags$img(src="logo.svg", width="70%"),
+              
          # TITRES ET PARAGRAPHE D'INTRO
          includeHTML("intro.html"),
          
@@ -32,8 +37,7 @@ navbarPage("Les ODD dans mon territoire",
                           br(),
                           actionButton("submitBtn", "Valider"),
                           actionButton("refresh", "Réessayer le quiz")
-         )
-         ,
+         ),
          
          # WHEEL
          h3(textOutput("wheel_title")),
@@ -42,6 +46,8 @@ navbarPage("Les ODD dans mon territoire",
          div(tags$img(src="green_tile.png", height="20px"),"Votre territoire est mieux positionné que votre département pour contribuer à l’ODD"),
          div(tags$img(src="red_tile.png", height="20px"),"Votre territoire est moins bien positionné que votre département pour contribuer à l’ODD")
          ),
+         
+         # Size of the wheel
          tags$head(tags$script('
                         var dimension = [0, 0];
                         $(document).on("shiny:connected", function(e) {
@@ -55,12 +61,11 @@ navbarPage("Les ODD dans mon territoire",
                         Shiny.onInputChange("dimension", dimension);
                         });
                         ')),
+         
          divwheelnavOutput("nav_output")
-     
-     
-   ))),
-   
-   
+         )
+       )
+     ),
    
    # Styling nav bar
    tags$head(
@@ -69,9 +74,13 @@ navbarPage("Les ODD dans mon territoire",
                      .navbar-default {background-color: #FFFFFF ;}
                        "))
      ), 
+   
+   
+   
    # DEUXIEME PAGE
    tabPanel("Les indicateurs ODD de mon territoire",
       column(8, tags$img(src="logo.svg", width="70%")),
+      
       # CHOIX DEPARTEMENT
       column(
         12, align="left", br(), h3("Portrait de territoire - Tous les indicateurs ODD de mon territoire"),
@@ -80,18 +89,15 @@ navbarPage("Les ODD dans mon territoire",
         )),
       uiOutput("departement_2"),
       uiOutput("commune_2"),
-    
-      # LOGOS ET GRAPHE
       tags$style(type="text/css",
                  ".shiny-output-error { visibility: hidden; }",
                  ".shiny-output-error:before { visibility: hidden; }"),
+      tags$head(tags$style("#epci_text_2{display:inline}")),
+      
       # LOGOS
-      tags$head(tags$style("
-                                  #epci_text_2{
-                                  display:inline
-                                  }")),
       h4("Votre territoire (EPCI) est : ", tags$b(textOutput("epci_text_2")), style="display:inline"),
       br(),
+      
       lapply(1:17, function(i){
         odd <- paste("ODD ", i, sep="")
         id_button <- paste("ODD_button_graph", i, sep="")
@@ -102,15 +108,11 @@ navbarPage("Les ODD dans mon territoire",
           img(src = odd_image,
               height = "125px"),
           tags$style(type = 'text/css', 
-                     HTML('.action-button { background-color: transparent;
-.active {
-                                color: #555;
-                          background-color: green;
-      };
-}'))
-        )
-      }
-      ),
+                     HTML('.action-button { background-color: transparent;.active {color: #555;background-color: green;};}'))
+          )
+        }
+        ),
+      
       column(
         12, align="left", br(),h4(style = "line-height:1.3em","Pour afficher l'ensemble des indicateurs, cliquez sur la roue (le chargement peut être long)",
           tags$button(
@@ -118,27 +120,25 @@ navbarPage("Les ODD dans mon territoire",
             class = "btn action-button",
             img(src="wheel_to_text.png", height="50px")
         ))),
+      
       # TEXTE
       useShinyjs(),
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
       
+      # ONE ODD
         uiOutput("cur_odd"),
       h3(textOutput("no_indicateur"), align="center"),
+      
+      # ALL ODD
       lapply(1:17, function(cur_odd){
         odd_all_cur <- paste("odd_all_cur", cur_odd, sep="")
         odd_main_text <- paste("odd_main_text", cur_odd, sep="")
         fluidRow(column(12, align="center", h3(textOutput(odd_main_text), br(), style="display: block; margin-left: auto; margin-right: auto;")),
         uiOutput(odd_all_cur))
       })
-      
-      # GRAPHE
-      
-      
-      
-      
-      
-      
    ),
+   
+   
    
    # DEBUT TROISIEME PAGE
    tabPanel(
@@ -185,12 +185,7 @@ navbarPage("Les ODD dans mon territoire",
               textOutput("subtext_odd"), br(), 
               textOutput("third_text_with_link"), 
               uiOutput("third_link"),br())
-       
-       
-     
-   )
-     
-     
+       )
    )
 )
 

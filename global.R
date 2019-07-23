@@ -43,6 +43,4 @@ source("data.R")
 source("helper.R")
 source("data_connect.R")
 
-max_img <- 7
-max_plot <- 7
 
