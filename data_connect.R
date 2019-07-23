@@ -39,12 +39,16 @@ insert_answer <- function(question_label, answer_question, right_answer, date_su
   res <- dbSendQuery(con, query)
 }
 
+# Récupération du dernier id de questionnaire
 get_last_questionnaire_id <- function(){
   result <- tryCatch(
     {
       query <- "SELECT MAX(questionnaire_id) FROM test_answer"
       my_query <- dbSendQuery(con, query)
       result <- dbFetch(my_query)
+      if(is.na(result)){
+        result = 0
+      }
       return (result)
     },
     error=function(cond) {
@@ -55,6 +59,9 @@ get_last_questionnaire_id <- function(){
       query <- "SELECT MAX(questionnaire_id) FROM test_answer"
       my_query <- dbSendQuery(con, query)
       result <- dbFetch(my_query)
+      if(is.na(result)){
+        result = 0
+      }
       return (result)
     }
   )

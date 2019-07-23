@@ -9,7 +9,7 @@ server <- function(input, output, session) {
     list(
       src = "logo_fr_dreal.png",
       contentType = 'image/png',
-      width = "100%"
+      height = "150px"
     )}, deleteFile = FALSE)
   
   # SELECTION DEPARTEMENT
