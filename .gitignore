@@ -1,3 +1,5 @@
+.env
+
 # History files
 .Rhistory
 .Rapp.history
@@ -37,4 +39,3 @@ rsconnect/
 .Rproj.user
 .env
 .idea/
-

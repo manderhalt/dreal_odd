@@ -3,10 +3,10 @@ get_divwheel_text_from_question_numbers <- function(question, numbers){
   first_part <- paste(gsub(":", " de", question$libel_long), numbers[[1]], "%")
   det <- substr(question$libel_long, start=1, stop=2)
   if (grepl("a", det)){
-    second_part <- paste(", tandis que celle de votre département est de", numbers[[2]], "%.")
+    second_part <- paste(",tandis que celle de votre département est de", numbers[[2]], "%.")
   }
   else {
-  second_part <- paste(", tandis que celui de votre département est de", numbers[[2]], "%.")
+  second_part <- paste(",tandis que celui de votre département est de", numbers[[2]], "%.")
   }
   final <- paste(first_part, second_part)
   return (final)
@@ -53,12 +53,13 @@ horiz_histo <- function(departement_code, epci_code, question_code){
 
 get_graph <- function(values, names, unit){
   scale <- max(values)
-  list_to_keep <- c()
+  list_to_keep <- c(1,2,3,4)
   for (i in 1:4){
     if (values[[i]]!=0 & !is.na(values[[i]])){
       list_to_keep <- c(list_to_keep, i)
     }
   }
+  list_to_keep <- c(1,2,3,4)
   colors2 <-c('#00AFEC', '#F2F2F2', '#F2F2F2', '#F2F2F2')
   values <- values[list_to_keep]
   #print(values)
@@ -89,13 +90,13 @@ get_graph <- function(values, names, unit){
                                 size = 16,
                                 color = 'black'),
                     showarrow = FALSE)%>%
-    add_annotations(x = max(values)+0.25*max(values),  y = names,
+    add_annotations(x = max(values,na.rm = TRUE)+0.25*max(values,na.rm = TRUE),  y = names,
                     text = paste(round(values, 2), unit),
                     font = list(family = 'Arial', size = 12),
                     showarrow = FALSE)%>%
     layout(plot_bgcolor='transparent') %>% 
     layout(paper_bgcolor='transparent') %>%
-    add_annotations(x = max(values)/2, y=1.5, valign="middle", text=stri_dup("-",20), showarrow=FALSE)
+    add_annotations(x = max(values,na.rm = TRUE)/2, y=1.5, valign="left", text=stri_dup("-",20), showarrow=FALSE)
   return (plotbar)
 }
 

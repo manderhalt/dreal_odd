@@ -8,10 +8,11 @@ navbarPage("Les ODD dans mon territoire",
      tags$head(tags$style("* { font-family: Arial; line-height:1.3em};.h4 {line-height:1.3em}")),
      fluidRow(
        column(1),
-       column(9,tags$img(src="logos.png", width="100%"),class="col-xs-12")
+       column(6,tags$img(src="logos.png", width="100%"),class="col-xs-12")
      ),
      
-     fluidRow(column(1),
+     fluidRow(
+       column(1),
        column(9,
               
          # TITRES ET PARAGRAPHE D'INTRO
@@ -44,6 +45,10 @@ navbarPage("Les ODD dans mon territoire",
          ),
          
          # WHEEL
+         conditionalPanel(condition = "input.submitBtn",
+         h4(textOutput("right_answers")),
+         br(),
+         hr()),
          h3(textOutput("wheel_title")),
          h4(textOutput("wheel_legend")),
          conditionalPanel(condition = "input.submitBtn",
@@ -130,7 +135,7 @@ navbarPage("Les ODD dans mon territoire",
       column(12, align="center", h3(textOutput("text_graph"), br(), style="display: block; margin-left: auto; margin-right: auto;")),
       
       # ONE ODD
-        uiOutput("cur_odd"),
+      uiOutput("cur_odd"),
       h3(textOutput("no_indicateur"), align="center"),
       
       # ALL ODD
@@ -190,6 +195,10 @@ navbarPage("Les ODD dans mon territoire",
               textOutput("third_text_with_link"), 
               uiOutput("third_link"),br())
        )
-   )
+   ),
+   tabPanel("Mentions Légales",
+    column(1),
+    column(10,htmlOutput("mentions")),
+    column(1))
 )
 

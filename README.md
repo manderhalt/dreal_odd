@@ -25,10 +25,16 @@ git clone https://github.com/manderhalt/dreal.git
 ### Installation des packages
 
 Il faudra executer le fichier *package_dependency.R* afin d'importer le package divwheel qui est un add on Javascript de la roue.
-Si besoin, changer le directory ou est cloner le repo divwheel.
+Si besoin, changer le directory ou est cloné le repo divwheel.
 
 ```
 git clone git@github.com:manderhalt/divwheel.git
+```
+
+Ce package peut également être installé depuis un dossier Github public avec devtools :
+
+```
+devtools::install_github('manderhalt/divwheel')
 ```
 
 ### Dev guide
@@ -36,8 +42,8 @@ git clone git@github.com:manderhalt/divwheel.git
 4 fichiers différents:
 * server.R: server de shiny
 * ui.R: ui de shiny
-* data.R: data nécessaire au bon fonctionnement
-* helper.R: fonctions nécessaires au bon fonctionnement
+* data.R: données nécessaires pour l'application
+* helper.R: fonctions utilisées par l'application
 
 1 package R html-widget:
 * divwheel: besoin de modifier divwheel.js et divwheel.R pour tout changement sur la roue
@@ -50,8 +56,8 @@ Un fichier .env où sont renseignés:
 * PASSWORD_DB
 * TABLE_ANSWER
 
-Avec TABLE_ANSWER nom de la table où sont renseignées les réponses. 
-Elle est au préalable crée et initialisée avec 
+Avec TABLE_ANSWER nom de la table où sont renseignées les réponses.
+Elle est au préalable crée et initialisée avec
 
 ```
 CREATE TABLE TABLE_ANSWER (
@@ -63,22 +69,8 @@ CREATE TABLE TABLE_ANSWER (
     epci int,
     questionnaire_id int
 );
-INSERT INTO TABLE_ANSWER 
-    (question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id) 
-VALUES 
+INSERT INTO TABLE_ANSWER
+    (question_label, answer_question, right_answer, date_submit, dep, epci, questionnaire_id)
+VALUES
     ('question test', 0, 0, '1990-01-01', 79, 79, 0);
 ```
-
-
-
-## Versioning
-
-Versioning classique, à jour sur le changelog
-
-## Déploiement
-Run de l'app et 
-
-psql -h ec2-46-137-170-51.eu-west-1.compute.amazonaws.com -d dfc1pthbflg0oa -U tqzzczaqbdfgsn -p 5432 -f dump.sql
-
-
-

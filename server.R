@@ -67,8 +67,7 @@ server <- function(input, output, session) {
   
   # UPDATE AFTER VALIDATION
   observeEvent(input$submitBtn, {
-    
-    lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
+    right_answers <- lapply(1:length(QUESTION[["Question.QUIZ"]]), function(question_number){
       current_question <- QUESTION[question_number,]
       cur_libel <- current_question[["Question.QUIZ"]]
       input_id <- paste("question_",question_number,sep='')
@@ -86,7 +85,20 @@ server <- function(input, output, session) {
                         label=current_question[["Question.QUIZ"]],
                         inline=TRUE,
                         choiceNames=choice_names, choiceValues = CHOICEVALUES, selected = marker_to_select) 
+     return(type_answer == 1)
+     })
+    number_of_questions <- length(right_answers)
+    number_of_right_answers <- Reduce('+',right_answers)
+    output$right_answers = renderText({
+      paste(
+        "Vous obtenez ",
+        number_of_right_answers,
+        " bonne(s) réponse(s) sur ",
+        length(right_answers),
+        ' questions',sep="")
     })
+    #print(tostring(Reduce('+',right_answers)))
+    
   })
   
   # DIVWHEEL
@@ -136,7 +148,7 @@ server <- function(input, output, session) {
   wheel_title <- reactiveVal("")
   wheel_legend <- reactiveVal("")
   observeEvent(input$submitBtn, {
-    wheel_title(WHEEL_TITLE)
+    wheel_title("Positionnement de votre territoire sur ces ODD")
     wheel_legend(WHEEL_LEGEND)
   })
   output$wheel_title <- renderText(wheel_title())
@@ -270,7 +282,9 @@ server <- function(input, output, session) {
     lapply(1:length(sidetextgraph()), function(cur_odd){
       if (length(rightoddimage()[[cur_odd]])>1){
       fluidRow(
-        column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
+        column(6, 
+               h4(tags$b(sidetextgraph()[[cur_odd]])),
+               h5(source_entity()[[cur_odd]]),
                renderPlotly({
                     if (cur_odd<=length(code_indic())){
                       cur_indic <- code_indic()[[cur_odd]]
@@ -279,8 +293,8 @@ server <- function(input, output, session) {
                         outgraph()[[cur_odd]],
                         c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
                       )
-                      }}),
-        h5(source_entity()[[cur_odd]])),
+                      }})
+        ),
         column(6, br(),  h4(tags$b("ODD concernés")),
           
           tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70),
@@ -291,7 +305,9 @@ server <- function(input, output, session) {
       }
       else if(length(rightoddimage()[[cur_odd]]==1)){
         fluidRow(
-          column(6, h4(tags$b(sidetextgraph()[[cur_odd]])), 
+          column(6, 
+                 h4(tags$b(sidetextgraph()[[cur_odd]])), 
+                 h5(source_entity()[[cur_odd]]),
                  renderPlotly({
                    if (cur_odd<=length(code_indic())){
                      cur_indic <- code_indic()[[cur_odd]]
@@ -300,8 +316,9 @@ server <- function(input, output, session) {
                        outgraph()[[cur_odd]],
                        c(epci_2()$raison_sociale, input$departement_2, get_region_name_from_dep(departement_2()$CodeZone), "France"), unit
                      )
-                   }}),
-                 h5(source_entity()[[cur_odd]])),
+                   }})
+                 
+                 ),
           column(6, br(),  h4(tags$b("ODD concernés")),
                  
                  tags$div(img(src = rightoddimage()[[cur_odd]][[1]], width = 70, height = 70))
@@ -499,5 +516,10 @@ server <- function(input, output, session) {
     )}, deleteFile = FALSE)
   output$third_text_with_link <- renderText({textwithlink()})
   
+  # MENTIONS LEGALES
+  getMentions<-function() {
+    return(includeHTML("www/mentions.html"))
+  }
+  output$mentions<-renderUI({getMentions()})
   
 }
